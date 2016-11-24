@@ -1,6 +1,10 @@
 package beans;
 
-public class Usuario {
+public class Usuario 
+{
+	
+	private String cpf;
 	private String nome;
-
+	private String senha;
+	private String caminho_foto;
 }
