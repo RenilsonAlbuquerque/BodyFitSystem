@@ -4,8 +4,12 @@ public class Administrador extends Usuario{
 	private String cargo;
 
 	
-	public Administrador(String cargo) {
-		super();
+	public Administrador(String cpf, String nome, String senha, String caminhoFoto,String cargo) {
+		super(cpf,nome,senha,caminhoFoto);
+		this.setCargo(cargo);
+	}
+	public Administrador(String cpf,String cargo) {
+		super(cpf);
 		this.setCargo(cargo);
 	}
 

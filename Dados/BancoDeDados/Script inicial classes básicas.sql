@@ -13,8 +13,8 @@ PRIMARY KEY (`CPF_U`)
 CREATE TABLE `aluno` (
   `CPF_ALU` varchar(12) NOT NULL,
   `IDADE` int(2) NOT NULL,
-  `ALTURA` varchar(3) NOT NULL,
-  `PESO` varchar(3) NOT NULL,
+  `ALTURA` float NOT NULL,
+  `PESO` float NOT NULL,
   PRIMARY KEY (`CPF_ALU`),
   CONSTRAINT `fk_cpf_alu` FOREIGN KEY (`CPF_ALU`) REFERENCES `usuario` (`CPF_U`) ON DELETE NO ACTION ON UPDATE CASCADE
 );
@@ -49,3 +49,4 @@ CREATE TABLE `exercicio_padrao` (
   PRIMARY KEY (`CODIGO_EP`),
   CONSTRAINT `fk_cod_ep` FOREIGN KEY (`CODIGO_EP`) REFERENCES `treino_padrao` (`CODIGO_TP`) ON DELETE NO ACTION ON UPDATE CASCADE
 );
+

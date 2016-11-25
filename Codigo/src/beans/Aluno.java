@@ -7,8 +7,15 @@ public class Aluno extends Usuario {
 	
 	
 	
-	public Aluno(int idade, float peso, float altura, String cpf, String nome, String senha, String caminhoFoto) {
-		super();
+	public Aluno(String cpf, String nome, String senha, String caminhoFoto,
+			int idade, float peso, float altura) {
+		super(cpf,nome,senha,caminhoFoto);
+		this.setIdade(idade);
+		this.setAltura(altura);
+		this.setPeso(peso);
+	}
+	public Aluno(String cpf,int idade, float peso, float altura) {
+		super(cpf);
 		this.setIdade(idade);
 		this.setAltura(altura);
 		this.setPeso(peso);

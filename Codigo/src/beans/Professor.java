@@ -4,8 +4,15 @@ public class Professor extends Usuario{
 	private String cref;
 	private String turno;
 			
-	public Professor(String cref, String turno, String cpf, String nome, String senha, String caminhoFoto) {
-		super();
+	public Professor(String cpf, String nome, String senha, String caminhoFoto,
+			String cref, String turno) {
+		super(cpf,nome,senha,caminhoFoto);
+		this.setCref(cref);
+		this.setTurno(turno);
+	}
+	public Professor(String cpf,
+			String cref, String turno) {
+		super(cpf);
 		this.setCref(cref);
 		this.setTurno(turno);
 	}

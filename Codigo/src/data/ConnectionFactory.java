@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import exceptions.ConexaoBancoException;
+
 
 
 public class ConnectionFactory {
@@ -17,38 +19,44 @@ public class ConnectionFactory {
     private static final String PASSWORD = "bancodedados2016.2";
     private static final String DRIVER_CLASS = "com.mysql.jdbc.Driver";
     
-	private ConnectionFactory() throws Exception{
+	private ConnectionFactory() throws ConexaoBancoException {
 		setConnection();
 	}
 	
-	public static ConnectionFactory getInstance()throws Exception{
+	public static ConnectionFactory getInstance() throws ConexaoBancoException{
 		if(instance == null){
 			instance = new ConnectionFactory();
 		}
 		return instance;
 		
 	}
-    private void setConnection()throws Exception{
-    	try{
-			Class.forName(DRIVER_CLASS).newInstance();
-			conexao =  DriverManager.getConnection(URL,USER,PASSWORD);
-    	}catch(Exception e){
-    		System.out.println(e.getMessage());
-    		throw new Exception("Erro na conexão com o banco de dados");
-    	}
+    private void setConnection() throws ConexaoBancoException{
+    	
+			try {
+				Class.forName(DRIVER_CLASS).newInstance();
+				conexao =  DriverManager.getConnection(URL,USER,PASSWORD);
+			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+				e.printStackTrace();
+			} 
+			catch(SQLException e){
+				throw new ConexaoBancoException();
+			}
     }
     
-	public Connection getConnection() throws Exception{
+	public Connection getConnection() throws ConexaoBancoException{
+		
 		this.setConnection();
-		return conexao;	
+		return conexao;
 	}
 	
-	public void closeConnetion() throws Exception{
-		try {
+	public void closeConnetion() throws ConexaoBancoException{
+		try{
 			this.conexao.close();
-		} catch (SQLException e) {
-			throw new Exception("Erro ao fechar a conexão com o banco de dados"); 
 		}
+		catch (SQLException e) {
+			throw new ConexaoBancoException();
+		}
+		
 	}
 
 }
