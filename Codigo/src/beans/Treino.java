@@ -3,21 +3,21 @@ package beans;
 import java.util.ArrayList;
 
 public class Treino {
-	private int codTp;
+	private int codigo;
 	private String nome;
 	private ArrayList<Exercicio>exerciciosArray;
 	
-	public Treino(int codTp, String nome, ArrayList<Exercicio>exerciciosArray) {
+	public Treino(int codigo, String nome) {
 		super();
-		this.codTp = codTp;
-		this.nome = nome;
+		this.setCodigo(codigo);
+		this.setNome(nome);
 		this.exerciciosArray = new ArrayList<Exercicio>();
 	}
-	public int getCodTp() {
-		return codTp;
+	public int getCodigo() {
+		return codigo;
 	}
-	public void setCodTp(int codTp) {
-		this.codTp = codTp;
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
 	public String getNome() {
 		return nome;

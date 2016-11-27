@@ -10,7 +10,7 @@ import beans.Professor;
 import exceptions.CRUDException;
 import exceptions.ConexaoBancoException;
 
-public class ProfessorDao implements IRepositorio<Professor>{
+public class ProfessorDao implements IRepositorioFuncionarios<Professor>{
 	
 	private PreparedStatement statement;
 	private ResultSet rSet;

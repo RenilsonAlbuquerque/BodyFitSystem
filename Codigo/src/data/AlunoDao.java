@@ -11,7 +11,7 @@ import exceptions.CRUDException;
 import exceptions.ConexaoBancoException;
 
 
-public class AlunoDao implements IRepositorio<Aluno>{
+public class AlunoDao implements IRepositorioAluno{
 	
 	private PreparedStatement statement;
 	private ResultSet rSet;
@@ -22,6 +22,7 @@ public class AlunoDao implements IRepositorio<Aluno>{
 
 	@Override
 	public boolean existe(String cpf) throws ConexaoBancoException {
+		
 		boolean resultado = false;
 		String sql = "SELECT * FROM aluno WHERE CPF_ALU =" + cpf;
 		
@@ -131,6 +132,12 @@ public class AlunoDao implements IRepositorio<Aluno>{
 		}
 		
 		return alunos;
+		
+	}
+
+	@Override
+	public void cadastrarRotinaTreino(Aluno aluno) {
+		// TODO Auto-generated method stub
 		
 	}
 

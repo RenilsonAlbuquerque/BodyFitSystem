@@ -5,17 +5,17 @@ public class Exercicio {
 	private String carga;
 	private int intervalo;
 	private int repeticao;
-	private int codigoEp;
+	private int codigo;
 	
 	
 	
-	public Exercicio(String nome, String carga, int intervalo, int repeticao, int codigoEp) {
+	public Exercicio(int codigo,String nome, String carga, int intervalo, int repeticao) {
 		super();
 		this.setNome(nome);
 		this.setCarga(carga);
 		this.setIntervalo(intervalo);
 		this.setRepeticao(repeticao);
-		this.setCodigoEp(codigoEp);
+		this.setCodigo(codigo);
 	}
 	public String getNome() {
 		return nome;
@@ -41,11 +41,11 @@ public class Exercicio {
 	public void setRepeticao(int repeticao) {
 		this.repeticao = repeticao;
 	}
-	public int getCodigoEp() {
-		return codigoEp;
+	public int getCodigo() {
+		return codigo;
 	}
-	public void setCodigoEp(int codigoEp) {
-		this.codigoEp = codigoEp;
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
 
 	

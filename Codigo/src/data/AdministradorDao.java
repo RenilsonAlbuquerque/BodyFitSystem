@@ -7,11 +7,10 @@ import java.util.ArrayList;
 import com.mysql.jdbc.PreparedStatement;
 
 import beans.Administrador;
-import beans.Aluno;
 import exceptions.CRUDException;
 import exceptions.ConexaoBancoException;
 
-public class AdministradorDao implements IRepositorio<Administrador>{
+public class AdministradorDao implements IRepositorioFuncionarios<Administrador>{
 	
 	private PreparedStatement statement;
 	private ResultSet rSet;
