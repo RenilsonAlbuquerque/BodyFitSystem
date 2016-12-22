@@ -22,7 +22,7 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 	@Override
 	public boolean existe(String cpf) throws ConexaoBancoException {
 		boolean resultado = false;
-		String sql = "SELECT * FROM aluno WHERE CPF_ALU =" + cpf;
+		String sql = "SELECT * FROM administrador WHERE CPF_ADM =" + cpf;
 		
 		try{
 			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
@@ -36,6 +36,9 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 		}catch(SQLException e){
 			
 			throw new ConexaoBancoException();
+		}
+		finally{
+			ConnectionFactory.getInstance().closeConnetion();
 		}
 		
 	}
@@ -52,7 +55,7 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 			statement.execute();
 			
 		}catch(SQLException e){
-			throw new CRUDException("Erro ao cadastrar o Administrador");
+			throw new CRUDException(e.getMessage());
 		}
 		finally{
 			ConnectionFactory.getInstance().closeConnetion();

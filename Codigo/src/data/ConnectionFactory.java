@@ -14,7 +14,7 @@ public class ConnectionFactory {
 	private Connection conexao;
 	
 	
-    private static final String URL = "jdbc:mysql://localhost:3306/academia";
+    private static final String URL = "jdbc:mysql://localhost:3303/academia";
     private static final String USER = "root";
     private static final String PASSWORD = "bancodedados2016.2";
     private static final String DRIVER_CLASS = "com.mysql.jdbc.Driver";
