@@ -129,6 +129,7 @@ public class UsuarioDao implements IRepositorioUsuario {
 		return null;
 	}
 	
+	@Override
 	public boolean existe(String cpf) throws ConexaoBancoException{
 		boolean resultado = false;
 		String sql = "SELECT * FROM usuario WHERE CPF_U ='" + cpf+"'";

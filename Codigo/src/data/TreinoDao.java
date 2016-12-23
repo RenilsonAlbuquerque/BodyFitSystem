@@ -38,6 +38,35 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 			
 			throw new ConexaoBancoException();
 		}
+		finally{
+			ConnectionFactory.getInstance().closeConnetion();
+		}
+		
+	}
+	@Override
+	public boolean existe(int codigo,String cpf) throws ConexaoBancoException {
+		
+		boolean resultado = false;
+		String sql = "SELECT * FROM academia.treino WHERE CODIGO_T = ? AND  CPF_P = ?";
+		
+		try{
+			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			this.statement.setInt(1, codigo);
+			this.statement.setString(2, cpf);
+			this.rSet = (ResultSet) statement.executeQuery();
+			
+			if(rSet.next()){
+				resultado = true;
+			}
+			return resultado;
+			
+		}catch(SQLException e){
+			
+			throw new ConexaoBancoException();
+		}
+		finally{
+			ConnectionFactory.getInstance().closeConnetion();
+		}
 		
 	}
 

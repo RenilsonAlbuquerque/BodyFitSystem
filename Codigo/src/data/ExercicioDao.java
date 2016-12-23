@@ -40,6 +40,29 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 		}
 		
 	}
+	@Override
+	public boolean existe(int codigo,String cpf) throws ConexaoBancoException {
+		
+		boolean resultado = false;
+		String sql = "SELECT * FROM academia.exercicio WHERE CODIGO_E = ? AND  CPF_P = ?";
+		
+		try{
+			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			this.statement.setInt(1, codigo);
+			this.statement.setString(2, cpf);
+			this.rSet = (ResultSet) statement.executeQuery();
+			
+			if(rSet.next()){
+				resultado = true;
+			}
+			return resultado;
+			
+		}catch(SQLException e){
+			
+			throw new ConexaoBancoException();
+		}
+		
+	}
 
 	@Override
 	public void cadastrar(Exercicio objeto) throws ConexaoBancoException,CRUDException {

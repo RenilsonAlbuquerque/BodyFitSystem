@@ -40,7 +40,7 @@ public class AlunoDao implements IRepositorioAluno{
 			throw new ConexaoBancoException();
 		}
 		finally{
-			//statement.close();
+
 			ConnectionFactory.getInstance().closeConnetion();
 		}
 		
