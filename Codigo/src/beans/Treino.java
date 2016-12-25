@@ -7,8 +7,11 @@ public class Treino {
 	private String nome;
 	private ArrayList<Exercicio>exerciciosArray;
 	
+	public Treino(String nome) {
+		this.setNome(nome);
+		this.exerciciosArray = new ArrayList<Exercicio>();
+	}
 	public Treino(int codigo, String nome) {
-		super();
 		this.setCodigo(codigo);
 		this.setNome(nome);
 		this.exerciciosArray = new ArrayList<Exercicio>();

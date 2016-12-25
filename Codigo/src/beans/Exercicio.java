@@ -7,7 +7,14 @@ public class Exercicio {
 	private int repeticao;
 	private int codigo;
 	
-	
+	public Exercicio(String nome, String carga, int intervalo, int repeticao) {
+		super();
+		this.setNome(nome);
+		this.setCarga(carga);
+		this.setIntervalo(intervalo);
+		this.setRepeticao(repeticao);
+		this.setCodigo(codigo);
+	}
 	
 	public Exercicio(int codigo,String nome, String carga, int intervalo, int repeticao) {
 		super();

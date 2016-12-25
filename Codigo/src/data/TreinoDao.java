@@ -72,13 +72,12 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 
 	@Override
 	public void cadastrar(Treino objeto) throws ConexaoBancoException,CRUDException {
-		String sql = "INSERT INTO academia.treino_padrao(CODIGO_TP, NOME) "
-				+ "values(?,?)";
+		String sql = "INSERT INTO academia.treino_padrao(NOME) "
+				+ "values(?)";
 		
 		try{
 			statement = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
-			statement.setInt(1, objeto.getCodigo());
-			statement.setString(2, objeto.getNome());
+			statement.setString(1, objeto.getNome());
 			statement.execute();
 		}catch(SQLException e){
 			throw new CRUDException("Erro ao cadastrar o Treino");
@@ -90,14 +89,13 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 	}
 	@Override
 	public void cadastrar(Treino objeto, String cpfProf) throws ConexaoBancoException,CRUDException {
-		String sql = "INSERT INTO academia.treino(CODIGO_T,CPF_P, NOME) "
-				+ "values(?,?,?) WHERE ";
+		String sql = "INSERT INTO academia.treino(CPF_P, NOME) "
+				+ "values(?,?)";
 		
 		try{
 			statement = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
-			statement.setInt(1, objeto.getCodigo());
-			statement.setString(2, cpfProf);
-			statement.setString(3, objeto.getNome());
+			statement.setString(1, cpfProf);
+			statement.setString(2, objeto.getNome());
 			statement.execute();
 		}catch(SQLException e){
 			throw new CRUDException("Erro ao cadastrar o Treino");

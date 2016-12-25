@@ -2,7 +2,6 @@ package control;
 
 import java.util.ArrayList;
 
-import beans.Aluno;
 import beans.Professor;
 import data.IRepositorioFuncionarios;
 import data.IRepositorioUsuario;

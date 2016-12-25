@@ -100,7 +100,6 @@ public class UsuarioDao implements IRepositorioUsuario {
 		String sql = "UPDATE academia.usuario SET CPF_U = ?, NOME =?, SENHA =?, CAMINHO_FOTO =? "
 				+ " WHERE CPF_U =" +objeto.getCpf();
 		
-			PreparedStatement smt;
 			try {
 				ConnectionFactory.getInstance().getConnection().setAutoCommit(true);
 				statement = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
