@@ -7,13 +7,17 @@ import beans.Aluno;
 import beans.Exercicio;
 import beans.Professor;
 import beans.Treino;
+import beans.Usuario;
 import exceptions.CRUDException;
 import exceptions.ConexaoBancoException;
 import exceptions.NegocioException;
 
 public class Fachada {
 	
+
 	private static Fachada instance;
+	private Usuario usuarioLogado;
+	
 	private ControladorUsuario usuario;
 	private ControladorAluno aluno;
 	private ControladorProfessor professor;
@@ -35,6 +39,17 @@ public class Fachada {
 			instance = new Fachada();
 		}
 		return instance;
+	}
+	
+	public Usuario getUsuarioLogado(){
+		return this.usuarioLogado;
+	}
+	public void setUsuarioLogado(Usuario usuario){
+		this.usuarioLogado = usuario;
+	}
+	
+	public boolean autenticar(String cpf,String senha) throws ConexaoBancoException{
+		return this.usuario.autenticar(cpf, senha);
 	}
 	
 	public void cadastrarAluno(Aluno aluno) throws ConexaoBancoException, NegocioException, CRUDException{

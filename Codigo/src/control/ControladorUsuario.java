@@ -17,6 +17,10 @@ public class ControladorUsuario {
 		this.controlador = new UsuarioDao();
 	}
 	
+	public boolean autenticar(String cpf,String senha) throws ConexaoBancoException{
+		return this.controlador.autenticar(cpf, senha);
+	}
+	
 	public void cadastrar(Usuario usuario) throws NegocioException, ConexaoBancoException, CRUDException{
 		if(Validadores.validarCPF(usuario.getCpf())){
 			if(Validadores.validarSenha(usuario.getSenha())){

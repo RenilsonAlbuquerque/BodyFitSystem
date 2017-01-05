@@ -27,7 +27,9 @@ public class ControladorAdministrador {
 			throw new NegocioException("CPF inválido");
 		
 	}
-	
+	public boolean existe(String cpf) throws ConexaoBancoException{
+		return this.repositorio.existe(cpf);
+	}
 	public void atualizar(Administrador administrador) throws NegocioException, ConexaoBancoException, CRUDException{
 		if(usuario.existe(administrador.getCpf())){
 			this.repositorio.atualizar(administrador);

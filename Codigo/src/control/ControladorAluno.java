@@ -20,6 +20,9 @@ private IRepositorioUsuario usuario;
 		this.repositorio = new AlunoDao();
 		this.usuario = new UsuarioDao();
 	}
+	public boolean existe(String cpf) throws ConexaoBancoException {
+		return this.repositorio.existe(cpf);
+	}
 	
 	public void cadastrar(Aluno aluno) throws NegocioException, ConexaoBancoException, CRUDException{
 		if(usuario.existe(aluno.getCpf())){
@@ -28,7 +31,6 @@ private IRepositorioUsuario usuario;
 			throw new NegocioException("CPF inválido");
 		
 	}
-	
 	public void atualizar(Aluno aluno) throws NegocioException, ConexaoBancoException, CRUDException{
 		if(usuario.existe(aluno.getCpf())){
 			this.repositorio.atualizar(aluno);
@@ -46,5 +48,6 @@ private IRepositorioUsuario usuario;
 	public void remover(Aluno aluno) throws ConexaoBancoException, CRUDException{
 		repositorio.remover(aluno);
 	}
+	
 
 }
