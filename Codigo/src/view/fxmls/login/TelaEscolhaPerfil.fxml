@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="399.0" prefWidth="418.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controls.login.ControladorTelaEscolhaPerfil">
+<AnchorPane prefHeight="399.0" prefWidth="418.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane fx:id="painel" layoutX="82.0" layoutY="2.0" prefHeight="390.0" prefWidth="246.0">
         <columnConstraints>
@@ -20,11 +20,11 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="botaoAluno" mnemonicParsing="false" prefHeight="54.0" prefWidth="246.0" text="Button" />
-            <Button fx:id="botaoAdministrador" mnemonicParsing="false" prefHeight="54.0" prefWidth="246.0" text="Button" GridPane.rowIndex="2" />
-            <Button fx:id="botaoProfessor" mnemonicParsing="false" prefHeight="54.0" prefWidth="246.0" text="Button" GridPane.rowIndex="1" />
-            <Button fx:id="botaoCoordenador" mnemonicParsing="false" prefHeight="54.0" prefWidth="246.0" text="Button" GridPane.rowIndex="3" />
-            <Button fx:id="botaoVoltar" mnemonicParsing="false" prefHeight="25.0" prefWidth="253.0" text="Button" GridPane.rowIndex="4" />
+            <Button fx:id="botaoAluno" mnemonicParsing="false" onAction="#acaoBotaoAluno" prefHeight="54.0" prefWidth="246.0" text="Aluno" />
+            <Button fx:id="botaoAdministrador" mnemonicParsing="false" onAction="#acaoBotaoCoordenador" prefHeight="54.0" prefWidth="246.0" text="Coordenador" GridPane.rowIndex="2" />
+            <Button fx:id="botaoProfessor" mnemonicParsing="false" onAction="#acaoBotaoProfessor" prefHeight="54.0" prefWidth="246.0" text="Professor" GridPane.rowIndex="1" />
+            <Button fx:id="botaoCoordenador" mnemonicParsing="false" onAction="#acaoBotaoAdministrador" prefHeight="54.0" prefWidth="246.0" text="Administrador" GridPane.rowIndex="3" />
+            <Button fx:id="botaoVoltar" mnemonicParsing="false" onAction="#acaoBotaoSair" prefHeight="25.0" prefWidth="253.0" text="Sair" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </children>

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import beans.Administrador;
 import beans.Aluno;
 import beans.Exercicio;
+import beans.PerfisEnum;
 import beans.Professor;
 import beans.Treino;
 import beans.Usuario;
@@ -46,6 +47,19 @@ public class Fachada {
 	}
 	public void setUsuarioLogado(Usuario usuario){
 		this.usuarioLogado = usuario;
+	}
+	public ArrayList<PerfisEnum> getPerfis(String cpf) throws ConexaoBancoException{
+		ArrayList<PerfisEnum> resultado = new ArrayList<PerfisEnum>();
+		if(aluno.existe(cpf))
+			resultado.add(PerfisEnum.aluno);
+		if(professor.existe(cpf))
+		{
+			resultado.add(PerfisEnum.professor);
+			//if(professor.)
+		}
+		if(administrador.existe(cpf))
+			resultado.add(PerfisEnum.administrador);
+		return resultado;
 	}
 	
 	public boolean autenticar(String cpf,String senha) throws ConexaoBancoException{

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="489.0" prefWidth="755.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane fx:id="painelTitulos" prefHeight="106.0" prefWidth="755.0">
+         <children>
+            <Circle fx:id="fotoPerfil" fill="#f9fbfc" layoutX="65.0" layoutY="53.0" radius="45.0" stroke="BLACK" strokeType="INSIDE" />
+            <Label fx:id="labelNomeUsuario" layoutX="118.0" layoutY="37.0" prefHeight="33.0" prefWidth="152.0" />
+            <Circle fx:id="botaoSair" fill="#f21919" layoutX="718.0" layoutY="47.0" radius="23.0" stroke="BLACK" strokeType="INSIDE" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

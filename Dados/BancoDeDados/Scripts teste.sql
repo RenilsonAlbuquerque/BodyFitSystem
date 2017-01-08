@@ -2,6 +2,8 @@ create database if not exists `academia`;
 
 use academia;
 
+SET SQL_SAFE_UPDATES=0;
+
 create table `usuario`(
 	`CPF_U` varchar(12) NOT NULL,
 	`NOME` varchar(50) NOT NULL,
@@ -96,20 +98,28 @@ END $$
 DELIMITER ;   
     
 insert into usuario (CPF_U,NOME,SENHA) VALUES ('10870298488','Renilson','1234');
-insert into professor (CPF_PROF,CREF,TURNO) VALUES ('10870298488','573822','tarde');
+insert into professor (CPF_PROF,CREF,TURNO) VALUES ('16547827499','573822','tarde');
+insert into administrador (CPF_ADM,CARGO) VALUES ('184719301','patrao');
 insert into treino (CPF_P,NOME) values ('10870298488','treino s');
 insert into exercicio (CODIGO_E,CPF_P,NOME,CARGA,REPETICOES,INTERVALO) values (1,'10870298488','exercicio1','100',12,30);
 insert into treino_exercicio (CODIGO_TRE,CODIGO_EXE) values (1,1);
-
+INSERT INTO academia.aluno(CPF_ALU, IDADE, ALTURA, PESO) values('556920940',22,1.82,78);
 
 DELETE FROM `treino` WHERE (CODIGO_T,CPF_P) = (1,'10870298488');
 DELETE FROM `exercicio` WHERE CODIGO_E = (1);
+DELETE FROM `aluno` WHERE CPF_ALU = ('10870298488');
+DELETE FROM `usuario` WHERE CPF_U = ('10870298488');
 
 call removerTreino(1,'10870298488');
 
+
+UPDATE academia.usuario SET  NOME = 'Carlos',SENHA = '1234', CAMINHO_FOTO = 'caminhododestino' WHERE CPF_U = (10870298488);
+
 select * from treino_exercicio;
-select * from exercicio;
+select * from exercicio where CODIGO_E = '1' AND CPF_P = '10870298488';
 select * from treino;
+select *from aluno;
+select *from usuario;
 
 drop procedure if exists removerTreino;
 drop table if exists aluno_treino;

@@ -1,21 +1,18 @@
 package view.controls.login;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import control.Fachada;
 import exceptions.ConexaoBancoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import view.controls.Principal;
-import view.fxmls.FXMLNames;
 
-public class ControladorTelaLogin implements Initializable{
+public class ControladorTelaLogin extends AnchorPane{
 	
 	
 	@FXML
@@ -32,7 +29,14 @@ public class ControladorTelaLogin implements Initializable{
 	private Label labelErro;
 
 	public ControladorTelaLogin(){
-		 
+		 try {
+			 FXMLLoader loader = new FXMLLoader(ControladorTelaLogin.class.getClass().getResource("/view/fxmls/login/TelaLogin.fxml"));
+			 loader.setController(this);
+			 this.getChildren().add(loader.load());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
 	     
 	}
 	
@@ -41,7 +45,8 @@ public class ControladorTelaLogin implements Initializable{
 	private void acaoBotaoLogin(ActionEvent evt){
 		try {
 			if(Fachada.getInstance().autenticar(campoCPF.getText(), campoSenha.getText())){
-				Principal.setCurrentStage(FXMLNames.telaEscolhaPerfil);
+				//Fachada.getInstance().setUsuarioLogado();
+				Principal.setCurrentStage(new ControladorTelaEscolhaPerfil(campoCPF.getText()));
 			}
 			else{
 				labelErro.setText("Login ou senha incorreto");
@@ -55,12 +60,7 @@ public class ControladorTelaLogin implements Initializable{
 	}
 
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 
 	
 

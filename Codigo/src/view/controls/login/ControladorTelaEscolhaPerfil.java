@@ -1,14 +1,22 @@
 package view.controls.login;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.io.IOException;
+import java.util.ArrayList;
 
+import beans.PerfisEnum;
+import control.Fachada;
+import exceptions.ConexaoBancoException;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Screen;
+import view.controls.Principal;
+import view.controls.menu.ControladorMenuPrincipalProfessor;
 
-public class ControladorTelaEscolhaPerfil implements Initializable{
+public class ControladorTelaEscolhaPerfil extends AnchorPane{
 	
 	@FXML
 	private GridPane painel;
@@ -23,18 +31,63 @@ public class ControladorTelaEscolhaPerfil implements Initializable{
 	@FXML
 	private Button botaoVoltar;
 	
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+	public ControladorTelaEscolhaPerfil(String cpf){
+		 try {
+			 	FXMLLoader loader = new FXMLLoader(ControladorTelaLogin.class.getClass().getResource("/view/fxmls/login/TelaEscolhaPerfil.fxml"));
+			 	loader.setController(this);
+			 	this.getChildren().add(loader.load());
+			 	
+			 	painel.getChildren().clear();
+			 	
+			 	
+			 	ArrayList<PerfisEnum> perfis = Fachada.getInstance().getPerfis(cpf);
+			 	if(perfis.indexOf(PerfisEnum.aluno) > -1)
+			 		painel.getChildren().add(botaoAluno);
+			 	
+			 	if(perfis.indexOf(PerfisEnum.professor) > -1)
+			 		painel.getChildren().add(botaoProfessor);
+			 	
+			 	if(perfis.indexOf(PerfisEnum.coordenador) > -1)
+			 		painel.getChildren().add(botaoCoordenador);
+			 	
+			 	if(perfis.indexOf(PerfisEnum.administrador) > -1)
+			 		painel.getChildren().add(botaoAdministrador);
+			 	
+			 	painel.add(botaoVoltar, 0, 4);
+			 	
+			} catch (IOException | ConexaoBancoException e) {
+				e.printStackTrace();
+			}
+		 
 	}
 	
-
-	public void adcionarBotao(Button botao){
+	
+	@FXML
+	private void acaoBotaoAluno(ActionEvent evt){
 		
-		 painel.setRowIndex(botao,1);
-
+	}
+	@FXML
+	private void acaoBotaoProfessor(ActionEvent evt){
+			
+		
+		Principal.setCurrentStage(new ControladorMenuPrincipalProfessor(),
+				(int)Screen.getPrimary().getVisualBounds().getWidth(),
+				(int)Screen.getPrimary().getVisualBounds().getHeight());
+	
+	}
+	@FXML
+	private void acaoBotaoCoordenador(ActionEvent evt){
+		
+	}
+	@FXML
+	private void acaoBotaoAdministrador(ActionEvent evt){
+		
+	}
+	@FXML
+	private void acaoBotaoSair(ActionEvent evt){
+		
 	} 
 	
-
+	
 
 }

@@ -32,9 +32,11 @@ public class ControladorUsuario {
 				throw new NegocioException("CPF inválido");
 		
 	}
+	
 	public boolean existe(String cpf) throws ConexaoBancoException{
 		return this.controlador.existe(cpf);
 	}
+	
 	
 	public void atualizar(Usuario usuario) throws NegocioException, ConexaoBancoException, CRUDException{
 		if(Validadores.validarCPF(usuario.getCpf())){
