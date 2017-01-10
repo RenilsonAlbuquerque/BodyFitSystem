@@ -12,5 +12,6 @@ public interface IRepositorioAtividades<T> extends InterfaceCRUD<T> {
 	public void cadastrar(T objeto,String cpfProf)throws ConexaoBancoException,CRUDException;
 	public void remover(T objeto,String cpfProf) throws ConexaoBancoException,CRUDException;
 	public void atualizar(T objeto,String cpfProf) throws ConexaoBancoException,CRUDException;
+	//public T buscar(int codigo)throws ConexaoBancoException,CRUDException;
 	public ArrayList<T> listar(String cpfProf)throws ConexaoBancoException,CRUDException;
 }

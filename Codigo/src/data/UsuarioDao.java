@@ -122,7 +122,7 @@ public class UsuarioDao implements IRepositorioUsuario {
 			}		
 			
 	}
-
+	
 	@Override
 	public ArrayList<Usuario> listar() throws ConexaoBancoException, CRUDException {
 		return null;
@@ -147,5 +147,7 @@ public class UsuarioDao implements IRepositorioUsuario {
 			throw new ConexaoBancoException();
 		}
 	}
+
+	
 	
 }

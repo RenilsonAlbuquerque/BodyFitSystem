@@ -110,7 +110,32 @@ public class AlunoDao implements IRepositorioAluno{
 			}	
 		
 	}
+	@Override
+	public Aluno buscar(String cpf) throws ConexaoBancoException, CRUDException {
+		Aluno aluno = null;;
+		String sql = "SELECT * FROM aluno WHERE CPF_ALU =" + cpf;
+		
+		try{
+			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			this.rSet = (ResultSet) statement.executeQuery();
+			
+			while(rSet.next()){
+				int idade = rSet.getInt("IDADE");
+				float peso = rSet.getFloat("PESO");
+				float altura = rSet.getFloat("ALTURA");
+				aluno = new Aluno(cpf,idade,peso,altura);
+			}
+			return aluno;
+			
+		}catch(SQLException e){
+			
+			throw new ConexaoBancoException();
+		}
+		finally{
 
+			ConnectionFactory.getInstance().closeConnetion();
+		}
+	}
 	@Override
 	public ArrayList<Aluno> listar() throws ConexaoBancoException,CRUDException {
 		ArrayList<Aluno> alunos = new ArrayList<Aluno>();
@@ -125,8 +150,8 @@ public class AlunoDao implements IRepositorioAluno{
 				float altura = rSet.getFloat("ALTURA");
 				float peso = rSet.getFloat("PESO");
 				
-				Aluno aluno = new Aluno(cpf,idade,altura,peso);
-				alunos.add(aluno);
+				
+				alunos.add(new Aluno(cpf,idade,altura,peso));
 			}
 		}catch(SQLException  e){
 			throw new CRUDException("Erro ao listar os alunos");
@@ -144,5 +169,7 @@ public class AlunoDao implements IRepositorioAluno{
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 
 }

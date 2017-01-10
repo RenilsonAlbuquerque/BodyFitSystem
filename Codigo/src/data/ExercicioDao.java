@@ -219,6 +219,7 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 		return exercicios;
 		
 	}
+	
 	@Override
 	public ArrayList<Exercicio> listar(String cpfProf) throws ConexaoBancoException,CRUDException {
 		ArrayList<Exercicio> exercicios = new ArrayList<Exercicio>();
@@ -245,6 +246,8 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 		
 		return exercicios;
 	}
+
+	
 
 	
 }

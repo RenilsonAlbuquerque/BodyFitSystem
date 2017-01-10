@@ -103,7 +103,27 @@ public class ProfessorDao implements IRepositorioFuncionarios<Professor>{
 			}	
 		
 	}
-
+	@Override
+	public Professor buscar(String cpf) throws ConexaoBancoException, CRUDException {
+		Professor professor = null;
+		String sql = "SELECT * FROM professor WHERE CPF_PROF =" + cpf;
+		
+		try{
+			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			this.rSet = (ResultSet) statement.executeQuery();
+			
+			while(rSet.next()){
+				String cref = rSet.getString("CREF");
+				String turno = rSet.getString("TURNO");
+				professor = new Professor(cpf,cref,turno);
+			}
+			return professor;
+			
+		}catch(SQLException e){
+			
+			throw new ConexaoBancoException();
+		}
+	}
 	@Override
 	public ArrayList<Professor> listar() throws ConexaoBancoException,CRUDException {
 		ArrayList<Professor> professores = new ArrayList<Professor>();
@@ -130,4 +150,6 @@ public class ProfessorDao implements IRepositorioFuncionarios<Professor>{
 		return professores;
 		
 	}
+
+	
 }

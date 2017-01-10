@@ -104,7 +104,29 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 			}	
 		
 	}
-
+	@Override
+	public Administrador buscar(String cpf) throws ConexaoBancoException, CRUDException {
+		Administrador adm = null;
+		String sql = "SELECT * FROM administrador WHERE CPF_ADM =" + cpf;
+		
+		try{
+			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			this.rSet = (ResultSet) statement.executeQuery();
+			
+			while(rSet.next()){
+				String cargo = rSet.getString("CARGO");
+				adm = new Administrador(cpf,cargo);
+			}
+			return adm;
+			
+		}catch(SQLException e){
+			
+			throw new ConexaoBancoException();
+		}
+		finally{
+			ConnectionFactory.getInstance().closeConnetion();
+		}
+	}
 	@Override
 	public ArrayList<Administrador> listar() throws ConexaoBancoException,CRUDException {
 		ArrayList<Administrador> administradores = new ArrayList<Administrador>();
@@ -130,6 +152,8 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 		return administradores;
 		
 	}
+
+	
 
 
 }

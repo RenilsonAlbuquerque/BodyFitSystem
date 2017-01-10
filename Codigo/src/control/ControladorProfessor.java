@@ -50,6 +50,5 @@ public class ControladorProfessor {
 			this.repositorio.remover(professor);
 		}else
 			throw new NegocioException("O professor não existe");
-		
 	}
 }

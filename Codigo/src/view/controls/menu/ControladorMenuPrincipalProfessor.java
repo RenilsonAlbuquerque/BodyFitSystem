@@ -5,7 +5,9 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Screen;
 import view.controls.login.ControladorTelaLogin;
@@ -49,8 +51,9 @@ public class ControladorMenuPrincipalProfessor extends AnchorPane{
 		
 	}
 	public void setDadosUsuario(){
-		//this.fotoPerfil
+		//this.fotoPerfil.setFill(new ImagePattern(new Image("/s")));
 		this.labelNomeUsuario.setText("teste");
+		
 	}
 
 }

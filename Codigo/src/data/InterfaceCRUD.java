@@ -11,4 +11,5 @@ public interface InterfaceCRUD<T> {
 	public void remover(T objeto) throws ConexaoBancoException,CRUDException ;
 	public void atualizar(T objeto) throws ConexaoBancoException,CRUDException;
 	public ArrayList<T> listar()throws ConexaoBancoException,CRUDException;
+	
 }
