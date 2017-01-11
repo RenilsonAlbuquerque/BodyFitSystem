@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import exceptions.CRUDException;
 import exceptions.ConexaoBancoException;
 
-public interface IRepositorioAtividades<T> extends InterfaceCRUD<T> {
+public interface IRepositorioAtividades<T> extends InterfaceCRUD<T,Integer> {
 	
 	public boolean existe(int codigo) throws ConexaoBancoException;
 	public boolean existe(int codigo, String cpf) throws ConexaoBancoException;

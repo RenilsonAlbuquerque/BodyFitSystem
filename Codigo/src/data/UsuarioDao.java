@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.mysql.jdbc.PreparedStatement;
 
+import beans.Aluno;
 import beans.Usuario;
 import exceptions.CRUDException;
 import exceptions.ConexaoBancoException;
@@ -52,6 +53,32 @@ public class UsuarioDao implements IRepositorioUsuario {
 				ConnectionFactory.getInstance().closeConnetion();
 		}
 		
+	}
+	@Override
+	public Usuario buscar(String cpf) throws ConexaoBancoException, CRUDException {
+		Usuario usuario = null;;
+		String sql = "SELECT * FROM usuario WHERE CPF_ALU =" + cpf;
+		
+		try{
+			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			this.rSet = (ResultSet) statement.executeQuery();
+			
+			while(rSet.next()){
+				String nome = rSet.getString("NOME");
+				String senha = rSet.getString("SENHA");
+				String caminhoFoto = rSet.getString("CAMINHO_FOTO");
+				usuario = new Usuario(cpf,nome,senha,caminhoFoto);
+			}
+			return usuario;
+			
+		}catch(SQLException e){
+			
+			throw new ConexaoBancoException();
+		}
+		finally{
+
+			ConnectionFactory.getInstance().closeConnetion();
+		}
 	}
 
 	@Override
@@ -147,6 +174,8 @@ public class UsuarioDao implements IRepositorioUsuario {
 			throw new ConexaoBancoException();
 		}
 	}
+
+	
 
 	
 	

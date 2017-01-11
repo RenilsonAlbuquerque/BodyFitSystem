@@ -247,6 +247,12 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 		return exercicios;
 	}
 
+	@Override
+	public Exercicio buscar(Integer chave) throws ConexaoBancoException, CRUDException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 	

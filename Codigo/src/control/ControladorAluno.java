@@ -37,7 +37,10 @@ private IRepositorioUsuario usuario;
 		}else
 			throw new NegocioException("CPF inválido");
 	}
-	
+	public Aluno buscar(String cpf) throws ConexaoBancoException, CRUDException{
+		
+		return this.repositorio.buscar(cpf);
+	}
 	public ArrayList<Aluno> listar() throws ConexaoBancoException, CRUDException, NegocioException{
 		if(!(repositorio.listar().isEmpty())){
 			return this.repositorio.listar();

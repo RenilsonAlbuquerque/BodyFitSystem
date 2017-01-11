@@ -36,6 +36,9 @@ public class ControladorAdministrador {
 		}else
 			throw new NegocioException("CPF inválido");
 	}
+	public Administrador buscar(String cpf) throws ConexaoBancoException, CRUDException{
+		return this.repositorio.buscar(cpf);
+	}
 	
 	public ArrayList<Administrador> listar() throws ConexaoBancoException, CRUDException, NegocioException{
 		if(!(repositorio.listar().isEmpty())){

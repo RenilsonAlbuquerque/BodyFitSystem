@@ -1,6 +1,6 @@
 package beans;
 
-public abstract class Usuario 
+public class Usuario 
 {
 	private String cpf;
 	private String nome;

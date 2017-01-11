@@ -38,6 +38,9 @@ public class ControladorProfessor {
 		}else
 			throw new NegocioException("CPF inválido");
 	}
+	public Professor buscar(String cpf) throws ConexaoBancoException, CRUDException{
+		return this.repositorio.buscar(cpf);
+	}
 	public ArrayList<Professor> listar() throws ConexaoBancoException, CRUDException, NegocioException{
 		if(!(repositorio.listar().isEmpty())){
 			return this.repositorio.listar();

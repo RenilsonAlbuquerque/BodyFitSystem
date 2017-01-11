@@ -62,6 +62,7 @@ public class Fachada {
 		return resultado;
 	}
 	
+	
 	public boolean autenticar(String cpf,String senha) throws ConexaoBancoException{
 		return this.usuario.autenticar(cpf, senha);
 	}

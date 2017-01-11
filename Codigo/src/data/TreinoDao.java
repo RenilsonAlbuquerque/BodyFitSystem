@@ -238,6 +238,12 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 		
 	}
 
+	@Override
+	public Treino buscar(Integer chave) throws ConexaoBancoException, CRUDException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 }
