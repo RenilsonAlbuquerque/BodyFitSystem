@@ -15,7 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Screen;
 import view.controls.Principal;
-import view.controls.menu.ControladorMenuPrincipalProfessor;
+import view.controls.menu.ControladorMenuPrincipal;
 
 public class ControladorTelaEscolhaPerfil extends AnchorPane{
 	
@@ -70,7 +70,7 @@ public class ControladorTelaEscolhaPerfil extends AnchorPane{
 	private void acaoBotaoAluno(ActionEvent evt){
 		try {
 			Fachada.getInstance().setUsuarioLogado(cpf, PerfisEnum.aluno);
-			Principal.setCurrentStage(new ControladorMenuPrincipalProfessor(),
+			Principal.setCurrentStage(new ControladorMenuPrincipal(),
 					(int)Screen.getPrimary().getVisualBounds().getWidth(),
 					(int)Screen.getPrimary().getVisualBounds().getHeight());
 		} catch (ConexaoBancoException | CRUDException e) {
@@ -83,7 +83,7 @@ public class ControladorTelaEscolhaPerfil extends AnchorPane{
 			
 		try {
 			Fachada.getInstance().setUsuarioLogado(cpf, PerfisEnum.professor);
-			Principal.setCurrentStage(new ControladorMenuPrincipalProfessor(),
+			Principal.setCurrentStage(new ControladorMenuPrincipal(),
 					(int)Screen.getPrimary().getVisualBounds().getWidth(),
 					(int)Screen.getPrimary().getVisualBounds().getHeight());
 		} catch (ConexaoBancoException | CRUDException e) {
@@ -97,7 +97,7 @@ public class ControladorTelaEscolhaPerfil extends AnchorPane{
 	private void acaoBotaoCoordenador(ActionEvent evt){
 		try {
 			Fachada.getInstance().setUsuarioLogado(cpf, PerfisEnum.coordenador);
-			Principal.setCurrentStage(new ControladorMenuPrincipalProfessor(),
+			Principal.setCurrentStage(new ControladorMenuPrincipal(),
 					(int)Screen.getPrimary().getVisualBounds().getWidth(),
 					(int)Screen.getPrimary().getVisualBounds().getHeight());
 		} catch (ConexaoBancoException | CRUDException e) {
@@ -109,7 +109,7 @@ public class ControladorTelaEscolhaPerfil extends AnchorPane{
 	private void acaoBotaoAdministrador(ActionEvent evt){
 		try {
 			Fachada.getInstance().setUsuarioLogado(cpf, PerfisEnum.administrador);
-			Principal.setCurrentStage(new ControladorMenuPrincipalProfessor(),
+			Principal.setCurrentStage(new ControladorMenuPrincipal(),
 					(int)Screen.getPrimary().getVisualBounds().getWidth(),
 					(int)Screen.getPrimary().getVisualBounds().getHeight());
 		} catch (ConexaoBancoException | CRUDException e) {
@@ -119,7 +119,7 @@ public class ControladorTelaEscolhaPerfil extends AnchorPane{
 	}
 	@FXML
 	private void acaoBotaoSair(ActionEvent evt){
-		
+		Principal.setCurrentStage(new ControladorTelaLogin());
 	} 
 	
 	

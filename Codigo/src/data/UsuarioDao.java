@@ -56,7 +56,7 @@ public class UsuarioDao implements IRepositorioUsuario {
 	@Override
 	public Usuario buscar(String cpf) throws ConexaoBancoException, CRUDException {
 		Usuario usuario = null;;
-		String sql = "SELECT * FROM usuario WHERE CPF_ALU =" + cpf;
+		String sql = "SELECT * FROM usuario WHERE CPF_U =" + cpf;
 		
 		try{
 			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
