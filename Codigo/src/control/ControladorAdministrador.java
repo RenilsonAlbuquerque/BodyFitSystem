@@ -3,6 +3,8 @@ package control;
 import java.util.ArrayList;
 
 import beans.Administrador;
+import beans.Professor;
+import beans.Usuario;
 import data.AdministradorDao;
 import data.IRepositorioFuncionarios;
 import data.IRepositorioUsuario;
@@ -37,7 +39,12 @@ public class ControladorAdministrador {
 			throw new NegocioException("CPF inválido");
 	}
 	public Administrador buscar(String cpf) throws ConexaoBancoException, CRUDException{
-		return this.repositorio.buscar(cpf);
+		Administrador administrador = this.repositorio.buscar(cpf);
+		Usuario usuario = this.usuario.buscar(cpf);
+		administrador.setNome(usuario.getNome());
+		administrador.setSenha(usuario.getSenha());
+		administrador.setCaminhoFoto(usuario.getCaminhoFoto());
+		return administrador;
 	}
 	
 	public ArrayList<Administrador> listar() throws ConexaoBancoException, CRUDException, NegocioException{

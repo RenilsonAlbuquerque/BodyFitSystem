@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import com.mysql.jdbc.PreparedStatement;
 
-import beans.Aluno;
 import beans.Usuario;
 import exceptions.CRUDException;
 import exceptions.ConexaoBancoException;

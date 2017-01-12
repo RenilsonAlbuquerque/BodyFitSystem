@@ -61,8 +61,14 @@ public class Fachada {
 			resultado.add(PerfisEnum.administrador);
 		return resultado;
 	}
-	
-	
+	public void setUsuarioLogado(String cpf,PerfisEnum perfil ) throws ConexaoBancoException, CRUDException{
+		if(perfil.equals(PerfisEnum.aluno))
+			this.usuarioLogado = this.aluno.buscar(cpf);
+		if(perfil.equals(PerfisEnum.professor))
+			this.usuarioLogado = this.professor.buscar(cpf);
+		if(perfil.equals(PerfisEnum.administrador))
+			this.usuarioLogado = this.administrador.buscar(cpf);
+	}
 	public boolean autenticar(String cpf,String senha) throws ConexaoBancoException{
 		return this.usuario.autenticar(cpf, senha);
 	}

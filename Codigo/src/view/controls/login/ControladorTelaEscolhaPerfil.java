@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import beans.PerfisEnum;
 import control.Fachada;
+import exceptions.CRUDException;
 import exceptions.ConexaoBancoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,6 +32,8 @@ public class ControladorTelaEscolhaPerfil extends AnchorPane{
 	@FXML
 	private Button botaoVoltar;
 	
+	private String cpf;
+		
 	public ControladorTelaEscolhaPerfil(String cpf){
 		 try {
 			 	FXMLLoader loader = new FXMLLoader(ControladorTelaLogin.class.getClass().getResource("/view/fxmls/login/TelaEscolhaPerfil.fxml"));
@@ -39,6 +42,7 @@ public class ControladorTelaEscolhaPerfil extends AnchorPane{
 			 	
 			 	painel.getChildren().clear();
 			 	
+			 	this.cpf = cpf;
 			 	
 			 	ArrayList<PerfisEnum> perfis = Fachada.getInstance().getPerfis(cpf);
 			 	if(perfis.indexOf(PerfisEnum.aluno) > -1)
@@ -64,24 +68,54 @@ public class ControladorTelaEscolhaPerfil extends AnchorPane{
 	
 	@FXML
 	private void acaoBotaoAluno(ActionEvent evt){
-		
+		try {
+			Fachada.getInstance().setUsuarioLogado(cpf, PerfisEnum.aluno);
+			Principal.setCurrentStage(new ControladorMenuPrincipalProfessor(),
+					(int)Screen.getPrimary().getVisualBounds().getWidth(),
+					(int)Screen.getPrimary().getVisualBounds().getHeight());
+		} catch (ConexaoBancoException | CRUDException e) {
+			
+			e.printStackTrace();
+		}
 	}
 	@FXML
 	private void acaoBotaoProfessor(ActionEvent evt){
 			
+		try {
+			Fachada.getInstance().setUsuarioLogado(cpf, PerfisEnum.professor);
+			Principal.setCurrentStage(new ControladorMenuPrincipalProfessor(),
+					(int)Screen.getPrimary().getVisualBounds().getWidth(),
+					(int)Screen.getPrimary().getVisualBounds().getHeight());
+		} catch (ConexaoBancoException | CRUDException e) {
+			
+			e.printStackTrace();
+		}
 		
-		Principal.setCurrentStage(new ControladorMenuPrincipalProfessor(),
-				(int)Screen.getPrimary().getVisualBounds().getWidth(),
-				(int)Screen.getPrimary().getVisualBounds().getHeight());
 	
 	}
 	@FXML
 	private void acaoBotaoCoordenador(ActionEvent evt){
-		
+		try {
+			Fachada.getInstance().setUsuarioLogado(cpf, PerfisEnum.coordenador);
+			Principal.setCurrentStage(new ControladorMenuPrincipalProfessor(),
+					(int)Screen.getPrimary().getVisualBounds().getWidth(),
+					(int)Screen.getPrimary().getVisualBounds().getHeight());
+		} catch (ConexaoBancoException | CRUDException e) {
+			
+			e.printStackTrace();
+		}
 	}
 	@FXML
 	private void acaoBotaoAdministrador(ActionEvent evt){
-		
+		try {
+			Fachada.getInstance().setUsuarioLogado(cpf, PerfisEnum.administrador);
+			Principal.setCurrentStage(new ControladorMenuPrincipalProfessor(),
+					(int)Screen.getPrimary().getVisualBounds().getWidth(),
+					(int)Screen.getPrimary().getVisualBounds().getHeight());
+		} catch (ConexaoBancoException | CRUDException e) {
+			
+			e.printStackTrace();
+		}
 	}
 	@FXML
 	private void acaoBotaoSair(ActionEvent evt){
