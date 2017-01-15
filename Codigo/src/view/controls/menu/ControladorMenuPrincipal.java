@@ -1,23 +1,34 @@
 package view.controls.menu;
 
 import java.io.IOException;
+import java.util.Optional;
+import java.util.Stack;
 
 import control.Fachada;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
-import javafx.stage.Screen;
+import view.controls.Principal;
 import view.controls.login.ControladorTelaLogin;
 
 public class ControladorMenuPrincipal extends BorderPane{
+	
+	private static ControladorMenuPrincipal instance;
+	private Stack<Pane> memoria;
+	
 	@FXML
-	private AnchorPane painelTitulos;
+	private GridPane painelTitulos;
 	
 	@FXML
 	private Circle fotoPerfil;
@@ -26,25 +37,29 @@ public class ControladorMenuPrincipal extends BorderPane{
 	private Label labelNomeUsuario;
 	
 	@FXML
-	private Circle botaoSair;
+	private Button botaoSair;
 	
 	@FXML
-	private Circle botaoVoltar;
+	private Button botaoVoltar;
 	
 	
-	public ControladorMenuPrincipal(Pane painel){
+	
+	
+	private ControladorMenuPrincipal(){
 
 		try{
 			
+			memoria = new Stack<Pane>();
 			FXMLLoader loader = new FXMLLoader(ControladorTelaLogin.class.getClass().getResource("/view/fxmls/menus/MenuPrincipal.fxml"));
 			loader.setController(this);
 			this.getChildren().add(loader.load());
+			
+			
 			setComponentLayout();
 			setDadosUsuario();
 			
-
-			this.setCenter(painel);
-			((HBox) painel).setAlignment(Pos.CENTER);
+			
+			this.setTop(painelTitulos);
 			
 			
 		}
@@ -53,20 +68,60 @@ public class ControladorMenuPrincipal extends BorderPane{
 		}
 	}
 	
+	public static ControladorMenuPrincipal getInstance(){
+		if(instance == null)
+			instance = new ControladorMenuPrincipal();
+		return instance;
+	}
 	public void setComponentLayout(){
-		fotoPerfil.setVisible(true);
-		painelTitulos.setMinWidth(Screen.getPrimary().getVisualBounds().getWidth());
-		painelTitulos.setMaxWidth(Screen.getPrimary().getVisualBounds().getWidth());
-		AnchorPane.setRightAnchor(botaoSair, 10.0);
-		AnchorPane.setRightAnchor(botaoVoltar, 60.0);
 		
-		
-		//labelNomeUsuario.setStyle(".label {-fx-font-weight: bold;-fx-text-fill: white;-fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );}");
-		//labelNomeUsuario.applyCss();
+		painelTitulos.setStyle("-fx-border-color: midnightblue;-fx-border-width: 1px;");
+		Circle c = new Circle(3);
+		botaoVoltar.setShape(c);
+		botaoSair.setShape(c);
+		painelTitulos.setId("painelDeTitulos");
 		
 	}
 	public void setDadosUsuario(){
 		//this.fotoPerfil.setFill(new ImagePattern(new Image(Fachada.getInstance().getUsuarioLogado().getCaminhoFoto())));
 		this.labelNomeUsuario.setText(Fachada.getInstance().getUsuarioLogado().getNome());
+	
+	}
+	
+	@FXML
+	public void acaoBotaoSair(){
+		Alert dialogo = new Alert(Alert.AlertType.CONFIRMATION);
+		DialogPane d = dialogo.getDialogPane();
+		d.getStylesheets().add(
+				   getClass().getResource("/view/style/stylesheet.css").toExternalForm());
+				d.getStyleClass().add("dialog-pane");
+		dialogo.setContentText("tem certeza que deseja sair?");
+		Optional<ButtonType> result = dialogo.showAndWait();
+		if(result.get() == ButtonType.OK){
+			Principal.setCurrentStage(new ControladorTelaLogin());
+		}
+			
+	}
+	
+	@FXML
+	public void acaoBotaoVoltar(){
+		
+		if(memoria.size() > 1){
+			memoria.pop();
+			if(memoria.isEmpty() == false){
+				this.adcionaTela(memoria.pop());
+			}		
+		}	
+			
+	}
+	public void adcionaTela(Pane painel){
+		this.setCenter(painel);
+		
+		if(painel instanceof HBox)
+			((HBox) painel).setAlignment(Pos.CENTER);
+		if(painel instanceof FlowPane)
+			((FlowPane) painel).setAlignment(Pos.CENTER);
+		this.memoria.push(painel);
+
 	}
 }

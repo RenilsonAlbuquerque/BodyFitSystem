@@ -10,15 +10,16 @@ import exceptions.ConexaoBancoException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Screen;
 import view.controls.Principal;
 import view.controls.menu.ControladorEscolhasProfessor;
 import view.controls.menu.ControladorMenuPrincipal;
 
-public class ControladorTelaEscolhaPerfil extends AnchorPane{
+public class ControladorTelaEscolhaPerfil extends FlowPane{
 	
 	@FXML
 	private GridPane painel;
@@ -41,7 +42,9 @@ public class ControladorTelaEscolhaPerfil extends AnchorPane{
 			 	loader.setController(this);
 			 	this.getChildren().add(loader.load());
 			 	
+			 	
 			 	painel.getChildren().clear();
+			 	this.setAlignment(Pos.CENTER);
 			 	
 			 	this.cpf = cpf;
 			 	
@@ -59,6 +62,7 @@ public class ControladorTelaEscolhaPerfil extends AnchorPane{
 			 		painel.getChildren().add(botaoAdministrador);
 			 	
 			 	painel.add(botaoVoltar, 0, 4);
+			 	
 			 	
 			} catch (IOException | ConexaoBancoException e) {
 				e.printStackTrace();
@@ -86,9 +90,10 @@ public class ControladorTelaEscolhaPerfil extends AnchorPane{
 			
 		try {
 			Fachada.getInstance().setUsuarioLogado(cpf, PerfisEnum.professor);
-			Principal.setCurrentStage(new ControladorMenuPrincipal(new ControladorEscolhasProfessor()),
+			Principal.setCurrentStage(ControladorMenuPrincipal.getInstance(),
 					(int)Screen.getPrimary().getVisualBounds().getWidth(),
 					(int)Screen.getPrimary().getVisualBounds().getHeight());
+			ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorEscolhasProfessor());
 		} catch (ConexaoBancoException | CRUDException e) {
 			
 			e.printStackTrace();

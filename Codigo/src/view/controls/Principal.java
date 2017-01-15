@@ -16,8 +16,9 @@ public class Principal extends Application{
 	public void start(Stage arg0) {
 		
 		currentStage = new Stage();
-		//currentStage.initStyle(StageStyle.UNDECORATED);
+		currentStage.initStyle(StageStyle.UNDECORATED);
 		setCurrentStage(new ControladorTelaLogin());
+		
 		
 	}
 	
