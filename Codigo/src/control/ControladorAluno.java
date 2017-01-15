@@ -3,7 +3,6 @@ package control;
 import java.util.ArrayList;
 
 import beans.Aluno;
-import beans.Usuario;
 import data.AlunoDao;
 import data.IRepositorioAluno;
 import data.IRepositorioUsuario;
@@ -39,12 +38,8 @@ private IRepositorioUsuario usuario;
 			throw new NegocioException("CPF inválido");
 	}
 	public Aluno buscar(String cpf) throws ConexaoBancoException, CRUDException{
-		Aluno aluno = this.repositorio.buscar(cpf);
-		Usuario usuario = this.usuario.buscar(cpf);
-		aluno.setNome(usuario.getNome());
-		aluno.setSenha(usuario.getSenha());
-		aluno.setCaminhoFoto(usuario.getCaminhoFoto());
-		return aluno;
+		return this.repositorio.buscar(cpf);
+		
 	}
 	public ArrayList<Aluno> listar() throws ConexaoBancoException, CRUDException, NegocioException{
 		if(!(repositorio.listar().isEmpty())){

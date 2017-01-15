@@ -1,15 +1,27 @@
 
 .root{
-	-fx-border-color: midnightblue;
+	/*-fx-border-color: midnightblue;*/
     -fx-border-width: 1px;
     -fx-font-size: 8pt;
     -fx-font-family: "cursive";
     -fx-base: black;
     -fx-background: black;
+    -fx-control-inner-background: rgb(10,10,10);
+	
+}
+.table-view {
+    -fx-base: #1d1d1d;
+    -fx-control-inner-background: #1d1d1d;
+    -fx-background-color: #1d1d1d;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 5;
 }
 .dialog-pane{
+	
     -fx-background-color: black;
     -fx-base:black;
+    -fx-control-inner-background: black;
 }
 
 .dialog-pane:header .header-panel .label {
@@ -19,6 +31,12 @@
 }
 
 #painelDeTitulos{
-	 -fx-background-color:radial-gradient(radius 180%,darkslategrey , derive(black, -30%), derive(black, 30%)); 
-	 -fx-text-fill:white; 
+	/*-fx-background-color: linear-gradient(to bottom, -fx-base, derive(-fx-base,30%));*/
+	-fx-background-color:radial-gradient(radius 180%,darkslategrey , derive(black, -30%), derive(black, 30%));  
+	-fx-text-fill:white; 
+}
+/*-----------Texto---------------- */
+.text-field{
+    -fx-border-color:mediumslateblue;
+    -fx-border-radius:1%;
 }

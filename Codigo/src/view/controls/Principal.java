@@ -17,15 +17,14 @@ public class Principal extends Application{
 		
 		currentStage = new Stage();
 		currentStage.initStyle(StageStyle.UNDECORATED);
-		setCurrentStage(new ControladorTelaLogin());
-		
-		
+		setCurrentStage(new ControladorTelaLogin());	
 	}
 	
 	public static void setCurrentStage(Parent painel){
 		
 		currentStage.setScene(new Scene(painel));
 		currentStage.getScene().getStylesheets().add("/view/style/stylesheet.css");
+		currentStage.centerOnScreen();
 		currentStage.show();
 		
 	}

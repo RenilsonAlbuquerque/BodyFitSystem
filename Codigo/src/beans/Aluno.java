@@ -1,6 +1,6 @@
 package beans;
 
-public class Aluno extends Usuario {
+public class Aluno extends Usuario implements Comparable<Aluno>{
 	private int idade;
 	private float peso;
 	private float altura;
@@ -40,5 +40,13 @@ public class Aluno extends Usuario {
 		this.altura = altura;
 	}
 	
-	
+	@Override
+	public String toString(){
+		return this.getNome();
+	}
+	@Override
+	public int compareTo(Aluno arg0) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

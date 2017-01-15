@@ -64,7 +64,7 @@ public class ControladorTelaEscolhaPerfil extends FlowPane{
 			 	painel.add(botaoVoltar, 0, 4);
 			 	
 			 	
-			} catch (IOException | ConexaoBancoException e) {
+			} catch (IOException | ConexaoBancoException | CRUDException e) {
 				e.printStackTrace();
 			}
 		 

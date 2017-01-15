@@ -44,7 +44,6 @@ public class ControladorMenuPrincipal extends BorderPane{
 	
 	
 	
-	
 	private ControladorMenuPrincipal(){
 
 		try{
@@ -96,6 +95,7 @@ public class ControladorMenuPrincipal extends BorderPane{
 				   getClass().getResource("/view/style/stylesheet.css").toExternalForm());
 				d.getStyleClass().add("dialog-pane");
 		dialogo.setContentText("tem certeza que deseja sair?");
+		dialogo.setHeaderText(null);
 		Optional<ButtonType> result = dialogo.showAndWait();
 		if(result.get() == ButtonType.OK){
 			Principal.setCurrentStage(new ControladorTelaLogin());

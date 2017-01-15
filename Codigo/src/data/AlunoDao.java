@@ -113,17 +113,20 @@ public class AlunoDao implements IRepositorioAluno{
 	@Override
 	public Aluno buscar(String cpf) throws ConexaoBancoException, CRUDException {
 		Aluno aluno = null;;
-		String sql = "SELECT * FROM aluno WHERE CPF_ALU =" + cpf;
+		String sql = "SELECT * FROM aluno INNER JOIN academia.usuario ON aluno.CPF_ALU = usuario.CPF_U WHERE CPF_ALU =" + cpf;
 		
 		try{
 			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
+				String nome = rSet.getString("NOME");
+				String senha = rSet.getString("SENHA");
+				String caminhoFoto = rSet.getString("CAMINHO_FOTO");
 				int idade = rSet.getInt("IDADE");
 				float peso = rSet.getFloat("PESO");
 				float altura = rSet.getFloat("ALTURA");
-				aluno = new Aluno(cpf,idade,peso,altura);
+				aluno = new Aluno(cpf,nome,senha,caminhoFoto,idade,peso,altura);
 			}
 			return aluno;
 			
@@ -139,19 +142,22 @@ public class AlunoDao implements IRepositorioAluno{
 	@Override
 	public ArrayList<Aluno> listar() throws ConexaoBancoException,CRUDException {
 		ArrayList<Aluno> alunos = new ArrayList<Aluno>();
-		String query = "SELECT * FROM academia.aluno";
+		String query = "SELECT * FROM academia.aluno INNER JOIN academia.usuario ON aluno.CPF_ALU = usuario.CPF_U";
 		try{
 			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(query);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
 				String cpf = rSet.getString("CPF_ALU");
+				String nome = rSet.getString("NOME");
+				String senha = rSet.getString("SENHA");
+				String caminhoFoto = rSet.getString("CAMINHO_FOTO");
 				int idade = rSet.getInt("IDADE");
 				float altura = rSet.getFloat("ALTURA");
 				float peso = rSet.getFloat("PESO");
 				
 				
-				alunos.add(new Aluno(cpf,idade,altura,peso));
+				alunos.add(new Aluno(cpf,nome,senha,caminhoFoto,idade,altura,peso));
 			}
 		}catch(SQLException  e){
 			throw new CRUDException("Erro ao listar os alunos");

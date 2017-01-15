@@ -106,7 +106,7 @@ public class ProfessorDao implements IRepositorioFuncionarios<Professor>{
 	@Override
 	public Professor buscar(String cpf) throws ConexaoBancoException, CRUDException {
 		Professor professor = null;
-		String sql = "SELECT * FROM professor WHERE CPF_PROF =" + cpf;
+		String sql = "SELECT * FROM professor INNER JOIN academia.usuario ON professor.CPF_PROF = usuario.CPF_U WHERE CPF_PROF =" + cpf;
 		
 		try{
 			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
@@ -114,8 +114,12 @@ public class ProfessorDao implements IRepositorioFuncionarios<Professor>{
 			
 			while(rSet.next()){
 				String cref = rSet.getString("CREF");
+				String nome = rSet.getString("NOME");
+				String senha = rSet.getString("SENHA");
+				String caminhoFoto = rSet.getString("CAMINHO_FOTO");
 				String turno = rSet.getString("TURNO");
-				professor = new Professor(cpf,cref,turno);
+				boolean coordenador = rSet.getBoolean("COORDENADOR");
+				professor = new Professor(cpf,nome,senha,caminhoFoto,cref,turno,coordenador);
 			}
 			return professor;
 			
@@ -127,17 +131,21 @@ public class ProfessorDao implements IRepositorioFuncionarios<Professor>{
 	@Override
 	public ArrayList<Professor> listar() throws ConexaoBancoException,CRUDException {
 		ArrayList<Professor> professores = new ArrayList<Professor>();
-		String query = "SELECT * FROM academia.professor";
+		String query = "SELECT * FROM academia.professor INNER JOIN academia.usuario ON professor.CPF_PROF = usuario.CPF_U";
 		try{
 			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(query);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
 				String cpf = rSet.getString("CPF_PROF");
+				String nome = rSet.getString("NOME");
+				String senha = rSet.getString("SENHA");
+				String caminhoFoto = rSet.getString("CAMINHO_FOTO");
 				String cref = rSet.getString("CREF");
 				String turno = rSet.getString("TURNO");
+				boolean coordenador = rSet.getBoolean("COORDENADOR");
 				
-				Professor professor = new Professor(cpf,cref,turno);
+				Professor professor = new Professor(cpf,nome,senha,caminhoFoto,cref,turno,coordenador);
 				professores.add(professor);
 			}
 		}catch(SQLException  e){

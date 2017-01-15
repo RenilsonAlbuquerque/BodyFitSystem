@@ -45,11 +45,10 @@ public class ControladorTelaLogin extends AnchorPane{
 	private void acaoBotaoLogin(ActionEvent evt){
 		try {
 			if(Fachada.getInstance().autenticar(campoCPF.getText(), campoSenha.getText())){
-				//Fachada.getInstance().setUsuarioLogado();
 				Principal.setCurrentStage(new ControladorTelaEscolhaPerfil(campoCPF.getText()));
 			}
 			else{
-				labelErro.setText("Login ou senha incorreto");
+				labelErro.setText("Login ou senha está incorreto");
 				campoCPF.setText("");
 				campoSenha.setText("");
 			}
@@ -57,11 +56,6 @@ public class ControladorTelaLogin extends AnchorPane{
 			System.out.println(e.getMessage());
 		}
 		
-	}
-
-
-	
-
-	
+	}	
 
 }

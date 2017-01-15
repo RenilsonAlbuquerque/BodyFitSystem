@@ -48,14 +48,16 @@ public class Fachada {
 	public void setUsuarioLogado(Usuario usuario){
 		this.usuarioLogado = usuario;
 	}
-	public ArrayList<PerfisEnum> getPerfis(String cpf) throws ConexaoBancoException{
+	public ArrayList<PerfisEnum> getPerfis(String cpf) throws ConexaoBancoException, CRUDException{
 		ArrayList<PerfisEnum> resultado = new ArrayList<PerfisEnum>();
 		if(aluno.existe(cpf))
 			resultado.add(PerfisEnum.aluno);
 		if(professor.existe(cpf))
 		{
 			resultado.add(PerfisEnum.professor);
-			//if(professor.)
+			if(professor.buscar(cpf).isCoordenador()){
+				resultado.add(PerfisEnum.coordenador);
+			}
 		}
 		if(administrador.existe(cpf))
 			resultado.add(PerfisEnum.administrador);

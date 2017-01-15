@@ -107,15 +107,18 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 	@Override
 	public Administrador buscar(String cpf) throws ConexaoBancoException, CRUDException {
 		Administrador adm = null;
-		String sql = "SELECT * FROM administrador WHERE CPF_ADM =" + cpf;
+		String sql = "SELECT * FROM administrador INNER JOIN academia.usuario ON administrador.CPF_ADM = usuario.CPF_U WHERE CPF_ADM =" + cpf;
 		
 		try{
 			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
+				String nome = rSet.getString("NOME");
+				String senha = rSet.getString("SENHA");
+				String caminhoFoto = rSet.getString("CAMINHO_FOTO");
 				String cargo = rSet.getString("CARGO");
-				adm = new Administrador(cpf,cargo);
+				adm = new Administrador(cpf,nome,senha,caminhoFoto,cargo);
 			}
 			return adm;
 			
@@ -130,16 +133,19 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 	@Override
 	public ArrayList<Administrador> listar() throws ConexaoBancoException,CRUDException {
 		ArrayList<Administrador> administradores = new ArrayList<Administrador>();
-		String query = "SELECT * FROM academia.administrador";
+		String query = "SELECT * FROM academia.administrador INNER JOIN academia.usuario ON administrador.CPF_ADM = usuario.CPF_U";
 		try{
 			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(query);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
 				String cpf = rSet.getString("CPF_ADM");
+				String nome = rSet.getString("NOME");
+				String senha = rSet.getString("SENHA");
+				String caminhoFoto = rSet.getString("CAMINHO_FOTO");
 				String cargo = rSet.getString("CARGO");
 				
-				Administrador adm = new Administrador(cpf,cargo);
+				Administrador adm = new Administrador(cpf,nome,senha,caminhoFoto,cargo);
 				administradores.add(adm);
 			}
 		}catch(SQLException  e){
@@ -152,8 +158,5 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 		return administradores;
 		
 	}
-
-	
-
 
 }

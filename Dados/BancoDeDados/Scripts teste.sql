@@ -25,6 +25,7 @@ CREATE TABLE `professor` (
   `CPF_PROF` varchar(12) NOT NULL,
   `CREF` varchar(14) NOT NULL,
   `TURNO` varchar(10) NOT NULL,
+  `COORDENADOR` boolean NOT NULL DEFAULT 0,
   PRIMARY KEY (`CPF_PROF`),
   CONSTRAINT `FK_PROF_CPF` FOREIGN KEY (`CPF_PROF`) REFERENCES `usuario` (`CPF_U`) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -98,12 +99,12 @@ END $$
 DELIMITER ;   
     
 insert into usuario (CPF_U,NOME,SENHA) VALUES ('10870298488','Renilson','1234');
-insert into professor (CPF_PROF,CREF,TURNO) VALUES ('16547827499','573822','tarde');
+insert into professor (CPF_PROF,CREF,TURNO,COORDENADOR) VALUES ('10870298488','573822','tarde',1);
 insert into administrador (CPF_ADM,CARGO) VALUES ('184719301','patrao');
 insert into treino (CPF_P,NOME) values ('10870298488','treino s');
 insert into exercicio (CODIGO_E,CPF_P,NOME,CARGA,REPETICOES,INTERVALO) values (1,'10870298488','exercicio1','100',12,30);
 insert into treino_exercicio (CODIGO_TRE,CODIGO_EXE) values (1,1);
-INSERT INTO academia.aluno(CPF_ALU, IDADE, ALTURA, PESO) values('556920940',22,1.82,78);
+INSERT INTO academia.aluno(CPF_ALU, IDADE, ALTURA, PESO) values('10870298488',22,1.82,78);
 
 DELETE FROM `treino` WHERE (CODIGO_T,CPF_P) = (1,'10870298488');
 DELETE FROM `exercicio` WHERE CODIGO_E = (1);

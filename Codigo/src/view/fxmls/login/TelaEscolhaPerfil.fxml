@@ -10,9 +10,9 @@
       <GridPane fx:id="painel" prefHeight="390.0" prefWidth="246.0">
          <children>
             <Button fx:id="botaoAluno" mnemonicParsing="false" onAction="#acaoBotaoAluno" prefHeight="54.0" prefWidth="246.0" text="Aluno" />
-            <Button fx:id="botaoAdministrador" mnemonicParsing="false" onAction="#acaoBotaoCoordenador" prefHeight="54.0" prefWidth="246.0" text="Coordenador" GridPane.rowIndex="2" />
+            <Button fx:id="botaoCoordenador" mnemonicParsing="false" onAction="#acaoBotaoCoordenador" prefHeight="54.0" prefWidth="246.0" text="Coordenador" GridPane.rowIndex="2" />
             <Button fx:id="botaoProfessor" mnemonicParsing="false" onAction="#acaoBotaoProfessor" prefHeight="54.0" prefWidth="246.0" text="Professor" GridPane.rowIndex="1" />
-            <Button fx:id="botaoCoordenador" mnemonicParsing="false" onAction="#acaoBotaoAdministrador" prefHeight="54.0" prefWidth="246.0" text="Administrador" GridPane.rowIndex="3" />
+            <Button fx:id="botaoAdministrador" mnemonicParsing="false" onAction="#acaoBotaoAdministrador" prefHeight="54.0" prefWidth="246.0" text="Administrador" GridPane.rowIndex="3" />
             <Button fx:id="botaoVoltar" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#acaoBotaoSair" prefHeight="25.0" prefWidth="109.0" text="Sair" GridPane.rowIndex="4" />
          </children>
          <columnConstraints>

@@ -22,7 +22,7 @@ public class TesteProfessorDao {
 	@Before
 	public void iniciar(){
 		this.dao = new ProfessorDao();
-		this.professor = new Professor("10784567244","Cref","manhã");
+		this.professor = new Professor("10784567244","Cref","manhã",true);
 	}
 	
 	@Test

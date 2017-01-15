@@ -40,7 +40,7 @@ public class TesteCRUDUsuarios {
 		this.dDao = new AdministradorDao();
 		
 		this.aluno = new Aluno("10870298445", "Roberto", "senha", "caminho",22, 70, 1.90f);
-		this.professor = new Professor("10784567244","maria","4321","caminho","Cref","manhã");
+		this.professor = new Professor("10784567244","maria","4321","caminho","Cref","manhã",true);
 		this.administrador = new Administrador("16748392088","João","3241","milkway","patrão");
 	}
 	
