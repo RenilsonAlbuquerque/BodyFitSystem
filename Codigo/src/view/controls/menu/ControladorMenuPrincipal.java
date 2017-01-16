@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.Stack;
 
 import control.Fachada;
+import data.FTPConnectionFactory;
+import exceptions.ConexaoFTPException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -13,11 +15,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import view.controls.Principal;
 import view.controls.login.ControladorTelaLogin;
@@ -82,7 +86,11 @@ public class ControladorMenuPrincipal extends BorderPane{
 		
 	}
 	public void setDadosUsuario(){
-		//this.fotoPerfil.setFill(new ImagePattern(new Image(Fachada.getInstance().getUsuarioLogado().getCaminhoFoto())));
+		try {
+			this.fotoPerfil.setFill(new ImagePattern(new Image(FTPConnectionFactory.getInstance().retrieveImage(Fachada.getInstance().getUsuarioLogado().getCaminhoFoto()))));
+		} catch (ConexaoFTPException e) {
+			e.printStackTrace();
+		}
 		this.labelNomeUsuario.setText(Fachada.getInstance().getUsuarioLogado().getNome());
 	
 	}

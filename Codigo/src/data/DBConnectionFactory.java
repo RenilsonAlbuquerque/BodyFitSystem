@@ -8,9 +8,9 @@ import exceptions.ConexaoBancoException;
 
 
 
-public class ConnectionFactory {
+public class DBConnectionFactory {
 	
-	private static ConnectionFactory instance;
+	private static DBConnectionFactory instance;
 	private Connection conexao;
 	
 	
@@ -19,13 +19,13 @@ public class ConnectionFactory {
     private static final String PASSWORD = "bancodedados2016.2";
     private static final String DRIVER_CLASS = "com.mysql.jdbc.Driver";
     
-	private ConnectionFactory() throws ConexaoBancoException {
+	private DBConnectionFactory() throws ConexaoBancoException {
 		setConnection();
 	}
 	
-	public static ConnectionFactory getInstance() throws ConexaoBancoException{
+	public static DBConnectionFactory getInstance() throws ConexaoBancoException{
 		if(instance == null){
-			instance = new ConnectionFactory();
+			instance = new DBConnectionFactory();
 		}
 		return instance;
 		

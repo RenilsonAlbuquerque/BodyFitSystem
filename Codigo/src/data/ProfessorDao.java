@@ -25,7 +25,7 @@ public class ProfessorDao implements IRepositorioFuncionarios<Professor>{
 		String sql = "SELECT * FROM professor WHERE CPF_PROF =" + cpf;
 		
 		try{
-			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			if(rSet.next()){
@@ -46,7 +46,7 @@ public class ProfessorDao implements IRepositorioFuncionarios<Professor>{
 				+ "values(?,?,?)";
 		
 		try{
-			statement = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			statement.setString(1, objeto.getCpf());
 			statement.setString(2, objeto.getCref());
 			statement.setString(3, objeto.getTurno());
@@ -56,7 +56,7 @@ public class ProfessorDao implements IRepositorioFuncionarios<Professor>{
 			throw new CRUDException("Erro ao cadastrar o Professor");
 		}
 		finally{
-			ConnectionFactory.getInstance().closeConnetion();
+			DBConnectionFactory.getInstance().closeConnetion();
 		}
 				
 	}
@@ -68,7 +68,7 @@ public class ProfessorDao implements IRepositorioFuncionarios<Professor>{
 		
 			PreparedStatement smt;
 			try {
-				smt = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 				smt.setString(1, objeto.getCpf());
 				smt.execute();
 			}
@@ -76,7 +76,7 @@ public class ProfessorDao implements IRepositorioFuncionarios<Professor>{
 				throw new CRUDException("Erro ao remover o Professor do sistema");
 			}
 			finally{
-				ConnectionFactory.getInstance().closeConnetion();
+				DBConnectionFactory.getInstance().closeConnetion();
 			}
 		
 	}
@@ -88,7 +88,7 @@ public class ProfessorDao implements IRepositorioFuncionarios<Professor>{
 		
 			PreparedStatement smt;
 			try {
-				smt = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 				smt.setString(1, objeto.getCpf());
 				smt.setString(2, objeto.getCref());
 				smt.setString(3, objeto.getTurno());
@@ -99,7 +99,7 @@ public class ProfessorDao implements IRepositorioFuncionarios<Professor>{
 				throw new CRUDException("Erro ao alterar o Professor");
 			}
 			finally{
-				ConnectionFactory.getInstance().closeConnetion();
+				DBConnectionFactory.getInstance().closeConnetion();
 			}	
 		
 	}
@@ -109,7 +109,7 @@ public class ProfessorDao implements IRepositorioFuncionarios<Professor>{
 		String sql = "SELECT * FROM professor INNER JOIN academia.usuario ON professor.CPF_PROF = usuario.CPF_U WHERE CPF_PROF =" + cpf;
 		
 		try{
-			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
@@ -133,7 +133,7 @@ public class ProfessorDao implements IRepositorioFuncionarios<Professor>{
 		ArrayList<Professor> professores = new ArrayList<Professor>();
 		String query = "SELECT * FROM academia.professor INNER JOIN academia.usuario ON professor.CPF_PROF = usuario.CPF_U";
 		try{
-			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(query);
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
@@ -152,7 +152,7 @@ public class ProfessorDao implements IRepositorioFuncionarios<Professor>{
 			throw new CRUDException("Erro ao listar os professores");
 		}
 		finally{
-			ConnectionFactory.getInstance().closeConnetion();
+			DBConnectionFactory.getInstance().closeConnetion();
 		}
 		
 		return professores;

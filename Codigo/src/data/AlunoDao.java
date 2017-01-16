@@ -27,7 +27,7 @@ public class AlunoDao implements IRepositorioAluno{
 		String sql = "SELECT * FROM aluno WHERE CPF_ALU =" + cpf;
 		
 		try{
-			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			if(rSet.next()){
@@ -41,7 +41,7 @@ public class AlunoDao implements IRepositorioAluno{
 		}
 		finally{
 
-			ConnectionFactory.getInstance().closeConnetion();
+			DBConnectionFactory.getInstance().closeConnetion();
 		}
 		
 	}
@@ -52,7 +52,7 @@ public class AlunoDao implements IRepositorioAluno{
 				+ "values(?,?,?,?)";
 		
 		try{
-			statement = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			statement.setString(1, objeto.getCpf());
 			statement.setInt(2, objeto.getIdade());
 			statement.setFloat(3, objeto.getAltura());
@@ -62,7 +62,7 @@ public class AlunoDao implements IRepositorioAluno{
 			throw new CRUDException("Erro ao cadastrar o Aluno");
 		}
 		finally{
-			ConnectionFactory.getInstance().closeConnetion();
+			DBConnectionFactory.getInstance().closeConnetion();
 		}
 				
 	}
@@ -74,7 +74,7 @@ public class AlunoDao implements IRepositorioAluno{
 		
 			PreparedStatement smt;
 			try {
-				smt = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 				smt.setString(1, objeto.getCpf());
 				smt.execute();
 			}
@@ -82,7 +82,7 @@ public class AlunoDao implements IRepositorioAluno{
 				throw new CRUDException("Erro ao deletar o Aluno");
 			}
 			finally{
-				ConnectionFactory.getInstance().closeConnetion();
+				DBConnectionFactory.getInstance().closeConnetion();
 			}
 		
 	}
@@ -94,7 +94,7 @@ public class AlunoDao implements IRepositorioAluno{
 		
 			PreparedStatement smt;
 			try {
-				smt = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 				smt.setString(1, objeto.getCpf());
 				smt.setInt(2, objeto.getIdade());
 				smt.setFloat(3, objeto.getAltura());
@@ -106,7 +106,7 @@ public class AlunoDao implements IRepositorioAluno{
 				throw new CRUDException("Erro ao alterar o usuario");
 			}
 			finally{
-				ConnectionFactory.getInstance().closeConnetion();
+				DBConnectionFactory.getInstance().closeConnetion();
 			}	
 		
 	}
@@ -116,7 +116,7 @@ public class AlunoDao implements IRepositorioAluno{
 		String sql = "SELECT * FROM aluno INNER JOIN academia.usuario ON aluno.CPF_ALU = usuario.CPF_U WHERE CPF_ALU =" + cpf;
 		
 		try{
-			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
@@ -136,7 +136,7 @@ public class AlunoDao implements IRepositorioAluno{
 		}
 		finally{
 
-			ConnectionFactory.getInstance().closeConnetion();
+			DBConnectionFactory.getInstance().closeConnetion();
 		}
 	}
 	@Override
@@ -144,7 +144,7 @@ public class AlunoDao implements IRepositorioAluno{
 		ArrayList<Aluno> alunos = new ArrayList<Aluno>();
 		String query = "SELECT * FROM academia.aluno INNER JOIN academia.usuario ON aluno.CPF_ALU = usuario.CPF_U";
 		try{
-			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(query);
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
@@ -163,7 +163,7 @@ public class AlunoDao implements IRepositorioAluno{
 			throw new CRUDException("Erro ao listar os alunos");
 		}
 		finally{
-			ConnectionFactory.getInstance().closeConnetion();
+			DBConnectionFactory.getInstance().closeConnetion();
 		}
 		
 		return alunos;

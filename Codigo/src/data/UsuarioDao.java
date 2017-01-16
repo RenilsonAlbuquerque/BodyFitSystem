@@ -26,7 +26,7 @@ public class UsuarioDao implements IRepositorioUsuario {
 		boolean resultado = false;
 		String query = "SELECT * FROM academia.usuario WHERE CPF_U = '" + cpf +"'" ;
 		try{
-			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(query);
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 		
@@ -49,7 +49,7 @@ public class UsuarioDao implements IRepositorioUsuario {
 		}
 		finally{
 			
-				ConnectionFactory.getInstance().closeConnetion();
+				DBConnectionFactory.getInstance().closeConnetion();
 		}
 		
 	}
@@ -59,7 +59,7 @@ public class UsuarioDao implements IRepositorioUsuario {
 		String sql = "SELECT * FROM usuario WHERE CPF_U =" + cpf;
 		
 		try{
-			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
@@ -76,7 +76,7 @@ public class UsuarioDao implements IRepositorioUsuario {
 		}
 		finally{
 
-			ConnectionFactory.getInstance().closeConnetion();
+			DBConnectionFactory.getInstance().closeConnetion();
 		}
 	}
 
@@ -86,7 +86,7 @@ public class UsuarioDao implements IRepositorioUsuario {
 				+ "values(?,?,?,?)";
 		
 		try{
-			statement = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			statement.setString(1, objeto.getCpf());
 			statement.setString(2, objeto.getNome());
 			statement.setString(3, objeto.getSenha());
@@ -96,7 +96,7 @@ public class UsuarioDao implements IRepositorioUsuario {
 			throw new CRUDException("Erro ao cadastrar o Usuário");
 		}
 		finally{
-			ConnectionFactory.getInstance().closeConnetion();
+			DBConnectionFactory.getInstance().closeConnetion();
 		}
 			
 	}
@@ -108,7 +108,7 @@ public class UsuarioDao implements IRepositorioUsuario {
 		
 			PreparedStatement smt;
 			try {
-				smt = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 				smt.setString(1, objeto.getCpf());
 				smt.execute();
 			}
@@ -116,7 +116,7 @@ public class UsuarioDao implements IRepositorioUsuario {
 				throw new CRUDException("Erro ao deletar o Usuário");
 			}
 			finally{
-				ConnectionFactory.getInstance().closeConnetion();
+				DBConnectionFactory.getInstance().closeConnetion();
 			}
 		
 	}
@@ -127,8 +127,8 @@ public class UsuarioDao implements IRepositorioUsuario {
 				+ " WHERE CPF_U =" +objeto.getCpf();
 		
 			try {
-				ConnectionFactory.getInstance().getConnection().setAutoCommit(true);
-				statement = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+				DBConnectionFactory.getInstance().getConnection().setAutoCommit(true);
+				statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 				
 				statement.setString(1, objeto.getCpf());
 				statement.setString(2, objeto.getNome());
@@ -144,7 +144,7 @@ public class UsuarioDao implements IRepositorioUsuario {
 				
 			}
 			finally{
-				ConnectionFactory.getInstance().closeConnetion();
+				DBConnectionFactory.getInstance().closeConnetion();
 			}		
 			
 	}
@@ -160,7 +160,7 @@ public class UsuarioDao implements IRepositorioUsuario {
 		String sql = "SELECT * FROM usuario WHERE CPF_U ='" + cpf+"'";
 		
 		try{
-			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			if(rSet.next()){

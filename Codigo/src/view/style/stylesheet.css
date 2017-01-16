@@ -12,7 +12,7 @@
 .table-view {
     -fx-base: #1d1d1d;
     -fx-control-inner-background: #1d1d1d;
-    -fx-background-color: #1d1d1d;
+    -fx-background-color: grey;
     -fx-table-cell-border-color: transparent;
     -fx-table-header-border-color: transparent;
     -fx-padding: 5;
@@ -38,5 +38,6 @@
 /*-----------Texto---------------- */
 .text-field{
     -fx-border-color:mediumslateblue;
+    -fx-border-color:teal;
     -fx-border-radius:1%;
 }

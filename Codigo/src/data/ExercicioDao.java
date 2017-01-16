@@ -26,7 +26,7 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 		String sql = "SELECT * FROM academia.exercicio_padrao WHERE CODIGO_EP = " + codigo;
 		
 		try{
-			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			if(rSet.next()){
@@ -47,7 +47,7 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 		String sql = "SELECT * FROM academia.exercicio WHERE CODIGO_E = ? AND  CPF_P = ?";
 		
 		try{
-			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.statement.setInt(1, codigo);
 			this.statement.setString(2, cpf);
 			this.rSet = (ResultSet) statement.executeQuery();
@@ -70,7 +70,7 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 				+ "values(?,?,?,?,?)";
 		
 		try{
-			statement = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			statement.setString(1, objeto.getNome());
 			statement.setString(2, objeto.getCarga());
 			statement.setInt(3, objeto.getRepeticao());
@@ -80,7 +80,7 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 			throw new CRUDException("Erro ao cadastrar o Exercício padrão");
 		}
 		finally{
-			ConnectionFactory.getInstance().closeConnetion();
+			DBConnectionFactory.getInstance().closeConnetion();
 		}
 				
 	}
@@ -90,7 +90,7 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 				+ "values(?,?,?,?,?) WHERE (CODIGO_T,CPF_P) = (?,?)";
 		
 		try{
-			statement = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			statement.setString(1, cpfProf);
 			statement.setString(2, objeto.getNome());
 			statement.setString(3, objeto.getCarga());
@@ -103,7 +103,7 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 			throw new CRUDException("Erro ao cadastrar o Exercicio do professor");
 		}
 		finally{
-			ConnectionFactory.getInstance().closeConnetion();
+			DBConnectionFactory.getInstance().closeConnetion();
 		}
 				
 	}
@@ -114,7 +114,7 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 		
 			PreparedStatement smt;
 			try {
-				smt = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 				smt.setInt(1, objeto.getCodigo());
 				smt.execute();
 			}
@@ -122,7 +122,7 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 				throw new CRUDException("Erro ao deletar o Exercício padrão");
 			}
 			finally{
-				ConnectionFactory.getInstance().closeConnetion();
+				DBConnectionFactory.getInstance().closeConnetion();
 			}
 		
 	}
@@ -132,7 +132,7 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 		
 			PreparedStatement smt;
 			try {
-				smt = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 				smt.setInt(1, objeto.getCodigo());
 				smt.setString(2, cpfProf);
 				smt.execute();
@@ -141,7 +141,7 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 				throw new CRUDException("Erro ao deletar o Exercício");
 			}
 			finally{
-				ConnectionFactory.getInstance().closeConnetion();
+				DBConnectionFactory.getInstance().closeConnetion();
 			}
 		
 	}
@@ -152,7 +152,7 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 		
 			PreparedStatement smt;
 			try {
-				smt = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 				smt.setString(1, objeto.getNome());
 				smt.setString(2, objeto.getCarga());
 				smt.setInt(3, objeto.getRepeticao());
@@ -164,7 +164,7 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 				throw new CRUDException("Erro ao alterar o exercício padrão");
 			}
 			finally{
-				ConnectionFactory.getInstance().closeConnetion();
+				DBConnectionFactory.getInstance().closeConnetion();
 			}		
 	}
 	
@@ -175,7 +175,7 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 		
 			PreparedStatement smt;
 			try {
-				smt = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 				smt.setString(1, objeto.getNome());
 				smt.setString(2, objeto.getCarga());
 				smt.setInt(3, objeto.getRepeticao());
@@ -187,7 +187,7 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 				throw new CRUDException("Erro ao alterar o exercício");
 			}
 			finally{
-				ConnectionFactory.getInstance().closeConnetion();
+				DBConnectionFactory.getInstance().closeConnetion();
 			}	
 		
 	}
@@ -197,7 +197,7 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 		ArrayList<Exercicio> exercicios = new ArrayList<Exercicio>();
 		String query = "SELECT * FROM academia.exercio_padrao";
 		try{
-			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(query);
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
@@ -213,7 +213,7 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 			throw new CRUDException("Erro ao listar os treinos padrão");
 		}
 		finally{
-			ConnectionFactory.getInstance().closeConnetion();
+			DBConnectionFactory.getInstance().closeConnetion();
 		}
 		
 		return exercicios;
@@ -225,7 +225,7 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 		ArrayList<Exercicio> exercicios = new ArrayList<Exercicio>();
 		String query = "SELECT * FROM academia.exercio WHERE CPF_P = '"+ cpfProf+ "'";
 		try{
-			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(query);
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
@@ -241,7 +241,7 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 			throw new CRUDException("Erro ao listar os treinos do professor");
 		}
 		finally{
-			ConnectionFactory.getInstance().closeConnetion();
+			DBConnectionFactory.getInstance().closeConnetion();
 		}
 		
 		return exercicios;

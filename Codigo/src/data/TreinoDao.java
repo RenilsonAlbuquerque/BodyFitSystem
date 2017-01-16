@@ -26,7 +26,7 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 		String sql = "SELECT * FROM academia.treino WHERE CODIGO_T = " + codigo;
 		
 		try{
-			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			if(rSet.next()){
@@ -39,7 +39,7 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 			throw new ConexaoBancoException();
 		}
 		finally{
-			ConnectionFactory.getInstance().closeConnetion();
+			DBConnectionFactory.getInstance().closeConnetion();
 		}
 		
 	}
@@ -50,7 +50,7 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 		String sql = "SELECT * FROM academia.treino WHERE CODIGO_T = ? AND  CPF_P = ?";
 		
 		try{
-			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.statement.setInt(1, codigo);
 			this.statement.setString(2, cpf);
 			this.rSet = (ResultSet) statement.executeQuery();
@@ -65,7 +65,7 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 			throw new ConexaoBancoException();
 		}
 		finally{
-			ConnectionFactory.getInstance().closeConnetion();
+			DBConnectionFactory.getInstance().closeConnetion();
 		}
 		
 	}
@@ -76,14 +76,14 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 				+ "values(?)";
 		
 		try{
-			statement = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			statement.setString(1, objeto.getNome());
 			statement.execute();
 		}catch(SQLException e){
 			throw new CRUDException("Erro ao cadastrar o Treino");
 		}
 		finally{
-			ConnectionFactory.getInstance().closeConnetion();
+			DBConnectionFactory.getInstance().closeConnetion();
 		}
 				
 	}
@@ -93,7 +93,7 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 				+ "values(?,?)";
 		
 		try{
-			statement = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			statement.setString(1, cpfProf);
 			statement.setString(2, objeto.getNome());
 			statement.execute();
@@ -101,7 +101,7 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 			throw new CRUDException("Erro ao cadastrar o Treino");
 		}
 		finally{
-			ConnectionFactory.getInstance().closeConnetion();
+			DBConnectionFactory.getInstance().closeConnetion();
 		}
 				
 	}
@@ -112,7 +112,7 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 		
 			PreparedStatement smt;
 			try {
-				smt = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 				smt.setInt(1, objeto.getCodigo());
 				smt.execute();
 			}
@@ -120,7 +120,7 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 				throw new CRUDException("Erro ao deletar o Treino padrão");
 			}
 			finally{
-				ConnectionFactory.getInstance().closeConnetion();
+				DBConnectionFactory.getInstance().closeConnetion();
 			}
 		
 	}
@@ -130,7 +130,7 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 		
 			PreparedStatement smt;
 			try {
-				smt = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 				smt.setInt(1, objeto.getCodigo());
 				smt.setString(2, cpfProf);
 				smt.execute();
@@ -139,7 +139,7 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 				throw new CRUDException("Erro ao deletar o Treino");
 			}
 			finally{
-				ConnectionFactory.getInstance().closeConnetion();
+				DBConnectionFactory.getInstance().closeConnetion();
 			}
 		
 	}
@@ -150,7 +150,7 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 		
 			PreparedStatement smt;
 			try {
-				smt = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 				smt.setInt(1, objeto.getCodigo());
 				smt.setString(2, objeto.getNome());
 				smt.execute();
@@ -160,7 +160,7 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 				throw new CRUDException("Erro ao alterar o treino padrão");
 			}
 			finally{
-				ConnectionFactory.getInstance().closeConnetion();
+				DBConnectionFactory.getInstance().closeConnetion();
 			}		
 	}
 	
@@ -171,7 +171,7 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 		
 			PreparedStatement smt;
 			try {
-				smt = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 				smt.setInt(1, objeto.getCodigo());
 				smt.setString(2, objeto.getNome());
 				smt.execute();
@@ -181,7 +181,7 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 				throw new CRUDException("Erro ao alterar o treino padrão");
 			}
 			finally{
-				ConnectionFactory.getInstance().closeConnetion();
+				DBConnectionFactory.getInstance().closeConnetion();
 			}	
 		
 	}
@@ -191,7 +191,7 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 		ArrayList<Treino> treinos = new ArrayList<Treino>();
 		String query = "SELECT * FROM academia.treino_padrao";
 		try{
-			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(query);
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
@@ -206,7 +206,7 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 			throw new CRUDException("Erro ao listar os treinos padrão");
 		}
 		finally{
-			ConnectionFactory.getInstance().closeConnetion();
+			DBConnectionFactory.getInstance().closeConnetion();
 		}
 		
 		return treinos;
@@ -217,7 +217,7 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 		ArrayList<Treino> treinos = new ArrayList<Treino>();
 		String query = "SELECT * FROM academia.treino WHERE CPF_P = " + cpfProf;
 		try{
-			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(query);
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
@@ -231,7 +231,7 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 			throw new CRUDException("Erro ao listar os treinos do professor");
 		}
 		finally{
-			ConnectionFactory.getInstance().closeConnetion();
+			DBConnectionFactory.getInstance().closeConnetion();
 		}
 		
 		return treinos;

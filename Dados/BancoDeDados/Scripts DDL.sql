@@ -6,7 +6,7 @@ create table `usuario`(
 	`CPF_U` varchar(12) NOT NULL,
 	`NOME` varchar(50) NOT NULL,
 	`SENHA` varchar(20) NOT NULL DEFAULT '123456',
-	`CAMINHO_FOTO` varchar(20) NOT NULL DEFAULT '/users/foto.jpg',
+	`CAMINHO_FOTO` varchar(20) NOT NULL DEFAULT 'Default User.png',
 	PRIMARY KEY (`CPF_U`)
 );
 

@@ -1,6 +1,6 @@
 package beans;
 
-public class Usuario 
+public class Usuario implements Comparable<Usuario>
 {
 	private String cpf;
 	private String nome;
@@ -40,6 +40,10 @@ public class Usuario
 	}
 	public void setCaminhoFoto(String caminhoFoto) {
 		this.caminhoFoto = caminhoFoto;
+	}
+	@Override
+	public int compareTo(Usuario usuario) {
+		return this.getNome().compareTo(usuario.getNome());
 	}
 	
 	

@@ -1,6 +1,7 @@
 package view.controls.gerenciamento;
 
 import java.io.IOException;
+import java.util.Collections;
 
 import beans.Aluno;
 import control.Fachada;
@@ -56,6 +57,7 @@ public class ControladorPGerenciaAlunos extends BorderPane{
 		ObservableList<Aluno> itens = null;
 		try {
 			itens = FXCollections.observableArrayList(Fachada.getInstance().listarAlunos());
+			Collections.sort(itens);
 			this.listaAlunos.setItems(itens);
 		} catch (ConexaoBancoException | CRUDException e) {
 			Alert alert = new Alert(AlertType.INFORMATION);

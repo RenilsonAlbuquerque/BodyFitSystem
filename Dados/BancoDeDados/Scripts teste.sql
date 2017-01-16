@@ -8,7 +8,7 @@ create table `usuario`(
 	`CPF_U` varchar(12) NOT NULL,
 	`NOME` varchar(50) NOT NULL,
 	`SENHA` varchar(20) NOT NULL DEFAULT '123456',
-	`CAMINHO_FOTO` varchar(20) NOT NULL DEFAULT '/users/foto.jpg',
+	`CAMINHO_FOTO` varchar(20) NOT NULL DEFAULT 'Default User.png',
 	PRIMARY KEY (`CPF_U`)
 );
 
@@ -99,12 +99,17 @@ END $$
 DELIMITER ;   
     
 insert into usuario (CPF_U,NOME,SENHA) VALUES ('10870298488','Renilson','1234');
+insert into usuario (CPF_U,NOME,SENHA) VALUES ('10870298499','Josivaldo','123');
+
 insert into professor (CPF_PROF,CREF,TURNO,COORDENADOR) VALUES ('10870298488','573822','tarde',1);
+insert into professor (CPF_PROF,CREF,TURNO,COORDENADOR) VALUES ('10870298499','573452','manha',0);
+
 insert into administrador (CPF_ADM,CARGO) VALUES ('184719301','patrao');
 insert into treino (CPF_P,NOME) values ('10870298488','treino s');
 insert into exercicio (CODIGO_E,CPF_P,NOME,CARGA,REPETICOES,INTERVALO) values (1,'10870298488','exercicio1','100',12,30);
 insert into treino_exercicio (CODIGO_TRE,CODIGO_EXE) values (1,1);
 INSERT INTO academia.aluno(CPF_ALU, IDADE, ALTURA, PESO) values('10870298488',22,1.82,78);
+INSERT INTO academia.aluno(CPF_ALU, IDADE, ALTURA, PESO) values('10870298499',27,1.90,85);
 
 DELETE FROM `treino` WHERE (CODIGO_T,CPF_P) = (1,'10870298488');
 DELETE FROM `exercicio` WHERE CODIGO_E = (1);

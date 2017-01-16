@@ -25,7 +25,7 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 		String sql = "SELECT * FROM administrador WHERE CPF_ADM =" + cpf;
 		
 		try{
-			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			if(rSet.next()){
@@ -38,7 +38,7 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 			throw new ConexaoBancoException();
 		}
 		finally{
-			ConnectionFactory.getInstance().closeConnetion();
+			DBConnectionFactory.getInstance().closeConnetion();
 		}
 		
 	}
@@ -49,7 +49,7 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 				+ "values(?,?)";
 		
 		try{
-			statement = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			statement.setString(1, objeto.getCpf());
 			statement.setString(2, objeto.getCargo());
 			statement.execute();
@@ -58,7 +58,7 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 			throw new CRUDException(e.getMessage());
 		}
 		finally{
-			ConnectionFactory.getInstance().closeConnetion();
+			DBConnectionFactory.getInstance().closeConnetion();
 		}
 				
 	}
@@ -70,7 +70,7 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 		
 			PreparedStatement smt;
 			try {
-				smt = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 				smt.setString(1, objeto.getCpf());
 				smt.execute();
 			}
@@ -78,7 +78,7 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 				throw new CRUDException("Erro ao deletar o Administrador");
 			}
 			finally{
-				ConnectionFactory.getInstance().closeConnetion();
+				DBConnectionFactory.getInstance().closeConnetion();
 			}
 		
 	}
@@ -90,7 +90,7 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 		
 			PreparedStatement smt;
 			try {
-				smt = (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 				smt.setString(1, objeto.getCpf());
 				smt.setString(2, objeto.getCargo());
 				smt.execute();
@@ -100,7 +100,7 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 				throw new CRUDException("Erro ao alterar o Administrador");
 			}
 			finally{
-				ConnectionFactory.getInstance().closeConnetion();
+				DBConnectionFactory.getInstance().closeConnetion();
 			}	
 		
 	}
@@ -110,7 +110,7 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 		String sql = "SELECT * FROM administrador INNER JOIN academia.usuario ON administrador.CPF_ADM = usuario.CPF_U WHERE CPF_ADM =" + cpf;
 		
 		try{
-			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
@@ -127,7 +127,7 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 			throw new ConexaoBancoException();
 		}
 		finally{
-			ConnectionFactory.getInstance().closeConnetion();
+			DBConnectionFactory.getInstance().closeConnetion();
 		}
 	}
 	@Override
@@ -135,7 +135,7 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 		ArrayList<Administrador> administradores = new ArrayList<Administrador>();
 		String query = "SELECT * FROM academia.administrador INNER JOIN academia.usuario ON administrador.CPF_ADM = usuario.CPF_U";
 		try{
-			this.statement= (PreparedStatement) ConnectionFactory.getInstance().getConnection().prepareStatement(query);
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
@@ -152,7 +152,7 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 			throw new CRUDException("Erro ao listar os administradores");
 		}
 		finally{
-			ConnectionFactory.getInstance().closeConnetion();
+			DBConnectionFactory.getInstance().closeConnetion();
 		}
 		
 		return administradores;
