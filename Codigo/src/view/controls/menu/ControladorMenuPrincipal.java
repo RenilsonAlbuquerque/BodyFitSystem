@@ -16,6 +16,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -82,15 +83,19 @@ public class ControladorMenuPrincipal extends BorderPane{
 		Circle c = new Circle(3);
 		botaoVoltar.setShape(c);
 		botaoSair.setShape(c);
+		
+	
 		painelTitulos.setId("painelDeTitulos");
 		
 	}
 	public void setDadosUsuario(){
+		
 		try {
 			this.fotoPerfil.setFill(new ImagePattern(new Image(FTPConnectionFactory.getInstance().retrieveImage(Fachada.getInstance().getUsuarioLogado().getCaminhoFoto()))));
 		} catch (ConexaoFTPException e) {
 			e.printStackTrace();
 		}
+		
 		this.labelNomeUsuario.setText(Fachada.getInstance().getUsuarioLogado().getNome());
 	
 	}

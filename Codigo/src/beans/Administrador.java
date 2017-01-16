@@ -1,4 +1,4 @@
-package beans;
+	package beans;
 
 public class Administrador extends Usuario{
 	private String cargo;

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Collections;
 
 import beans.Aluno;
+import beans.Usuario;
 import control.Fachada;
 import exceptions.CRUDException;
 import exceptions.ConexaoBancoException;
@@ -17,8 +18,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.HBox;
 import view.controls.login.ControladorTelaLogin;
 
 public class ControladorPGerenciaAlunos extends BorderPane{
@@ -26,11 +28,13 @@ public class ControladorPGerenciaAlunos extends BorderPane{
 	@FXML
 	private ListView listaAlunos;
 	
-	@FXML
-	private Pane painelDadosAluno;
 	
 	@FXML
-	private TextField txtBuscar;
+	private HBox painelMeio;
+	
+	
+	@FXML
+	private TextField txtBuscar;	
 	
 	@FXML
 	private Button btnAdcionar;
@@ -47,12 +51,18 @@ public class ControladorPGerenciaAlunos extends BorderPane{
 			loader.setController(this);
 			this.setCenter(loader.load());
 			
+			
 			this.povoarlista();
+			this.painelMeio.getChildren().add(new ControladorTelaVisualizacao((Usuario)this.listaAlunos.getItems().get(0)));
 		}catch(IOException e){
 			e.printStackTrace();
 		}
 	}
 	
+	@FXML
+	public void acaoMudancaItens(MouseEvent e){
+		((ControladorTelaVisualizacao) this.painelMeio.getChildren().get(1)).adcionarUsuario((Usuario)this.listaAlunos.getSelectionModel().getSelectedItem());
+	}
 	public void povoarlista(){
 		ObservableList<Aluno> itens = null;
 		try {

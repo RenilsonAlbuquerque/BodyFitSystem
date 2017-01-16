@@ -157,7 +157,7 @@ public class AlunoDao implements IRepositorioAluno{
 				float peso = rSet.getFloat("PESO");
 				
 				
-				alunos.add(new Aluno(cpf,nome,senha,caminhoFoto,idade,altura,peso));
+				alunos.add(new Aluno(cpf,nome,senha,caminhoFoto,idade,peso,altura));
 			}
 		}catch(SQLException  e){
 			throw new CRUDException("Erro ao listar os alunos");
@@ -172,7 +172,7 @@ public class AlunoDao implements IRepositorioAluno{
 
 	@Override
 	public void cadastrarRotinaTreino(Aluno aluno) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

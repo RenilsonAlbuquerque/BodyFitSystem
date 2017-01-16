@@ -17,9 +17,9 @@ public class FTPConnectionFactory {
 	private static int porta = 21;
 	private static String login = "Cliente";
 	private static String senha = "12345";
-	
+		
 	private FTPConnectionFactory() throws ConexaoFTPException{
-		this.initConection();
+
 	}
 	
 	public static FTPConnectionFactory getInstance() throws ConexaoFTPException{
@@ -43,7 +43,7 @@ public class FTPConnectionFactory {
 		if(this.conexao == null)
 			this.initConection();
 		try{
-			this.conexao.changeWorkingDirectory("/imagens Usuarios/");
+			this.conexao.changeWorkingDirectory("/Imagens Usuarios/");
 			return conexao.retrieveFileStream(caminho);
 			
 		}catch(IOException e){
@@ -58,9 +58,11 @@ public class FTPConnectionFactory {
 		try {
 			this.conexao.logout();
 			this.conexao.disconnect();
+			this.conexao = null;
 		} catch (IOException e) {
 		
 		}
 	}
+	
 	
 }

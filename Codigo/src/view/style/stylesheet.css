@@ -9,14 +9,7 @@
     -fx-control-inner-background: rgb(10,10,10);
 	
 }
-.table-view {
-    -fx-base: #1d1d1d;
-    -fx-control-inner-background: #1d1d1d;
-    -fx-background-color: grey;
-    -fx-table-cell-border-color: transparent;
-    -fx-table-header-border-color: transparent;
-    -fx-padding: 5;
-}
+
 .dialog-pane{
 	
     -fx-background-color: black;
@@ -35,9 +28,12 @@
 	-fx-background-color:radial-gradient(radius 180%,darkslategrey , derive(black, -30%), derive(black, 30%));  
 	-fx-text-fill:white; 
 }
-/*-----------Texto---------------- */
+
+/*-----------Campo de texto---------------- */
 .text-field{
     -fx-border-color:mediumslateblue;
     -fx-border-color:teal;
     -fx-border-radius:1%;
 }
+
+

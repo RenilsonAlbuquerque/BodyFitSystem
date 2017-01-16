@@ -18,18 +18,13 @@
       </HBox>
    </bottom>
    <center>
-      <HBox fx:id="painelMeio" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="painelMeio" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0" BorderPane.alignment="CENTER">
          <children>
-            <ListView fx:id="listaAlunos" prefHeight="431.0" prefWidth="347.0">
+            <ListView fx:id="listaAlunos" onMouseClicked="#acaoMudancaItens" prefHeight="431.0" prefWidth="347.0">
                <HBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </HBox.margin>
             </ListView>
-            <AnchorPane fx:id="painelDadosAluno" prefHeight="431.0" prefWidth="367.0">
-               <HBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </HBox.margin>
-            </AnchorPane>
          </children>
       </HBox>
    </center>
