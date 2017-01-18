@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="730.0" vgap="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="botaoGerenciarAlunos" mnemonicParsing="false" onAction="#acaoBtnAluno" prefHeight="249.0" prefWidth="350.0" text="Gerenciar Alunos" textFill="#f5f5f5">
+         <font>
+            <Font name="Verdana" size="23.0" />
+         </font>
+      </Button>
+      <Button fx:id="botaoGerenciarProfessorres" mnemonicParsing="false" onAction="#acaoBtnProfessor" prefHeight="249.0" prefWidth="350.0" text="Gerenciar Professores" textFill="#f5f5f5">
+         <font>
+            <Font name="Verdana" size="23.0" />
+         </font>
+      </Button>
+      <Button fx:id="botaoGerenciarCoordenadores" mnemonicParsing="false" onAction="#acaoBtnCoordenador" prefHeight="249.0" prefWidth="350.0" text="Gerenciar Coordenadores" textFill="#f5f5f5">
+         <font>
+            <Font name="Verdana" size="23.0" />
+         </font>
+      </Button>
+      <Button fx:id="botaoGerenciarAdministradores1" mnemonicParsing="false" onAction="#acaoBtnAdministrador" prefHeight="249.0" prefWidth="350.0" text="Gerenciar Administradores" textFill="#f5f5f5">
+         <font>
+            <Font name="Verdana" size="23.0" />
+         </font>
+      </Button>
+   </children>
+</FlowPane>

@@ -16,6 +16,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -25,6 +26,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import view.controls.Principal;
+import view.controls.login.ControladorTelaEscolhaPerfil;
 import view.controls.login.ControladorTelaLogin;
 
 public class ControladorMenuPrincipal extends BorderPane{
@@ -47,7 +49,8 @@ public class ControladorMenuPrincipal extends BorderPane{
 	@FXML
 	private Button botaoVoltar;
 	
-	
+	@FXML
+	private Button botaoTrocarPerfil;
 	
 	private ControladorMenuPrincipal(){
 
@@ -81,11 +84,13 @@ public class ControladorMenuPrincipal extends BorderPane{
 		
 		painelTitulos.setStyle("-fx-border-color: midnightblue;-fx-border-width: 1px;");
 		Circle c = new Circle(3);
+		
 		botaoVoltar.setShape(c);
 		botaoSair.setShape(c);
-		
-	
+		botaoTrocarPerfil.setShape(c);
+
 		painelTitulos.setId("painelDeTitulos");
+		
 		
 	}
 	public void setDadosUsuario(){
@@ -112,6 +117,7 @@ public class ControladorMenuPrincipal extends BorderPane{
 		Optional<ButtonType> result = dialogo.showAndWait();
 		if(result.get() == ButtonType.OK){
 			Principal.setCurrentStage(new ControladorTelaLogin());
+				instance = null;
 		}
 			
 	}
@@ -125,8 +131,12 @@ public class ControladorMenuPrincipal extends BorderPane{
 				this.adcionaTela(memoria.pop());
 			}		
 		}	
-			
-		
+	}
+	
+	@FXML
+	public void acaoBotaoTrocarPerfil(){
+		Principal.setCurrentStage(new ControladorTelaEscolhaPerfil(Fachada.getInstance().getUsuarioLogado().getCpf()));
+		instance = null;
 	}
 	public void adcionaTela(Pane painel){
 		this.setCenter(painel);
@@ -141,4 +151,5 @@ public class ControladorMenuPrincipal extends BorderPane{
 		this.memoria.push(painel);
 
 	}
+
 }

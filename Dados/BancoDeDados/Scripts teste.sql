@@ -104,6 +104,9 @@ insert into usuario (CPF_U,NOME,SENHA) VALUES ('10870298499','Josivaldo','123');
 insert into professor (CPF_PROF,CREF,TURNO,COORDENADOR) VALUES ('10870298488','573822','tarde',1);
 insert into professor (CPF_PROF,CREF,TURNO,COORDENADOR) VALUES ('10870298499','573452','manha',0);
 
+
+insert into administrador(CPF_ADM,CARGO) VALUES ('10870298488','gerente');
+
 insert into administrador (CPF_ADM,CARGO) VALUES ('184719301','patrao');
 insert into treino (CPF_P,NOME) values ('10870298488','treino s');
 insert into exercicio (CODIGO_E,CPF_P,NOME,CARGA,REPETICOES,INTERVALO) values (1,'10870298488','exercicio1','100',12,30);

@@ -18,6 +18,7 @@ import javafx.stage.Screen;
 import view.controls.Principal;
 import view.controls.menu.ControladorEscolhasProfessor;
 import view.controls.menu.ControladorMenuPrincipal;
+import view.controls.menu.ControladorOpcoesAdministrador;
 
 public class ControladorTelaEscolhaPerfil extends FlowPane{
 	
@@ -120,11 +121,11 @@ public class ControladorTelaEscolhaPerfil extends FlowPane{
 		try {
 			
 			Fachada.getInstance().setUsuarioLogado(cpf, PerfisEnum.administrador);
-			/*
-			Principal.setCurrentStage(new ControladorMenuPrincipal(),
+			
+			Principal.setCurrentStage(ControladorMenuPrincipal.getInstance(),
 					(int)Screen.getPrimary().getVisualBounds().getWidth(),
 					(int)Screen.getPrimary().getVisualBounds().getHeight());
-					*/
+			ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorOpcoesAdministrador());
 		} catch (ConexaoBancoException | CRUDException e) {
 			
 			e.printStackTrace();

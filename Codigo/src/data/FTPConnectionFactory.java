@@ -1,6 +1,8 @@
 package data;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import org.apache.commons.net.ftp.FTPClient;
 
@@ -13,13 +15,17 @@ public class FTPConnectionFactory {
 	private static FTPConnectionFactory instance = null;
 	private FTPClient conexao;
 	
-	private static String URL = "192.168.0.8";
-	private static int porta = 21;
-	private static String login = "Cliente";
-	private static String senha = "12345";
+	private static String URL;
+	private static final int porta = 21;
+	private static final String login = "Cliente";
+	private static final String senha = "12345";
 		
 	private FTPConnectionFactory() throws ConexaoFTPException{
-
+		try {
+			URL = InetAddress.getLocalHost().getHostAddress();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static FTPConnectionFactory getInstance() throws ConexaoFTPException{
