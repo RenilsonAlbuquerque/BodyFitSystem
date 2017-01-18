@@ -7,8 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import view.controls.login.ControladorTelaLogin;
 
-public class Principal extends Application{
-	
+public class TesteUnitario  extends Application{
 	private static Stage currentStage;
 	
 	
@@ -40,6 +39,7 @@ public class Principal extends Application{
 	}
 	public static void main(String args[]){
 		launch();
+		
 	}
 	
 

@@ -6,26 +6,30 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane prefHeight="531.0" prefWidth="715.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <bottom>
-      <HBox fx:id="painelBaixo" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
+<HBox alignment="CENTER" prefHeight="588.0" prefWidth="880.0" spacing="60.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox fx:id="painelEsquerda" alignment="CENTER" prefHeight="589.0" prefWidth="447.0" spacing="20.0">
          <children>
+            <ListView fx:id="listaObjetos" prefHeight="431.0" prefWidth="399.0" />
             <TextField fx:id="txtBuscar" alignment="CENTER" prefHeight="36.0" prefWidth="350.0" />
-            <Button fx:id="btnAdcionar" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="64.0" prefWidth="105.0" text="Adcionar Treino" />
-            <Button fx:id="btnEditar" mnemonicParsing="false" prefHeight="64.0" prefWidth="92.0" text="Editar Treino" />
-            <Button fx:id="btnExcluir" mnemonicParsing="false" prefHeight="64.0" prefWidth="92.0" text="Excluir Treino" />
          </children>
-      </HBox>
-   </bottom>
-   <center>
-      <HBox fx:id="painelMeio" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="40.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+      <VBox fx:id="painelDireita" alignment="CENTER" prefHeight="576.0" prefWidth="400.0" spacing="20.0">
          <children>
-            <ListView fx:id="listaAlunos" onMouseClicked="#acaoMudancaItens" prefHeight="431.0" prefWidth="347.0">
-               <HBox.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </HBox.margin>
-            </ListView>
+            <HBox fx:id="painelBaixo" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Button fx:id="btnAdcionar" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="64.0" prefWidth="105.0" text="Adcionar Treino" />
+                  <Button fx:id="btnEditar" mnemonicParsing="false" prefHeight="64.0" prefWidth="92.0" text="Editar Treino" />
+                  <Button fx:id="btnExcluir" mnemonicParsing="false" prefHeight="64.0" prefWidth="92.0" text="Excluir Treino" />
+               </children>
+            </HBox>
          </children>
-      </HBox>
-   </center>
-</BorderPane>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+   </children>
+</HBox>

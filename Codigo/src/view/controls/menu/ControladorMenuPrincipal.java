@@ -16,12 +16,12 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import view.controls.Principal;
@@ -126,14 +126,18 @@ public class ControladorMenuPrincipal extends BorderPane{
 			}		
 		}	
 			
+		
 	}
 	public void adcionaTela(Pane painel){
 		this.setCenter(painel);
 		
 		if(painel instanceof HBox)
 			((HBox) painel).setAlignment(Pos.CENTER);
+		if(painel instanceof VBox)
+			((VBox) painel).setAlignment(Pos.CENTER);
 		if(painel instanceof FlowPane)
 			((FlowPane) painel).setAlignment(Pos.CENTER);
+		
 		this.memoria.push(painel);
 
 	}

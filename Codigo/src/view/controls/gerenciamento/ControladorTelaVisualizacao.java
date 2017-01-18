@@ -14,13 +14,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import view.controls.login.ControladorTelaLogin;
 
-public class ControladorTelaVisualizacao extends GridPane{
+public class ControladorTelaVisualizacao extends VBox{
+	
 	
 	@FXML
-	private Label labelFoto;
+	private Circle fotoPerfil;
 	
 	@FXML
 	private Label labelNome;
@@ -59,7 +62,8 @@ public class ControladorTelaVisualizacao extends GridPane{
 	}
 	public void adcionarUsuario(Usuario usuario){
 		try {
-			this.labelFoto.setGraphic(new ImageView(new Image(FTPConnectionFactory.getInstance().retrieveImage(usuario.getCaminhoFoto()))));
+			this.fotoPerfil.setFill(new ImagePattern(new Image(FTPConnectionFactory.getInstance().retrieveImage(usuario.getCaminhoFoto()))));
+			//this.labelFoto.setGraphic(new ImageView(new Image(FTPConnectionFactory.getInstance().retrieveImage(usuario.getCaminhoFoto()))));
 			this.labelCPF.setText(usuario.getCpf());
 			this.labelNome.setText(usuario.getNome());
 			if(usuario instanceof Aluno){

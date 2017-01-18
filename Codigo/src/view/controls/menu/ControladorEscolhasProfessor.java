@@ -2,6 +2,7 @@ package view.controls.menu;
 
 import java.io.IOException;
 
+import beans.Aluno;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +32,7 @@ public class ControladorEscolhasProfessor extends HBox {
 	
 	@FXML
 	public void acaoGerenciarAlunos(ActionEvent e ){
-		ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorPGerenciaAlunos());
+		ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorPGerenciaAlunos<Aluno>(Aluno.class));
 	}
 	@FXML
 	public void acaoTreinosExercicios(ActionEvent e ){
