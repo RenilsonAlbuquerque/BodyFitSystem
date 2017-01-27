@@ -1,3 +1,5 @@
+drop database academia;
+
 create database if not exists `academia`;
 
 use academia;
@@ -5,7 +7,7 @@ use academia;
 create table `usuario`(
 	`CPF_U` varchar(12) NOT NULL,
 	`NOME` varchar(50) NOT NULL,
-	`SENHA` varchar(20) NOT NULL DEFAULT '123456',
+	`SENHA` varchar(50) NOT NULL DEFAULT '123456',
 	`CAMINHO_FOTO` varchar(20) NOT NULL DEFAULT 'Default User.png',
 	PRIMARY KEY (`CPF_U`)
 );
@@ -81,9 +83,71 @@ CREATE TABLE `treino_exercicio`(
 CREATE TABLE `aluno_treino`(
 	`CPF_ALUNO` varchar(12) NOT NULL,
     `CODIGO_TREINO` int NOT NULL,
+    `DIA_DA_SEMANA` int NOT NULL check(DIA_DA_SEMANA > 1 and DIA_DA_SEMANA <8),
 	CONSTRAINT `PK_ALUTRE` PRIMARY KEY (`CPF_ALUNO`,`CODIGO_TREINO`),
     CONSTRAINT `FK_ALUTRE_CPFALU` FOREIGN KEY (`CPF_ALUNO`) REFERENCES `aluno` (`CPF_ALU`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `FK_ALUTRE_CODTRE` FOREIGN KEY (`CODIGO_TREINO`) REFERENCES `treino` (`CODIGO_T`)ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
+
+DELIMITER $
+CREATE FUNCTION autenticar(cpf varchar(12),senha varchar(50)) RETURNS int
+BEGIN
+    return (
+		select COUNT(1) FROM `usuario` WHERE (CPF_U = cpf and SENHA = md5(senha)) 
+    );
+END
+$
+
+
+DELIMITER $$
+CREATE FUNCTION alterarSenha(cpf varchar(12), senhaAntiga varchar(50), novaSenha varchar(50))RETURNS int(1) 
+BEGIN
+DECLARE resultado int(1) DEFAULT 0;
+    UPDATE usuario SET `SENHA` =
+		IF( `SENHA` = MD5(senhaAntiga), MD5(novaSenha),senhaAntiga)
+	WHERE `CPF_U` = cpf;
+    
+    SET resultado =  IFNULL(( SELECT distinct 1 FROM  usuario WHERE CPF_U = CPF_U and SENHA = md5(novaSenha)),0);
+RETURN resultado;    
+END $$
+DELIMITER $$;
+
+
+select * from usuario;
+
+
+
+DELIMITER $$
+CREATE FUNCTION teste(cpf varchar(12)) RETURNS varchar(50)
+BEGIN
+DECLARE resultado varchar(50) default 0;
+	select SENHA into resultado from usuario where CPF_U = '10870298488';
+    set resultado = md5('senha');
+return resultado;   
+END $$
+DELIMITER $$
+
+
+
+select *from usuario;
+SELECT * FROM `usuario` WHERE CPF_U = '10870298488' and SENHA = (md5('1234'));
+
+    
+select autenticar('10870298488','1');
+select teste('10870298488');
+call alterarSenha('10870298488','123','123456');
+
+    
+delete from aluno_treino;
+delete from treino_exercicio;
+delete from exercicio;
+delete from treino;
+delete from exercicio_padrao;
+delete from treino_padrao;
+delete from aluno;
+delete from professor;
+delete from administrador;
+delete from usuario;
+    

@@ -7,7 +7,7 @@ SET SQL_SAFE_UPDATES=0;
 create table `usuario`(
 	`CPF_U` varchar(12) NOT NULL,
 	`NOME` varchar(50) NOT NULL,
-	`SENHA` varchar(20) NOT NULL DEFAULT '123456',
+	`SENHA` varchar(50) NOT NULL DEFAULT '123456',
 	`CAMINHO_FOTO` varchar(20) NOT NULL DEFAULT 'Default User.png',
 	PRIMARY KEY (`CPF_U`)
 );
@@ -83,9 +83,19 @@ CREATE TABLE `treino_exercicio`(
 CREATE TABLE `aluno_treino`(
 	`CPF_ALUNO` varchar(12) NOT NULL,
     `CODIGO_TREINO` int NOT NULL,
+     `DIA_DA_SEMANA` int NOT NULL check(DIA_DA_SEMANA > 1 and DIA_DA_SEMANA <8),
 	CONSTRAINT `PK_ALUTRE` PRIMARY KEY (`CPF_ALUNO`,`CODIGO_TREINO`),
     CONSTRAINT `FK_ALUTRE_CPFALU` FOREIGN KEY (`CPF_ALUNO`) REFERENCES `aluno` (`CPF_ALU`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `FK_ALUTRE_CODTRE` FOREIGN KEY (`CODIGO_TREINO`) REFERENCES `treino` (`CODIGO_T`)ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `historico`(
+	`CPF_ALUNO` varchar(12) NOT NULL,
+	`CODIGO_TREINO` int NOT NULL,
+    `DIA` INT NOT NULL check(DIA > 0 and DIA < 32),
+    `MES` INT NOT NULL check(MES > 0 and DIA < 13),
+    `ANO` INT NOT NULL check(ANO > 2000),
+    CONSTRAINT `PK_ALUTRE` PRIMARY KEY (`CPF_ALUNO`,`CODIGO_TREINO`)
 );
 
 DELIMITER $$
@@ -104,6 +114,8 @@ insert into usuario (CPF_U,NOME,SENHA) VALUES ('10870298499','Josivaldo','123');
 insert into professor (CPF_PROF,CREF,TURNO,COORDENADOR) VALUES ('10870298488','573822','tarde',1);
 insert into professor (CPF_PROF,CREF,TURNO,COORDENADOR) VALUES ('10870298499','573452','manha',0);
 
+INSERT INTO aluno(CPF_ALU, IDADE, ALTURA, PESO) values('10870298488',22,1.82,78);
+INSERT INTO aluno(CPF_ALU, IDADE, ALTURA, PESO) values('10870298499',27,1.90,85);
 
 insert into administrador(CPF_ADM,CARGO) VALUES ('10870298488','gerente');
 
@@ -111,8 +123,7 @@ insert into administrador (CPF_ADM,CARGO) VALUES ('184719301','patrao');
 insert into treino (CPF_P,NOME) values ('10870298488','treino s');
 insert into exercicio (CODIGO_E,CPF_P,NOME,CARGA,REPETICOES,INTERVALO) values (1,'10870298488','exercicio1','100',12,30);
 insert into treino_exercicio (CODIGO_TRE,CODIGO_EXE) values (1,1);
-INSERT INTO academia.aluno(CPF_ALU, IDADE, ALTURA, PESO) values('10870298488',22,1.82,78);
-INSERT INTO academia.aluno(CPF_ALU, IDADE, ALTURA, PESO) values('10870298499',27,1.90,85);
+
 
 DELETE FROM `treino` WHERE (CODIGO_T,CPF_P) = (1,'10870298488');
 DELETE FROM `exercicio` WHERE CODIGO_E = (1);
@@ -130,7 +141,14 @@ select * from treino;
 select *from aluno;
 select *from usuario;
 
+delete from professor;
+
+
 drop procedure if exists removerTreino;
+drop function if exists autenticar;
+drop function if exists teste;
+
+
 drop table if exists aluno_treino;
 drop table if exists treino_exercicio;
 drop table if exists exercicio;
@@ -141,3 +159,16 @@ drop table if exists aluno;
 drop table if exists professor;
 drop table if exists administrador;
 drop table if exists usuario;
+
+
+
+delete from aluno_treino;
+delete from treino_exercicio;
+delete from exercicio;
+delete from treino;
+delete from exercicio_padrao;
+delete from treino_padrao;
+delete from aluno;
+delete from professor;
+delete from administrador;
+delete from usuario;

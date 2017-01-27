@@ -16,7 +16,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -28,6 +28,7 @@ import javafx.scene.shape.Circle;
 import view.controls.Principal;
 import view.controls.login.ControladorTelaEscolhaPerfil;
 import view.controls.login.ControladorTelaLogin;
+import view.controls.visualizacao.ControladorVisualizacaoPerfilProprio;
 
 public class ControladorMenuPrincipal extends BorderPane{
 	
@@ -106,7 +107,7 @@ public class ControladorMenuPrincipal extends BorderPane{
 	}
 	
 	@FXML
-	public void acaoBotaoSair(){
+	private void acaoBotaoSair(){
 		Alert dialogo = new Alert(Alert.AlertType.CONFIRMATION);
 		DialogPane d = dialogo.getDialogPane();
 		d.getStylesheets().add(
@@ -123,7 +124,7 @@ public class ControladorMenuPrincipal extends BorderPane{
 	}
 	
 	@FXML
-	public void acaoBotaoVoltar(){
+	private void acaoBotaoVoltar(){
 		
 		if(memoria.size() > 1){
 			memoria.pop();
@@ -134,9 +135,13 @@ public class ControladorMenuPrincipal extends BorderPane{
 	}
 	
 	@FXML
-	public void acaoBotaoTrocarPerfil(){
+	private void acaoBotaoTrocarPerfil(){
 		Principal.setCurrentStage(new ControladorTelaEscolhaPerfil(Fachada.getInstance().getUsuarioLogado().getCpf()));
 		instance = null;
+	}
+	@FXML
+	private void acaoBotaoPerfil(MouseEvent e){
+		new ControladorVisualizacaoPerfilProprio();
 	}
 	public void adcionaTela(Pane painel){
 		this.setCenter(painel);
@@ -151,5 +156,6 @@ public class ControladorMenuPrincipal extends BorderPane{
 		this.memoria.push(painel);
 
 	}
+	
 
 }

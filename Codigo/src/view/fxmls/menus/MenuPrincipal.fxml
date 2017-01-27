@@ -24,7 +24,7 @@
           <RowConstraints fillHeight="false" minHeight="130.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
-            <Circle fx:id="fotoPerfil" fill="#f9fbfc" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="fotoPerfil" fill="#f9fbfc" onMouseClicked="#acaoBotaoPerfil" radius="60.0" stroke="BLACK" strokeType="INSIDE" />
             <Label fx:id="labelNomeUsuario" prefHeight="59.0" prefWidth="395.0" textFill="WHITE" GridPane.columnIndex="1">
                <font>
                   <Font name="Arial Black" size="40.0" />

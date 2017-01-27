@@ -1,4 +1,4 @@
-package view.controls.gerenciamento;
+package view.controls.visualizacao;
 
 import java.io.IOException;
 
@@ -51,7 +51,7 @@ public class ControladorTelaVisualizacao extends VBox{
 	
 	public ControladorTelaVisualizacao(Usuario usuario){
 		try{
-			FXMLLoader loader = new FXMLLoader(ControladorTelaLogin.class.getClass().getResource("/view/fxmls/gerenciamento/TelaVisualizacaoUsuario.fxml"));
+			FXMLLoader loader = new FXMLLoader(ControladorTelaLogin.class.getClass().getResource("/view/fxmls/visualizacao/TelaVisualizacaoUsuario.fxml"));
 			loader.setController(this);
 			this.getChildren().add(loader.load());
 			

@@ -29,8 +29,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import view.controls.login.ControladorTelaLogin;
+import view.controls.visualizacao.ControladorTelaVisualizacao;
 
-public class ControladorPGerenciaAlunos<T> extends BorderPane{
+public class ControladorPGerenciaUsuario<T> extends BorderPane{
 	
 	private Class<T> tipo;
 	
@@ -57,7 +58,7 @@ public class ControladorPGerenciaAlunos<T> extends BorderPane{
 	@FXML
 	private Button btnExcluir;
 	
-	public ControladorPGerenciaAlunos(Class<T> tipo){
+	public ControladorPGerenciaUsuario(Class<T> tipo){
 		try{
 			FXMLLoader loader = new FXMLLoader(ControladorTelaLogin.class.getClass().getResource("/view/fxmls/gerenciamento/PGerenciaAluno.fxml"));
 			loader.setController(this);

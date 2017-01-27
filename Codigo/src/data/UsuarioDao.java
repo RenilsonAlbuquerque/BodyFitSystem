@@ -83,7 +83,7 @@ public class UsuarioDao implements IRepositorioUsuario {
 	@Override
 	public void cadastrar(Usuario objeto) throws ConexaoBancoException, CRUDException {
 		String sql = "INSERT INTO academia.usuario(CPF_U,NOME, SENHA, CAMINHO_FOTO) "
-				+ "values(?,?,?,?)";
+				+ "values(?,?,MD5(?),?)";
 		
 		try{
 			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
@@ -174,8 +174,6 @@ public class UsuarioDao implements IRepositorioUsuario {
 		}
 	}
 
-	
 
-	
 	
 }

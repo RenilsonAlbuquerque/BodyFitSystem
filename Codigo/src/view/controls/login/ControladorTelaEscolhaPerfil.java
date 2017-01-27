@@ -16,9 +16,9 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Screen;
 import view.controls.Principal;
-import view.controls.menu.ControladorEscolhasProfessor;
 import view.controls.menu.ControladorMenuPrincipal;
 import view.controls.menu.ControladorOpcoesAdministrador;
+import view.controls.menu.ControladorOpcoesProfessor;
 
 public class ControladorTelaEscolhaPerfil extends FlowPane{
 	
@@ -43,13 +43,14 @@ public class ControladorTelaEscolhaPerfil extends FlowPane{
 			 	loader.setController(this);
 			 	this.getChildren().add(loader.load());
 			 	
-			 	
 			 	painel.getChildren().clear();
+			 	//painel.getChildren().removeAll();
 			 	this.setAlignment(Pos.CENTER);
 			 	
 			 	this.cpf = cpf;
 			 	
 			 	ArrayList<PerfisEnum> perfis = Fachada.getInstance().getPerfis(cpf);
+			 	
 			 	if(perfis.indexOf(PerfisEnum.aluno) > -1)
 			 		painel.getChildren().add(botaoAluno);
 			 	
@@ -77,7 +78,7 @@ public class ControladorTelaEscolhaPerfil extends FlowPane{
 		try {
 			Fachada.getInstance().setUsuarioLogado(cpf, PerfisEnum.aluno);
 			/*
-			Principal.setCurrentStage(new ControladorMenuPrincipal(),
+			Principal.setCurrentStage(new ControladorMenuPrincipal(cpf,PerfisEnum.aluno),
 					(int)Screen.getPrimary().getVisualBounds().getWidth(),
 					(int)Screen.getPrimary().getVisualBounds().getHeight());
 					*/
@@ -85,6 +86,7 @@ public class ControladorTelaEscolhaPerfil extends FlowPane{
 			
 			e.printStackTrace();
 		}
+		
 	}
 	@FXML
 	private void acaoBotaoProfessor(ActionEvent evt){
@@ -94,7 +96,7 @@ public class ControladorTelaEscolhaPerfil extends FlowPane{
 			Principal.setCurrentStage(ControladorMenuPrincipal.getInstance(),
 					(int)Screen.getPrimary().getVisualBounds().getWidth(),
 					(int)Screen.getPrimary().getVisualBounds().getHeight());
-			ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorEscolhasProfessor());
+			ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorOpcoesProfessor());
 		} catch (ConexaoBancoException | CRUDException e) {
 			
 			e.printStackTrace();

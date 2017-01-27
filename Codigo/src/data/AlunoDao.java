@@ -72,11 +72,11 @@ public class AlunoDao implements IRepositorioAluno{
 		String sql = "DELETE FROM academia.aluno "
 				+ " WHERE CPF_ALU = ?";
 		
-			PreparedStatement smt;
+		
 			try {
-				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
-				smt.setString(1, objeto.getCpf());
-				smt.execute();
+				statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+				statement.setString(1, objeto.getCpf());
+				statement.execute();
 			}
 			catch(SQLException e){
 				throw new CRUDException("Erro ao deletar o Aluno");
@@ -91,15 +91,14 @@ public class AlunoDao implements IRepositorioAluno{
 	public void atualizar(Aluno objeto) throws ConexaoBancoException,CRUDException{
 		String sql = "UPDATE academia.aluno SET CPF_ALU = ?, IDADE = ?,ALTURA = ?, PESO = ? "
 				+ " WHERE CPF_ALU =" + objeto.getCpf();
-		
-			PreparedStatement smt;
+	
 			try {
-				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
-				smt.setString(1, objeto.getCpf());
-				smt.setInt(2, objeto.getIdade());
-				smt.setFloat(3, objeto.getAltura());
-				smt.setFloat(4, objeto.getPeso());
-				smt.execute();
+				statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+				statement.setString(1, objeto.getCpf());
+				statement.setInt(2, objeto.getIdade());
+				statement.setFloat(3, objeto.getAltura());
+				statement.setFloat(4, objeto.getPeso());
+				statement.execute();
 				
 			} catch (Exception e) {
 	
@@ -110,6 +109,7 @@ public class AlunoDao implements IRepositorioAluno{
 			}	
 		
 	}
+	
 	@Override
 	public Aluno buscar(String cpf) throws ConexaoBancoException, CRUDException {
 		Aluno aluno = null;;

@@ -75,6 +75,16 @@ public class Fachada {
 		return this.usuario.autenticar(cpf, senha);
 	}
 	
+	public void atualizarUsuario(Usuario usuario) throws NegocioException, ConexaoBancoException, CRUDException{
+		this.usuario.atualizar(usuario);
+		if(usuario instanceof Aluno)
+			this.aluno.atualizar((Aluno)usuario);
+		if(usuario instanceof Administrador)
+			this.administrador.atualizar((Administrador)usuario);
+		if(usuario instanceof Professor)
+			this.professor.atualizar((Professor)usuario);
+	}
+	
 	public void cadastrarAluno(Aluno aluno) throws ConexaoBancoException, NegocioException, CRUDException{
 		if(this.usuario.existe(aluno.getCpf()) == false)
 			this.usuario.cadastrar(aluno);
@@ -102,6 +112,7 @@ public class Fachada {
 	public void cadastrarExercicio(Exercicio exercicio,String cpfProf) throws ConexaoBancoException, NegocioException, CRUDException{
 		this.exercicio.cadastrar(exercicio, cpfProf);
 	}
+	/*
 	public void alterarAluno(Aluno aluno) throws NegocioException, ConexaoBancoException, CRUDException{
 		this.aluno.atualizar(aluno);
 	}
@@ -111,6 +122,7 @@ public class Fachada {
 	public void alterarAdministrador(Administrador administrador) throws NegocioException, ConexaoBancoException, CRUDException{
 		this.administrador.atualizar(administrador);
 	}
+	*/
 	public void alterarTreino(Treino treino) throws ConexaoBancoException, CRUDException, NegocioException{
 		this.treino.alterar(treino);
 	}
