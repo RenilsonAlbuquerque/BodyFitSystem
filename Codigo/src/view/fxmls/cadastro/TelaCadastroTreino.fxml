@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="421.0" prefWidth="691.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+  <columnConstraints>
+    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="308.0" minWidth="10.0" prefWidth="306.0" />
+      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="223.0" minWidth="10.0" prefWidth="58.0" />
+    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="327.0" minWidth="10.0" prefWidth="327.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="136.0" minHeight="0.0" prefHeight="68.0" valignment="CENTER" vgrow="ALWAYS" />
+    <RowConstraints maxHeight="361.0" minHeight="10.0" prefHeight="46.0" valignment="CENTER" vgrow="ALWAYS" />
+    <RowConstraints maxHeight="350.0" minHeight="5.0" prefHeight="315.0" valignment="CENTER" vgrow="ALWAYS" />
+      <RowConstraints maxHeight="350.0" minHeight="10.0" prefHeight="70.0" valignment="CENTER" vgrow="ALWAYS" />
+  </rowConstraints>
+   <children>
+      <Label prefHeight="17.0" prefWidth="241.0" text="Exercícios do Treino" GridPane.rowIndex="1" />
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Label text="Nome do Treino: " />
+            <TextField fx:id="txtNomeTreino" />
+         </children>
+      </VBox>
+      <ListView fx:id="listaExerciciosTreino" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
+      <ListView fx:id="listaExerciciosAdcionar" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      <VBox alignment="CENTER" prefHeight="284.0" prefWidth="71.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <children>
+            <Button fx:id="btnMeusExercicios" mnemonicParsing="false" onAction="#acaoBotaoMeusExercicios" prefHeight="57.0" prefWidth="58.0" text="Meus Treinos" />
+            <Button fx:id="btnExerciciosPadrao" mnemonicParsing="false" onAction="#acaoBotaoExerciciosPadrao" prefHeight="57.0" prefWidth="58.0" text="Padrao" />
+         </children>
+      </VBox>
+      <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#acaoBotaoSalvar" prefHeight="25.0" prefWidth="74.0" text="Salvar" GridPane.rowIndex="3" />
+   </children>
+</GridPane>

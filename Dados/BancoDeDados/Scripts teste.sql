@@ -136,7 +136,7 @@ call removerTreino(1,'10870298488');
 UPDATE academia.usuario SET  NOME = 'Carlos',SENHA = '1234', CAMINHO_FOTO = 'caminhododestino' WHERE CPF_U = (10870298488);
 
 select * from treino_exercicio;
-select * from exercicio where CODIGO_E = '1' AND CPF_P = '10870298488';
+select * from exercicio;
 select * from treino;
 select *from aluno;
 select *from usuario;
@@ -148,7 +148,7 @@ drop procedure if exists removerTreino;
 drop function if exists autenticar;
 drop function if exists teste;
 
-
+insert into exercicio_padrao (NOME,CARGA,REPETICOES,INTERVALO) values('flexões','20',2,30);
 drop table if exists aluno_treino;
 drop table if exists treino_exercicio;
 drop table if exists exercicio;
@@ -172,3 +172,7 @@ delete from aluno;
 delete from professor;
 delete from administrador;
 delete from usuario;
+
+
+
+SELECT * FROM aluno_treino where CPF_ALUNO = '10870298488';

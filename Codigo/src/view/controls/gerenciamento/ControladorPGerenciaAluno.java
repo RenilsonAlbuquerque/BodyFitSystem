@@ -116,6 +116,6 @@ public class ControladorPGerenciaAluno extends BorderPane{
 	
 	@FXML
 	public void acaoRotinaTreinos(ActionEvent e){
-		ControladorMenuPrincipal.getInstance().adcionaTela(new ControladoAplicacaoTreino((Aluno) this.listaObjetos.getSelectionModel().getSelectedItem()));
+		ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorAplicacaoTreino((Aluno) this.listaObjetos.getSelectionModel().getSelectedItem()));
 	}
 }

@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 import beans.Exercicio;
 import data.ExercicioDao;
-import data.IRepositorioAtividades;
+import data.IRepositorioExercicio;
 import exceptions.CRUDException;
 import exceptions.ConexaoBancoException;
 import exceptions.NegocioException;
 
 public class ControladorExercicio {
 		
-	public IRepositorioAtividades<Exercicio> repositorio;
+	public IRepositorioExercicio<Exercicio> repositorio;
 	
 	public ControladorExercicio(){
 		this.repositorio = new ExercicioDao();
@@ -44,14 +44,21 @@ public class ControladorExercicio {
 		else
 			throw new NegocioException("O exercício não existe");
 	}
-	public ArrayList<Exercicio> lsitar() throws ConexaoBancoException, CRUDException, NegocioException{
+	public ArrayList<Exercicio> listar() throws ConexaoBancoException, CRUDException, NegocioException{
 		ArrayList<Exercicio> exercicio = this.repositorio.listar();
 		if(!(exercicio.isEmpty()))
 			return exercicio;
 		else
 			throw new NegocioException("Não existem exercícios padrão cadastrados");
 	}
-	public ArrayList<Exercicio> lsitar(String cpf) throws ConexaoBancoException, CRUDException, NegocioException{
+	public ArrayList<Exercicio> listar(int codigo) throws ConexaoBancoException, CRUDException, NegocioException{
+		ArrayList<Exercicio> exercicio = this.repositorio.listar(codigo);
+		if(!(exercicio.isEmpty()))
+			return exercicio;
+		else
+			throw new NegocioException("Não existem exercícios padrão cadastrados");
+	}
+	public ArrayList<Exercicio> listar(String cpf) throws ConexaoBancoException, CRUDException, NegocioException{
 		ArrayList<Exercicio> exercicio = this.repositorio.listar(cpf); 
 		if(!(exercicio.isEmpty())){
 			return exercicio;

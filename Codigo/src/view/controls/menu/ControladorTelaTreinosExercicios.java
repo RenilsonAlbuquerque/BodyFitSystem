@@ -2,10 +2,13 @@ package view.controls.menu;
 
 import java.io.IOException;
 
+import control.Fachada;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
+import view.controls.gerenciamento.ControladorPGerenciaExercicioPadrao;
+import view.controls.gerenciamento.ControladorPGerenciaTreinos;
 import view.controls.login.ControladorTelaLogin;
 
 public class ControladorTelaTreinosExercicios extends FlowPane {
@@ -38,11 +41,11 @@ public class ControladorTelaTreinosExercicios extends FlowPane {
 	}
 	@FXML
 	public void acaoBancoExercicios(){
-		
+		ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorPGerenciaExercicioPadrao());
 	}
 	@FXML
 	public void acaoMeusTreinos(){
-		
+		ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorPGerenciaTreinos(Fachada.getInstance().getUsuarioLogado().getCpf()));
 	}
 	@FXML
 	public void acaoMeusExercicios(){

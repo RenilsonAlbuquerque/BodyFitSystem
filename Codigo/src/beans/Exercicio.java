@@ -1,6 +1,6 @@
 package beans;
 
-public class Exercicio {
+public class Exercicio implements Comparable<Exercicio>{
 	private String nome;
 	private String carga;
 	private int intervalo;
@@ -54,6 +54,9 @@ public class Exercicio {
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
-
+	@Override
+	public int compareTo(Exercicio exercicio) {
+		return this.getNome().compareTo(exercicio.getNome());
+	}
 	
 }

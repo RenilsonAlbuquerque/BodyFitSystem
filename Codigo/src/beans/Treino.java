@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Treino {
 	private int codigo;
 	private String nome;
-	private ArrayList<Exercicio>exerciciosArray;
+	private ArrayList<Exercicio> exerciciosArray;
 	
 	public Treino(String nome) {
 		this.setNome(nome);

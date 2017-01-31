@@ -10,7 +10,7 @@ import beans.Exercicio;
 import exceptions.CRUDException;
 import exceptions.ConexaoBancoException;
 
-public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
+public class ExercicioDao implements IRepositorioExercicio<Exercicio>{
 	
 	private PreparedStatement statement;
 	private ResultSet rSet;
@@ -67,7 +67,7 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 	@Override
 	public void cadastrar(Exercicio objeto) throws ConexaoBancoException,CRUDException {
 		String sql = "INSERT INTO academia.exercicio_padrao (NOME,CARGA,REPETICOES,INTERVALO) "
-				+ "values(?,?,?,?,?)";
+				+ "values(?,?,?,?)";
 		
 		try{
 			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
@@ -195,13 +195,13 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 	@Override
 	public ArrayList<Exercicio> listar() throws ConexaoBancoException,CRUDException {
 		ArrayList<Exercicio> exercicios = new ArrayList<Exercicio>();
-		String query = "SELECT * FROM academia.exercio_padrao";
+		String query = "SELECT * FROM exercicio_padrao";
 		try{
 			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
-				int codigo = rSet.getInt("CODIGO_TP");
+				int codigo = rSet.getInt("CODIGO_EP");
 				String nome = rSet.getString("NOME");
 				String carga = rSet.getNString("CARGA");
 				int repeticoes = rSet.getInt("REPETICOES");
@@ -246,7 +246,33 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio>{
 		
 		return exercicios;
 	}
-
+	
+	@Override
+	public ArrayList<Exercicio> listar(int codigoTreino) throws ConexaoBancoException,CRUDException {
+		ArrayList<Exercicio> exercicios = new ArrayList<Exercicio>();
+		String query = "SELECT * FROM academia.exercio WHERE CODIGO_T = "+ codigoTreino;
+		try{
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
+			this.rSet = (ResultSet) statement.executeQuery();
+			
+			while(rSet.next()){
+				int codigo = rSet.getInt("CODIGO_TP");
+				String nome = rSet.getString("NOME");
+				String carga = rSet.getNString("CARGA");
+				int repeticoes = rSet.getInt("REPETICOES");
+				int intervalo = rSet.getInt("INTERVALO");
+				Exercicio exercicio = new Exercicio(codigo,nome,carga,repeticoes,intervalo);
+				exercicios.add(exercicio);
+			}
+		}catch(SQLException  e){
+			throw new CRUDException("Erro ao listar os treinos do professor");
+		}
+		finally{
+			DBConnectionFactory.getInstance().closeConnetion();
+		}
+		
+		return exercicios;
+	}
 	@Override
 	public Exercicio buscar(Integer chave) throws ConexaoBancoException, CRUDException {
 		// TODO Auto-generated method stub

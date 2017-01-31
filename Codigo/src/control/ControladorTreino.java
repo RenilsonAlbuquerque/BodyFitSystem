@@ -3,14 +3,14 @@ package control;
 import java.util.ArrayList;
 
 import beans.Treino;
-import data.IRepositorioAtividades;
+import data.IRepositorioTreino;
 import data.TreinoDao;
 import exceptions.CRUDException;
 import exceptions.ConexaoBancoException;
 import exceptions.NegocioException;
 
 public class ControladorTreino {
-	public IRepositorioAtividades<Treino> repositorio;
+	public IRepositorioTreino<Treino> repositorio;
 	
 	public ControladorTreino(){
 		this.repositorio = new TreinoDao();
@@ -42,6 +42,9 @@ public class ControladorTreino {
 		}
 		else
 			throw new NegocioException("O treino não existe");
+	}
+	public ArrayList<Treino> treinosAluno(String cpf) throws ConexaoBancoException, CRUDException{
+		return this.repositorio.rotinaDeTreinos(cpf);
 	}
 	public ArrayList<Treino> listar() throws ConexaoBancoException, CRUDException, NegocioException{
 		ArrayList<Treino> treino = this.repositorio.listar();

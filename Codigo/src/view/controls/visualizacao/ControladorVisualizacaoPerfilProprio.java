@@ -1,27 +1,25 @@
 package view.controls.visualizacao;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import control.Fachada;
 import exceptions.CRUDException;
 import exceptions.ConexaoBancoException;
 import exceptions.NegocioException;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 import view.controls.login.ControladorTelaLogin;
 
 public class ControladorVisualizacaoPerfilProprio extends HBox{
@@ -62,14 +60,8 @@ public class ControladorVisualizacaoPerfilProprio extends HBox{
 	
 	@FXML
 	public void acaoAlterarSenha(){
-		Dialog<Pair<String,String>> dialogo = new Dialog<>();
-		dialogo.setTitle("Alterar senha");
-		dialogo.setHeaderText(null);
 		
-		DialogPane d = dialogo.getDialogPane();
-		d.getStylesheets().add(
-				   getClass().getResource("/view/style/stylesheet.css").toExternalForm());
-				d.getStyleClass().add("dialog-pane");
+		Stage dialogo = new Stage();
 		
 		GridPane painel = new GridPane();
 		painel.setHgap(10);
@@ -85,25 +77,35 @@ public class ControladorVisualizacaoPerfilProprio extends HBox{
 		painel.add(senhaAntiga, 1, 0);
 		painel.add(new Label("Nova Senha:"), 0, 1);
 		painel.add(novaSenha, 1, 1);
-		painel.add(erro, 0, 2);
+		painel.add(erro, 1, 2);
 		painel.add(botaoConfirmar, 2, 3);
 		
-		dialogo.getDialogPane().setContent(painel);
-		
-		Optional<Pair<String,String>> result = dialogo.showAndWait();
-		if(result.isPresent()){
-			try {
-				if(Fachada.getInstance().autenticar(Fachada.getInstance().getUsuarioLogado().getCpf(), senhaAntiga.getText())){
-					Fachada.getInstance().getUsuarioLogado().setSenha(novaSenha.getText());
-					Fachada.getInstance().atualizarUsuario(Fachada.getInstance().getUsuarioLogado());
-				}
-			} catch (ConexaoBancoException | NegocioException | CRUDException e) {
-				erro.setText(e.getMessage());
-			} 		
-		}
 		
 		
+		botaoConfirmar.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	try {
+					if(Fachada.getInstance().autenticar(Fachada.getInstance().getUsuarioLogado().getCpf(), senhaAntiga.getText())){
+						Fachada.getInstance().getUsuarioLogado().setSenha(novaSenha.getText());
+						Fachada.getInstance().atualizarUsuario(Fachada.getInstance().getUsuarioLogado());
+						dialogo.close();
+					}
+					else{
+						erro.setText("A senha atual não está certa");
+					}
+				} catch (ConexaoBancoException | NegocioException | CRUDException ex) {
+					erro.setText(ex.getMessage());
+				} 		
+		    }
+		});
 		
+		
+		dialogo.setScene(new Scene(painel));
+		dialogo.getScene().getStylesheets().add("/view/style/stylesheet.css");
+		dialogo.show();
+	
+		
+
 	
 	}
 	

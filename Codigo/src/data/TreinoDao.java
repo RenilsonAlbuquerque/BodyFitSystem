@@ -10,7 +10,7 @@ import beans.Treino;
 import exceptions.CRUDException;
 import exceptions.ConexaoBancoException;
 
-public class TreinoDao implements IRepositorioAtividades<Treino>{
+public class TreinoDao implements IRepositorioTreino<Treino>{
 	
 	private PreparedStatement statement;
 	private ResultSet rSet;
@@ -233,7 +233,6 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 		finally{
 			DBConnectionFactory.getInstance().closeConnetion();
 		}
-		
 		return treinos;
 		
 	}
@@ -242,6 +241,30 @@ public class TreinoDao implements IRepositorioAtividades<Treino>{
 	public Treino buscar(Integer chave) throws ConexaoBancoException, CRUDException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public ArrayList<Treino> rotinaDeTreinos(String cpf)throws ConexaoBancoException,CRUDException {
+		ArrayList<Treino> treinos = new ArrayList<Treino>();
+		String query = "SELECT * FROM aluno_treino where CPF_ALUNO = " + cpf;
+		try{
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
+			this.rSet = (ResultSet) statement.executeQuery();
+			
+			while(rSet.next()){
+				int codigo = rSet.getInt("CODIGO_TREINO");
+				String nome = rSet.getString("NOME");
+				
+				treinos.add(new Treino(codigo,nome));			
+			}
+		}catch(SQLException  e){
+			throw new CRUDException("Erro ao listar os treinos do aluno");
+		}
+		finally{
+			DBConnectionFactory.getInstance().closeConnetion();
+		}
+		
+		return treinos;
 	}
 
 	

@@ -138,6 +138,15 @@ public class Fachada {
 	public ArrayList<Administrador> listarAdministradores() throws ConexaoBancoException, CRUDException, NegocioException{
 		return this.administrador.listar();
 	}
+	public ArrayList<Treino> treinosAluno(String cpf) throws ConexaoBancoException, CRUDException, NegocioException{
+		ArrayList<Treino> resultado = this.treino.treinosAluno(cpf);
+		if(!resultado.isEmpty()){
+			for(Treino t : resultado){
+				t.setExerciciosArray(this.exercicio.listar(t.getCodigo()));
+			}
+		}
+		return resultado;
+	}
 	public ArrayList<Treino> listarTreinosPadrao() throws ConexaoBancoException, CRUDException, NegocioException{
 		return this.treino.listar();
 	}
@@ -145,10 +154,10 @@ public class Fachada {
 		return this.treino.listar(cpfProf);
 	}
 	public ArrayList<Exercicio> listarExerciciosPadrao() throws ConexaoBancoException, CRUDException, NegocioException{
-		return this.exercicio.lsitar();
+		return this.exercicio.listar();
 	}
 	public ArrayList<Exercicio> listarExercicios(String cpfProf) throws ConexaoBancoException, CRUDException, NegocioException{
-		return this.exercicio.lsitar(cpfProf);
+		return this.exercicio.listar(cpfProf);
 	}
 	public void removerAluno(Aluno aluno) throws ConexaoBancoException, CRUDException{
 		this.aluno.remover(aluno);

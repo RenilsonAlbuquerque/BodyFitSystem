@@ -39,7 +39,7 @@ CREATE TABLE `administrador` (
 
 CREATE TABLE `treino_padrao` (
   `CODIGO_TP` int NOT NULL AUTO_INCREMENT,
-  `NOME` varchar(11) NOT NULL,
+  `NOME` varchar(20) NOT NULL,
   PRIMARY KEY (`CODIGO_TP`)
 );
 
@@ -49,16 +49,15 @@ CREATE TABLE `exercicio_padrao` (
   `CARGA` varchar(10) NOT NULL,
   `REPETICOES` int(3) NOT NULL,
   `INTERVALO` int(2) NOT NULL,
-  PRIMARY KEY (`CODIGO_EP`),
-  CONSTRAINT `FK_EP_CODIGO` FOREIGN KEY (`CODIGO_EP`) REFERENCES `treino_padrao` (`CODIGO_TP`) ON DELETE NO ACTION ON UPDATE CASCADE
+  PRIMARY KEY (`CODIGO_EP`)
+  
 );
 
 CREATE TABLE `treino` (
   `CODIGO_T` int NOT NULL AUTO_INCREMENT,
   `CPF_P` varchar(12) NOT NULL, 
-  `NOME` varchar(11) NOT NULL,
-  PRIMARY KEY (`CODIGO_T`,`CPF_P`),
-  CONSTRAINT `FK_TRE_CPFP` FOREIGN KEY (`CPF_P`) REFERENCES `professor` (`CPF_PROF`) ON DELETE 	NO ACTION ON UPDATE CASCADE
+  `NOME` varchar(20) NOT NULL,
+  PRIMARY KEY (`CODIGO_T`,`CPF_P`)
 );
 
 CREATE TABLE `exercicio` (
@@ -83,7 +82,7 @@ CREATE TABLE `treino_exercicio`(
 CREATE TABLE `aluno_treino`(
 	`CPF_ALUNO` varchar(12) NOT NULL,
     `CODIGO_TREINO` int NOT NULL,
-    `DIA_DA_SEMANA` int NOT NULL check(DIA_DA_SEMANA > 1 and DIA_DA_SEMANA <8),
+    `NOME` varchar(20) NOT NULL,
 	CONSTRAINT `PK_ALUTRE` PRIMARY KEY (`CPF_ALUNO`,`CODIGO_TREINO`),
     CONSTRAINT `FK_ALUTRE_CPFALU` FOREIGN KEY (`CPF_ALUNO`) REFERENCES `aluno` (`CPF_ALU`) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `FK_ALUTRE_CODTRE` FOREIGN KEY (`CODIGO_TREINO`) REFERENCES `treino` (`CODIGO_T`)ON DELETE CASCADE ON UPDATE CASCADE
@@ -140,6 +139,7 @@ select teste('10870298488');
 call alterarSenha('10870298488','123','123456');
 
     
+select *from exercicio_padrao;    
 delete from aluno_treino;
 delete from treino_exercicio;
 delete from exercicio;

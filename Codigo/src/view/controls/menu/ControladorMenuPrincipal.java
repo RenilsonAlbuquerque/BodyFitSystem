@@ -82,8 +82,7 @@ public class ControladorMenuPrincipal extends BorderPane{
 		return instance;
 	}
 	public void setComponentLayout(){
-		
-		painelTitulos.setStyle("-fx-border-color: midnightblue;-fx-border-width: 1px;");
+	
 		Circle c = new Circle(3);
 		
 		botaoVoltar.setShape(c);
