@@ -1,35 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="295.0" prefWidth="541.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="295.0" prefWidth="432.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane prefHeight="61.0" prefWidth="438.0">
          <children>
-            <Label prefHeight="35.0" prefWidth="149.0" text="Nome:" />
-            <Label layoutY="35.0" prefHeight="26.0" prefWidth="143.0" />
+            <Label prefHeight="35.0" prefWidth="149.0" text="Nome:">
+               <font>
+                  <Font size="20.0" />
+               </font></Label>
+            <Label fx:id="lblNome" layoutY="35.0" prefHeight="26.0" prefWidth="143.0" />
          </children>
       </AnchorPane>
       <AnchorPane>
          <children>
-            <Label prefHeight="35.0" prefWidth="149.0" text="Carga:" />
-            <Label layoutY="35.0" prefHeight="26.0" prefWidth="143.0" />
+            <Label prefHeight="35.0" prefWidth="149.0" text="Carga:">
+               <font>
+                  <Font size="20.0" />
+               </font></Label>
+            <Label fx:id="lblCarga" layoutY="35.0" prefHeight="26.0" prefWidth="143.0" />
          </children>
       </AnchorPane>
       <AnchorPane>
          <children>
-            <Label prefHeight="35.0" prefWidth="149.0" text="Intervalo:" />
-            <Label layoutY="35.0" prefHeight="26.0" prefWidth="143.0" />
+            <Label prefHeight="35.0" prefWidth="149.0" text="Intervalo:">
+               <font>
+                  <Font size="20.0" />
+               </font></Label>
+            <Label fx:id="lblIntervalo" layoutY="35.0" prefHeight="26.0" prefWidth="143.0" />
          </children>
       </AnchorPane>
       <AnchorPane>
          <children>
-            <Label prefHeight="35.0" prefWidth="149.0" text="Repetições:" />
-            <Label layoutY="35.0" prefHeight="26.0" prefWidth="143.0" />
+            <Label prefHeight="35.0" prefWidth="149.0" text="Repetições:">
+               <font>
+                  <Font size="20.0" />
+               </font></Label>
+            <Label fx:id="lblRepeticoes" layoutY="35.0" prefHeight="26.0" prefWidth="143.0" />
          </children>
       </AnchorPane>
    </children>

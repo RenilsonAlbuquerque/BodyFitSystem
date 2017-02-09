@@ -1,8 +1,7 @@
-package view.controls.cadastro;
+package view.controls.atualizar;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import beans.Exercicio;
 import beans.Treino;
@@ -25,10 +24,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
+import view.controls.cadastro.ControladorTelaCadastroTreino;
 import view.controls.visualizacao.ControladorVisualizacaoExercicio;
 
-
-public class ControladorTelaCadastroTreino extends GridPane{
+public class ControladorTelaAlterarTreino extends GridPane{
 
 	private ArrayList exerciciosPadrao;
 	private ArrayList exerciciosProfessor;
@@ -48,8 +47,12 @@ public class ControladorTelaCadastroTreino extends GridPane{
 	@FXML
 	private Button btnExerciciosPadrao;
 	
+	@FXML
+	private Button btnSalvar;
 	
-	public ControladorTelaCadastroTreino(){
+	
+	
+	public ControladorTelaAlterarTreino(Treino treino){
 		try{
 			FXMLLoader loader = new FXMLLoader(ControladorTelaCadastroTreino.class.getClass().getResource("/view/fxmls/cadastro/TelaCadastroTreino.fxml"));
 			loader.setController(this);
@@ -85,48 +88,10 @@ public class ControladorTelaCadastroTreino extends GridPane{
 		}
 
 		this.listaExerciciosAdcionar.setVisible(false);
-
-	}
-	
-	
-	public ControladorTelaCadastroTreino(ArrayList<Treino> treinos){
-		try{
-			FXMLLoader loader = new FXMLLoader(ControladorTelaCadastroTreino.class.getClass().getResource("/view/fxmls/cadastro/TelaCadastroTreino.fxml"));
-			loader.setController(this);
-			
-			this.getChildren().add(loader.load());
-			
-			this.listaExerciciosTreino.setCellFactory(new Callback<ListView<Exercicio>, CelulaListaTreino>() {
-
-				@Override
-				public CelulaListaTreino call(ListView<Exercicio> arg0) {
-					return new CelulaListaTreino();
-				}
-			});
-			
-		}catch(IOException e){
-			e.printStackTrace();
-		}
 		
-		try 
-		{
-			exerciciosPadrao= Fachada.getInstance().listarExerciciosPadrao();
-			
-		} catch (ConexaoBancoException | CRUDException | NegocioException e) {
-			this.exerciciosPadrao = new ArrayList<String>();
-			this.exerciciosPadrao.add(e.getMessage());
-		}
-		try{
-			exerciciosProfessor = Fachada.getInstance().listarExercicios(Fachada.getInstance().getUsuarioLogado().getCpf());
-			
-		} catch (ConexaoBancoException | CRUDException | NegocioException e) {
-			this.exerciciosProfessor = new ArrayList<String>();
-			this.exerciciosProfessor.add(e.getMessage());
-		}
-
-		this.listaExerciciosAdcionar.setVisible(false);
-		this.listaExerciciosTreino.getItems().addAll(treinos);
-
+		this.listaExerciciosTreino.setItems(FXCollections.observableArrayList(treino.getExerciciosArray()));
+		this.txtNomeTreino.setText(treino.getNome());
+		this.btnSalvar.setText("Alterar");
 	}
 	
 	
@@ -170,13 +135,13 @@ public class ControladorTelaCadastroTreino extends GridPane{
 			Treino treino = new Treino(this.txtNomeTreino.getText());
 			treino.getExerciciosArray().addAll(this.listaExerciciosTreino.getItems());
 			try {
-				Fachada.getInstance().cadastrarTreino(treino, Fachada.getInstance().getUsuarioLogado().getCpf());
+				Fachada.getInstance().alterarTreino(treino, Fachada.getInstance().getUsuarioLogado().getCpf());
 				Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
 				DialogPane d = dialogo.getDialogPane();
 				d.getStylesheets().add(
 						   getClass().getResource("/view/style/stylesheet.css").toExternalForm());
 						d.getStyleClass().add("dialog-pane");
-				dialogo.setContentText("Treino cadastrado");
+				dialogo.setContentText("Treino alterado");
 				dialogo.setHeaderText(null);
 				dialogo.show();
 			} catch (ConexaoBancoException | NegocioException | CRUDException e1) {
@@ -339,6 +304,5 @@ public class ControladorTelaCadastroTreino extends GridPane{
 			}
 		}
 		
-	
 	
 }

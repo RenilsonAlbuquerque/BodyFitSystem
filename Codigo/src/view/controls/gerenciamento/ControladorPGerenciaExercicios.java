@@ -36,7 +36,7 @@ import view.controls.Principal;
 import view.controls.login.ControladorTelaLogin;
 import view.controls.visualizacao.ControladorVisualizacaoExercicio;
 
-public class ControladorPGerenciaExercicioPadrao extends BorderPane{
+public class ControladorPGerenciaExercicios extends BorderPane{
 	
 	private ArrayList<Exercicio> exercicios;
 	
@@ -61,7 +61,7 @@ public class ControladorPGerenciaExercicioPadrao extends BorderPane{
 	@FXML
 	private Button btnExcluirExercicio;
 	
-	public ControladorPGerenciaExercicioPadrao(){
+	public ControladorPGerenciaExercicios(){
 		try{
 			FXMLLoader loader = new FXMLLoader(ControladorTelaLogin.class.getClass().getResource("/view/fxmls/gerenciamento/TelaProfessorGerenciaExercicios.fxml"));
 			loader.setController(this);
@@ -86,7 +86,7 @@ public class ControladorPGerenciaExercicioPadrao extends BorderPane{
 	public void povoarlista(){
 		try {
 			
-			this.exercicios =  Fachada.getInstance().listarExerciciosPadrao();
+			this.exercicios =  Fachada.getInstance().listarExercicios(Fachada.getInstance().getUsuarioLogado().getCpf());
 			this.listaObjetos.setItems(FXCollections.observableArrayList(exercicios));
 			Collections.sort(this.listaObjetos.getItems());
 			
@@ -107,9 +107,7 @@ public class ControladorPGerenciaExercicioPadrao extends BorderPane{
 						 ((ControladorVisualizacaoExercicio) painelDireita.getChildren().get(0)).setExercicio((Exercicio)listaObjetos.getSelectionModel().getSelectedItem());
 					
 				}
-			});
-			
-			
+			});		
 		}
 		catch(ConexaoBancoException | CRUDException e){
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -117,6 +115,7 @@ public class ControladorPGerenciaExercicioPadrao extends BorderPane{
 			alert.setHeaderText(null);
 			alert.setContentText(e.getMessage());
 			alert.showAndWait();
+			e.printStackTrace();
 		}catch (NegocioException e) {
 			
 			this.listaObjetos.setItems(FXCollections.observableArrayList(e.getMessage()));
@@ -169,8 +168,9 @@ public class ControladorPGerenciaExercicioPadrao extends BorderPane{
 		    @Override public void handle(ActionEvent e) {
 		    	try {
 		    		
-		    		Fachada.getInstance().cadastrarExercicioPadrao(new Exercicio(
-		    				txtNome.getText(),txtCarga.getText(),Integer.valueOf(txtRepeticao.getText()),Integer.valueOf(txtIntervalo.getText()) ));
+		    		Fachada.getInstance().cadastrarExercicio(new Exercicio(
+		    				txtNome.getText(),txtCarga.getText(),Integer.valueOf(txtRepeticao.getText()),Integer.valueOf(txtIntervalo.getText())),
+		    				Fachada.getInstance().getUsuarioLogado().getCpf());
 		    		
 		    		dialogo.close();
 		    		povoarlista();
@@ -231,7 +231,7 @@ public class ControladorPGerenciaExercicioPadrao extends BorderPane{
 						exercicio.setCarga(txtCarga.getText());
 						exercicio.setRepeticao(Integer.valueOf(txtRepeticao.getText()));
 						exercicio.setIntervalo(Integer.valueOf(txtIntervalo.getText()));
-						Fachada.getInstance().alterarExercicio(exercicio);
+						Fachada.getInstance().alterarExercicio(exercicio,Fachada.getInstance().getUsuarioLogado().getCpf());
 
 						dialogo.close();
 						povoarlista();
@@ -263,7 +263,7 @@ public class ControladorPGerenciaExercicioPadrao extends BorderPane{
 			Optional<ButtonType> result = dialogo.showAndWait();
 			if(result.get() == ButtonType.OK){
 				try{
-					Fachada.getInstance().removerExercicioPadrao((Exercicio) listaObjetos.getSelectionModel().getSelectedItem());
+					Fachada.getInstance().removerExercicio((Exercicio) listaObjetos.getSelectionModel().getSelectedItem(),Fachada.getInstance().getUsuarioLogado().getCpf());
 					povoarlista();
 					listaObjetos.getSelectionModel().select(0);
 				}catch(ConexaoBancoException | CRUDException | NegocioException ex){

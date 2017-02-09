@@ -4,7 +4,7 @@ create database if not exists `academia`;
 
 use academia;
 
-create table `usuario`(
+create table if not exists `usuario`(
 	`CPF_U` varchar(12) NOT NULL,
 	`NOME` varchar(50) NOT NULL,
 	`SENHA` varchar(50) NOT NULL DEFAULT '123456',
@@ -12,16 +12,18 @@ create table `usuario`(
 	PRIMARY KEY (`CPF_U`)
 );
 
-CREATE TABLE `aluno` (
+CREATE TABLE if not exists `aluno` (
   `CPF_ALU` varchar(12) NOT NULL,
+  `CPF_PROF` varchar(12) NOT NULL,
   `IDADE` int(2) NOT NULL,
   `ALTURA` float NOT NULL,
   `PESO` float NOT NULL,	
   PRIMARY KEY (`CPF_ALU`),
+  foreign key(CPF_PROF) references professor(CPF_PROF),
   CONSTRAINT `FK_ALU_CPF` FOREIGN KEY (`CPF_ALU`) REFERENCES `usuario` (`CPF_U`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE `professor` (
+CREATE TABLE if not exists `professor` (
   `CPF_PROF` varchar(12) NOT NULL,
   `CREF` varchar(14) NOT NULL,
   `TURNO` varchar(10) NOT NULL,
@@ -30,20 +32,20 @@ CREATE TABLE `professor` (
   CONSTRAINT `FK_PROF_CPF` FOREIGN KEY (`CPF_PROF`) REFERENCES `usuario` (`CPF_U`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE `administrador` (
+CREATE TABLE if not exists `administrador` (
   `CPF_ADM` varchar(12) NOT NULL,
   `CARGO` varchar(11) NOT NULL,
   PRIMARY KEY (`CPF_ADM`),
   CONSTRAINT `FK_ADM_CPF` FOREIGN KEY (`CPF_ADM`) REFERENCES `usuario` (`CPF_U`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE `treino_padrao` (
+CREATE TABLE if not exists `treino_padrao` (
   `CODIGO_TP` int NOT NULL AUTO_INCREMENT,
   `NOME` varchar(20) NOT NULL,
   PRIMARY KEY (`CODIGO_TP`)
 );
 
-CREATE TABLE `exercicio_padrao` (
+CREATE TABLE if not exists `exercicio_padrao` (
   `CODIGO_EP` int NOT NULL AUTO_INCREMENT,
   `NOME` varchar(11) NOT NULL,
   `CARGA` varchar(10) NOT NULL,
@@ -53,14 +55,15 @@ CREATE TABLE `exercicio_padrao` (
   
 );
 
-CREATE TABLE `treino` (
+CREATE TABLE if not exists `treino` (
   `CODIGO_T` int NOT NULL AUTO_INCREMENT,
   `CPF_P` varchar(12) NOT NULL, 
   `NOME` varchar(20) NOT NULL,
-  PRIMARY KEY (`CODIGO_T`,`CPF_P`)
+  PRIMARY KEY (`CODIGO_T`,`CPF_P`),
+  foreign key (CPF_P) references professor(CPF_PROF)
 );
 
-CREATE TABLE `exercicio` (
+CREATE TABLE if not exists `exercicio` (
   `CODIGO_E` int NOT NULL AUTO_INCREMENT,
   `CPF_P` varchar(12) NOT NULL, 
   `NOME` varchar(11) NOT NULL,
@@ -71,7 +74,7 @@ CREATE TABLE `exercicio` (
    CONSTRAINT `FK_EXE_CPFP` FOREIGN KEY (`CPF_P`) REFERENCES `professor` (`CPF_PROF`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE `treino_exercicio`(
+CREATE TABLE if not exists `treino_exercicio`(
     `CODIGO_TRE` int NOT NULL,
     `CODIGO_EXE` int NOT NULL,
 	CONSTRAINT `PK_TREEXE` PRIMARY KEY (`CODIGO_TRE`,`CODIGO_EXE`),
@@ -79,7 +82,7 @@ CREATE TABLE `treino_exercicio`(
     CONSTRAINT `fk_TREEXE_CODE` FOREIGN KEY (`CODIGO_EXE`) REFERENCES `exercicio` (`CODIGO_E`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE `aluno_treino`(
+CREATE TABLE if not exists `aluno_treino`(
 	`CPF_ALUNO` varchar(12) NOT NULL,
     `CODIGO_TREINO` int NOT NULL,
     `NOME` varchar(20) NOT NULL,
@@ -114,7 +117,7 @@ END $$
 DELIMITER $$;
 
 
-select * from usuario;
+select * from exercicio;
 
 
 
@@ -151,3 +154,8 @@ delete from professor;
 delete from administrador;
 delete from usuario;
     
+insert into exercicio (CPF_P,NOME,CARGA, REPETICOES,INTERVALO ) values ('10870298488','pescoço','--',2,30);
+insert into treino (CPF_PROF,NOME) values ('10870298488','treino de virilha')
+and insert into treino_exercicio (CODIGO_TRE,CODIGO_EXE) values (1,1);
+    
+    SELECT * FROM academia.exercio WHERE CPF_P = '10870298488';

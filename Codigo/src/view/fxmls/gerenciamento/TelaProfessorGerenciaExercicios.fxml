@@ -22,8 +22,8 @@
             <HBox fx:id="painelBaixo" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Button fx:id="btnCadastrarExercicio" contentDisplay="CENTER" mnemonicParsing="false" onAction="#acaoCadastrarExercicio" prefHeight="64.0" prefWidth="116.0" text="Cadastrar Exercício" />
-                  <Button fx:id="btnAlterarExercicio" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="64.0" prefWidth="116.0" text="Alterar Exercício" />
-                  <Button fx:id="btnExcluirExercicio" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="64.0" prefWidth="116.0" text="Excluir Exercício" />
+                  <Button fx:id="btnAlterarExercicio" contentDisplay="CENTER" mnemonicParsing="false" onAction="#acaoAlterarExercicio" prefHeight="64.0" prefWidth="116.0" text="Alterar Exercício" />
+                  <Button fx:id="btnExcluirExercicio" contentDisplay="CENTER" mnemonicParsing="false" onAction="#acaoExcluirExercicio" prefHeight="64.0" prefWidth="116.0" text="Excluir Exercício" />
                </children>
             </HBox>
          </children>

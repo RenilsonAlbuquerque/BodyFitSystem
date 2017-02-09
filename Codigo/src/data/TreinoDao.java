@@ -221,7 +221,7 @@ public class TreinoDao implements IRepositorioTreino<Treino>{
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
-				int codigo = rSet.getInt("CODIGO_TP");
+				int codigo = rSet.getInt("CODIGO_T");
 				String nome = rSet.getString("NOME");
 				
 				Treino treino = new Treino(codigo,nome);
@@ -239,7 +239,6 @@ public class TreinoDao implements IRepositorioTreino<Treino>{
 
 	@Override
 	public Treino buscar(Integer chave) throws ConexaoBancoException, CRUDException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -266,7 +265,9 @@ public class TreinoDao implements IRepositorioTreino<Treino>{
 		
 		return treinos;
 	}
-
+	public void cadastrarRotinaDetreinos(){
+		
+	}
 	
 
 }

@@ -55,8 +55,14 @@ public class Exercicio implements Comparable<Exercicio>{
 		this.codigo = codigo;
 	}
 	@Override
+	public String toString(){
+		return this.nome;
+	}
+	
+	@Override
 	public int compareTo(Exercicio exercicio) {
 		return this.getNome().compareTo(exercicio.getNome());
 	}
+	
 	
 }

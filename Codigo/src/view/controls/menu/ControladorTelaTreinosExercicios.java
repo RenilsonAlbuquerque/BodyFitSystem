@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
 import view.controls.gerenciamento.ControladorPGerenciaExercicioPadrao;
+import view.controls.gerenciamento.ControladorPGerenciaExercicios;
 import view.controls.gerenciamento.ControladorPGerenciaTreinos;
 import view.controls.login.ControladorTelaLogin;
 
@@ -49,7 +50,7 @@ public class ControladorTelaTreinosExercicios extends FlowPane {
 	}
 	@FXML
 	public void acaoMeusExercicios(){
-		
+		ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorPGerenciaExercicios());
 	}
 	
 

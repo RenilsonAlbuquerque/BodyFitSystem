@@ -223,13 +223,13 @@ public class ExercicioDao implements IRepositorioExercicio<Exercicio>{
 	@Override
 	public ArrayList<Exercicio> listar(String cpfProf) throws ConexaoBancoException,CRUDException {
 		ArrayList<Exercicio> exercicios = new ArrayList<Exercicio>();
-		String query = "SELECT * FROM academia.exercio WHERE CPF_P = '"+ cpfProf+ "'";
+		String query = "SELECT * FROM academia.exercicio WHERE CPF_P = "+ cpfProf;
 		try{
 			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
-				int codigo = rSet.getInt("CODIGO_TP");
+				int codigo = rSet.getInt("CODIGO_E");
 				String nome = rSet.getString("NOME");
 				String carga = rSet.getNString("CARGA");
 				int repeticoes = rSet.getInt("REPETICOES");
@@ -238,7 +238,7 @@ public class ExercicioDao implements IRepositorioExercicio<Exercicio>{
 				exercicios.add(exercicio);
 			}
 		}catch(SQLException  e){
-			throw new CRUDException("Erro ao listar os treinos do professor");
+			throw new CRUDException("Erro ao listar os exercícios do professor");
 		}
 		finally{
 			DBConnectionFactory.getInstance().closeConnetion();

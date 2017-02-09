@@ -2,7 +2,7 @@ package beans;
 
 import java.util.ArrayList;
 
-public class Treino {
+public class Treino implements Comparable<Treino>{
 	private int codigo;
 	private String nome;
 	private ArrayList<Exercicio> exerciciosArray;
@@ -34,5 +34,14 @@ public class Treino {
 	public void setExerciciosArray(ArrayList<Exercicio> exerciciosArray) {
 		this.exerciciosArray = exerciciosArray;
 	}
+	@Override
+	public String toString(){
+		return this.getNome();
+	}
+	@Override
+	public int compareTo(Treino treino) {
+		return this.getNome().compareTo(treino.getNome());
+	}
+	
 	
 }

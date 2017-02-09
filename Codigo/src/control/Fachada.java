@@ -126,8 +126,14 @@ public class Fachada {
 	public void alterarTreino(Treino treino) throws ConexaoBancoException, CRUDException, NegocioException{
 		this.treino.alterar(treino);
 	}
+	public void alterarTreino(Treino treino, String cpf) throws ConexaoBancoException, CRUDException, NegocioException{
+		this.treino.alterar(treino, cpf);
+	}
 	public void alterarExercicio(Exercicio exercicio) throws ConexaoBancoException, CRUDException, NegocioException{
 		this.exercicio.alterar(exercicio);
+	}
+	public void alterarExercicio(Exercicio exercicio,String cpfProf) throws ConexaoBancoException, CRUDException, NegocioException{
+		this.exercicio.alterar(exercicio,cpfProf);
 	}
 	public ArrayList<Aluno> listarAlunos() throws ConexaoBancoException, CRUDException, NegocioException{
 		return this.aluno.listar();
