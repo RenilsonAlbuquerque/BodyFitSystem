@@ -17,8 +17,19 @@ public class ControladorUsuario {
 		this.controlador = new UsuarioDao();
 	}
 	
-	public boolean autenticar(String cpf,String senha) throws ConexaoBancoException{
-		return this.controlador.autenticar(cpf, senha);
+	public boolean autenticar(String cpf,String senha) throws ConexaoBancoException, CRUDException, NegocioException{
+		int indice = -1;
+		ArrayList<Usuario> usuarios = this.listar();
+		for(int i = 0; i < usuarios.size();i++){
+			if(usuarios.get(i).getCpf().equals(cpf)){
+				indice = i;
+				break;
+			}	
+		}
+		if(indice > -1  && usuarios.get(indice).getSenha().equals(senha))
+			return true;
+		else
+			return false;
 	}
 	
 	public void cadastrar(Usuario usuario) throws NegocioException, ConexaoBancoException, CRUDException{

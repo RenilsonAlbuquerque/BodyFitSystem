@@ -81,6 +81,7 @@ public class ControladorPGerenciaAluno extends BorderPane{
 					
 				}
 			});
+			this.listaObjetos.getSelectionModel().select(0);
 		}catch(IOException e){
 			e.printStackTrace();
 		}
@@ -112,6 +113,10 @@ public class ControladorPGerenciaAluno extends BorderPane{
 				listaObjetos.getItems().add(a);
 		}
 		Collections.sort(this.listaObjetos.getItems());
+		if(alunos.isEmpty()){
+			listaObjetos.setItems(FXCollections.observableArrayList("Nenhum resutado encontrado"));
+		}
+		
 	}
 	
 	@FXML

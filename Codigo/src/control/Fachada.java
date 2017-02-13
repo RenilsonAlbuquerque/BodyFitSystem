@@ -71,7 +71,7 @@ public class Fachada {
 		if(perfil.equals(PerfisEnum.administrador))
 			this.usuarioLogado = this.administrador.buscar(cpf);
 	}
-	public boolean autenticar(String cpf,String senha) throws ConexaoBancoException{
+	public boolean autenticar(String cpf,String senha) throws ConexaoBancoException, CRUDException, NegocioException{
 		return this.usuario.autenticar(cpf, senha);
 	}
 	

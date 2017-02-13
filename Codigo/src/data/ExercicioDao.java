@@ -66,8 +66,8 @@ public class ExercicioDao implements IRepositorioExercicio<Exercicio>{
 
 	@Override
 	public void cadastrar(Exercicio objeto) throws ConexaoBancoException,CRUDException {
-		String sql = "INSERT INTO academia.exercicio_padrao (NOME,CARGA,REPETICOES,INTERVALO) "
-				+ "values(?,?,?,?)";
+		String sql = "INSERT INTO academia.exercicio_padrao (NOME,CARGA,REPETICOES,INTERVALO,PADRAO) "
+				+ "values(?,?,?,?,?)";
 		
 		try{
 			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
@@ -75,6 +75,7 @@ public class ExercicioDao implements IRepositorioExercicio<Exercicio>{
 			statement.setString(2, objeto.getCarga());
 			statement.setInt(3, objeto.getRepeticao());
 			statement.setInt(4, objeto.getIntervalo());
+			statement.setBoolean(5, objeto.isPadrao());
 			statement.execute();
 		}catch(SQLException e){
 			throw new CRUDException("Erro ao cadastrar o Exercício padrão");
@@ -195,18 +196,19 @@ public class ExercicioDao implements IRepositorioExercicio<Exercicio>{
 	@Override
 	public ArrayList<Exercicio> listar() throws ConexaoBancoException,CRUDException {
 		ArrayList<Exercicio> exercicios = new ArrayList<Exercicio>();
-		String query = "SELECT * FROM exercicio_padrao";
+		String query = "SELECT * FROM exercicio where padrao = 1";
 		try{
 			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
-				int codigo = rSet.getInt("CODIGO_EP");
+				int codigo = rSet.getInt("CODIGO_E");
 				String nome = rSet.getString("NOME");
 				String carga = rSet.getNString("CARGA");
 				int repeticoes = rSet.getInt("REPETICOES");
 				int intervalo = rSet.getInt("INTERVALO");
-				Exercicio exercicio = new Exercicio(codigo,nome,carga,repeticoes,intervalo);
+				boolean padrao = rSet.getBoolean("PADRAO");
+				Exercicio exercicio = new Exercicio(codigo,nome,carga,repeticoes,intervalo,padrao);
 				exercicios.add(exercicio);
 			}
 		}catch(SQLException  e){
@@ -219,7 +221,7 @@ public class ExercicioDao implements IRepositorioExercicio<Exercicio>{
 		return exercicios;
 		
 	}
-	
+		
 	@Override
 	public ArrayList<Exercicio> listar(String cpfProf) throws ConexaoBancoException,CRUDException {
 		ArrayList<Exercicio> exercicios = new ArrayList<Exercicio>();
@@ -234,7 +236,8 @@ public class ExercicioDao implements IRepositorioExercicio<Exercicio>{
 				String carga = rSet.getNString("CARGA");
 				int repeticoes = rSet.getInt("REPETICOES");
 				int intervalo = rSet.getInt("INTERVALO");
-				Exercicio exercicio = new Exercicio(codigo,nome,carga,repeticoes,intervalo);
+				boolean padrao = rSet.getBoolean("PADRAO");
+				Exercicio exercicio = new Exercicio(codigo,nome,carga,repeticoes,intervalo,padrao);
 				exercicios.add(exercicio);
 			}
 		}catch(SQLException  e){
@@ -261,7 +264,8 @@ public class ExercicioDao implements IRepositorioExercicio<Exercicio>{
 				String carga = rSet.getNString("CARGA");
 				int repeticoes = rSet.getInt("REPETICOES");
 				int intervalo = rSet.getInt("INTERVALO");
-				Exercicio exercicio = new Exercicio(codigo,nome,carga,repeticoes,intervalo);
+				boolean padrao = rSet.getBoolean("PADRAO");
+				Exercicio exercicio = new Exercicio(codigo,nome,carga,repeticoes,intervalo,padrao);
 				exercicios.add(exercicio);
 			}
 		}catch(SQLException  e){

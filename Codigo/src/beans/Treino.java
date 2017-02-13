@@ -6,6 +6,7 @@ public class Treino implements Comparable<Treino>{
 	private int codigo;
 	private String nome;
 	private ArrayList<Exercicio> exerciciosArray;
+	private boolean padrao;
 	
 	public Treino(String nome) {
 		this.setNome(nome);
@@ -33,6 +34,12 @@ public class Treino implements Comparable<Treino>{
 	}
 	public void setExerciciosArray(ArrayList<Exercicio> exerciciosArray) {
 		this.exerciciosArray = exerciciosArray;
+	}
+	public boolean isPadrao() {
+		return padrao;
+	}
+	public void setPadrao(boolean padrao) {
+		this.padrao = padrao;
 	}
 	@Override
 	public String toString(){

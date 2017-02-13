@@ -160,8 +160,8 @@ public class ControladorPGerenciaExercicios extends BorderPane{
 		painel.add(txtRepeticao, 1, 2);
 		painel.add(lblIntervalo, 0, 3);
 		painel.add(txtIntervalo, 1, 3);
-		painel.add(lblErro, 1, 3);
-		painel.add(botaoCadastrar, 2, 3);
+		painel.add(lblErro, 2, 3);
+		painel.add(botaoCadastrar, 3, 3);
 		
 
 		botaoCadastrar.setOnAction(new EventHandler<ActionEvent>() {
@@ -169,13 +169,13 @@ public class ControladorPGerenciaExercicios extends BorderPane{
 		    	try {
 		    		
 		    		Fachada.getInstance().cadastrarExercicio(new Exercicio(
-		    				txtNome.getText(),txtCarga.getText(),Integer.valueOf(txtRepeticao.getText()),Integer.valueOf(txtIntervalo.getText())),
+		    				txtNome.getText(),txtCarga.getText(),Integer.valueOf(txtRepeticao.getText()),Integer.valueOf(txtIntervalo.getText()),false),
 		    				Fachada.getInstance().getUsuarioLogado().getCpf());
 		    		
 		    		dialogo.close();
 		    		povoarlista();
 				} catch (ConexaoBancoException | NegocioException | CRUDException ex) {
-					
+					lblErro.setText(ex.getMessage());
 				} 
 						
 		    }

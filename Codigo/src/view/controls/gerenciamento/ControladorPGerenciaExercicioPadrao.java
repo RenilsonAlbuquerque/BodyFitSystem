@@ -118,7 +118,6 @@ public class ControladorPGerenciaExercicioPadrao extends BorderPane{
 			alert.setContentText(e.getMessage());
 			alert.showAndWait();
 		}catch (NegocioException e) {
-			
 			this.listaObjetos.setItems(FXCollections.observableArrayList(e.getMessage()));
 		}
 	}
@@ -170,7 +169,7 @@ public class ControladorPGerenciaExercicioPadrao extends BorderPane{
 		    	try {
 		    		
 		    		Fachada.getInstance().cadastrarExercicioPadrao(new Exercicio(
-		    				txtNome.getText(),txtCarga.getText(),Integer.valueOf(txtRepeticao.getText()),Integer.valueOf(txtIntervalo.getText()) ));
+		    				txtNome.getText(),txtCarga.getText(),Integer.valueOf(txtRepeticao.getText()),Integer.valueOf(txtIntervalo.getText()),true ));
 		    		
 		    		dialogo.close();
 		    		povoarlista();

@@ -69,7 +69,6 @@ public class ControladorMenuPrincipal extends BorderPane{
 			
 			this.setTop(painelTitulos);
 			
-			
 		}
 		catch(IOException e){
 			e.printStackTrace();
@@ -98,7 +97,7 @@ public class ControladorMenuPrincipal extends BorderPane{
 		try {
 			this.fotoPerfil.setFill(new ImagePattern(new Image(FTPConnectionFactory.getInstance().retrieveImage(Fachada.getInstance().getUsuarioLogado().getCaminhoFoto()))));
 		} catch (ConexaoFTPException e) {
-			e.printStackTrace();
+			this.fotoPerfil.setFill(new ImagePattern(new Image("imagens/Default User.png")));
 		}
 		
 		this.labelNomeUsuario.setText(Fachada.getInstance().getUsuarioLogado().getNome());
@@ -151,6 +150,9 @@ public class ControladorMenuPrincipal extends BorderPane{
 			((VBox) painel).setAlignment(Pos.CENTER);
 		if(painel instanceof FlowPane)
 			((FlowPane) painel).setAlignment(Pos.CENTER);
+		if(painel instanceof GridPane){
+			((GridPane) painel).setAlignment(Pos.CENTER);
+		}
 		
 		this.memoria.push(painel);
 

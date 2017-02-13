@@ -63,33 +63,32 @@ public class ControladorTelaVisualizacao extends VBox{
 	public void adcionarUsuario(Usuario usuario){
 		try {
 			this.fotoPerfil.setFill(new ImagePattern(new Image(FTPConnectionFactory.getInstance().retrieveImage(usuario.getCaminhoFoto()))));
-			//this.labelFoto.setGraphic(new ImageView(new Image(FTPConnectionFactory.getInstance().retrieveImage(usuario.getCaminhoFoto()))));
-			this.labelCPF.setText(usuario.getCpf());
-			this.labelNome.setText(usuario.getNome());
-			if(usuario instanceof Aluno){
-				this.labelNome1.setText("Idade");
-				this.labelValor1.setText(String.valueOf(((Aluno)usuario).getIdade()));
-				
-				this.labelNome2.setText("Altura");
-				this.labelValor2.setText(String.valueOf(((Aluno)usuario).getAltura()));
-				
-				this.labelNome3.setText("Peso");
-				this.labelValor3.setText(String.valueOf(((Aluno)usuario).getPeso()));
-			}
-			if(usuario instanceof Professor){	
-				this.labelNome1.setText("CREF");
-				this.labelValor1.setText( ((Professor) usuario).getCref() );
-				
-				this.labelNome2.setText("Turno");
-				this.labelValor2.setText( ((Professor) usuario).getTurno() );
-				
-			}
-			if(usuario instanceof Administrador){
-				this.labelNome1.setText("Cargo");
-				this.labelValor1.setText(((Administrador) usuario).getCargo());
-			}
 		} catch (ConexaoFTPException e) {
-			System.out.println(e.getMessage());
+			this.fotoPerfil.setFill(new ImagePattern(new Image("imagens/Default User.png")));
+		}
+		this.labelCPF.setText(usuario.getCpf());
+		this.labelNome.setText(usuario.getNome());
+		if(usuario instanceof Aluno){
+			this.labelNome1.setText("Idade");
+			this.labelValor1.setText(String.valueOf(((Aluno)usuario).getIdade()));
+			
+			this.labelNome2.setText("Altura");
+			this.labelValor2.setText(String.valueOf(((Aluno)usuario).getAltura()));
+			
+			this.labelNome3.setText("Peso");
+			this.labelValor3.setText(String.valueOf(((Aluno)usuario).getPeso()));
+		}
+		if(usuario instanceof Professor){	
+			this.labelNome1.setText("CREF");
+			this.labelValor1.setText( ((Professor) usuario).getCref() );
+			
+			this.labelNome2.setText("Turno");
+			this.labelValor2.setText( ((Professor) usuario).getTurno() );
+			
+		}
+		if(usuario instanceof Administrador){
+			this.labelNome1.setText("Cargo");
+			this.labelValor1.setText(((Administrador) usuario).getCargo());
 		}
 		
 		

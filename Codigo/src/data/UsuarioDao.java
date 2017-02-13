@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import com.mysql.jdbc.PreparedStatement;
 
+import beans.Aluno;
+import beans.PerfisEnum;
 import beans.Usuario;
 import exceptions.CRUDException;
 import exceptions.ConexaoBancoException;
@@ -151,7 +153,29 @@ public class UsuarioDao implements IRepositorioUsuario {
 	
 	@Override
 	public ArrayList<Usuario> listar() throws ConexaoBancoException, CRUDException {
-		return null;
+		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+		String query = "SELECT * FROM academia.usuario";
+		try{
+			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
+			this.rSet = (ResultSet) statement.executeQuery();
+			
+			while(rSet.next()){
+				String cpf = rSet.getString("CPF_U");
+				String nome = rSet.getString("NOME");
+				String senha = rSet.getString("SENHA");
+				String caminhoFoto = rSet.getString("CAMINHO_FOTO");
+				
+				
+								
+				usuarios.add(new Usuario(cpf,nome,senha,caminhoFoto));
+			}
+		}catch(SQLException  e){
+			throw new CRUDException("Erro ao listar os alunos");
+		}
+		finally{
+			DBConnectionFactory.getInstance().closeConnetion();
+		}
+		return usuarios;
 	}
 	
 	@Override

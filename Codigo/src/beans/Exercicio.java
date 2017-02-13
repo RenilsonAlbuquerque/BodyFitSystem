@@ -1,28 +1,31 @@
 package beans;
 
 public class Exercicio implements Comparable<Exercicio>{
+	private int codigo;
 	private String nome;
 	private String carga;
 	private int intervalo;
 	private int repeticao;
-	private int codigo;
+	private boolean padrao;
 	
-	public Exercicio(String nome, String carga, int intervalo, int repeticao) {
+	public Exercicio(String nome, String carga, int intervalo, int repeticao,boolean padrao) {
 		super();
 		this.setNome(nome);
 		this.setCarga(carga);
 		this.setIntervalo(intervalo);
 		this.setRepeticao(repeticao);
 		this.setCodigo(codigo);
+		this.setPadrao(padrao);
 	}
 	
-	public Exercicio(int codigo,String nome, String carga, int intervalo, int repeticao) {
+	public Exercicio(int codigo,String nome, String carga, int intervalo, int repeticao,boolean padrao) {
 		super();
 		this.setNome(nome);
 		this.setCarga(carga);
 		this.setIntervalo(intervalo);
 		this.setRepeticao(repeticao);
 		this.setCodigo(codigo);
+		this.setPadrao(padrao);
 	}
 	public String getNome() {
 		return nome;
@@ -54,6 +57,15 @@ public class Exercicio implements Comparable<Exercicio>{
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
+	
+	public boolean isPadrao() {
+		return padrao;
+	}
+
+	public void setPadrao(boolean padrao) {
+		this.padrao = padrao;
+	}
+
 	@Override
 	public String toString(){
 		return this.nome;
