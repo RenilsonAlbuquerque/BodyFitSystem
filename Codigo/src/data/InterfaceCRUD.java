@@ -1,16 +1,15 @@
 package data;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
-
-import exceptions.CRUDException;
-import exceptions.ConexaoBancoException;
 
 public interface InterfaceCRUD<T,K> {
 	
-	public T buscar(K chave)throws ConexaoBancoException,CRUDException;
-	public void cadastrar(T objeto)throws ConexaoBancoException,CRUDException;
-	public void remover(T objeto) throws ConexaoBancoException,CRUDException ;
-	public void atualizar(T objeto) throws ConexaoBancoException,CRUDException;
-	public ArrayList<T> listar()throws ConexaoBancoException,CRUDException;
+	public boolean existe(K chave) throws SQLException; 
+	public T buscar(K chave)throws SQLException;
+	public boolean cadastrar(T objeto)throws SQLException;
+	public boolean remover(T objeto)throws SQLException ;
+	public boolean atualizar(T objeto)throws SQLException;
+	public ArrayList<T> listar()throws SQLException;
 	
 }

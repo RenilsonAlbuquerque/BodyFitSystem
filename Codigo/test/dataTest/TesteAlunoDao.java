@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
+import java.sql.SQLException;
+
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -12,8 +14,6 @@ import org.junit.runners.MethodSorters;
 import beans.Aluno;
 import data.AlunoDao;
 import data.UsuarioDao;
-import exceptions.CRUDException;
-import exceptions.ConexaoBancoException;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TesteAlunoDao {
@@ -26,7 +26,7 @@ public class TesteAlunoDao {
 	public void comecar(){
 		this.daoUs = new UsuarioDao();
 		this.aluno = new Aluno("10870298445", "Roberto", "senha", "caminho",22, 70, 1.90f);
-		this.dao = new AlunoDao();
+		this.dao = AlunoDao.getInstance();
 		
 	}
 	
@@ -38,7 +38,7 @@ public class TesteAlunoDao {
 			dao.cadastrar(aluno);
 			assertEquals(dao.existe(aluno.getCpf()),true);
 		}
-		catch(ConexaoBancoException | CRUDException e){
+		catch(SQLException e){
 			fail("Erro ao cadastrar o aluno");
 		}
 	}
@@ -51,7 +51,7 @@ public class TesteAlunoDao {
 			dao.atualizar(aluno);
 			assertEquals(dao.existe(aluno.getCpf()),true);
 		}
-		catch(ConexaoBancoException | CRUDException e){
+		catch(SQLException e){
 			fail("Erro ao atualizar o aluno");
 		}
 	}
@@ -62,7 +62,7 @@ public class TesteAlunoDao {
 		try{
 			assertNotNull(this.dao.listar());
 			
-		}catch(ConexaoBancoException | CRUDException e){
+		}catch(SQLException e){
 			fail("Erro ao listar os alunos");
 		}
 	}
@@ -72,7 +72,7 @@ public class TesteAlunoDao {
 		try{
 			this.dao.remover(aluno);
 			assertEquals(this.dao.existe(aluno.getCpf()),false);
-		}catch(ConexaoBancoException | CRUDException e){
+		}catch(SQLException e){
 			fail("Erro ao remover o aluno");
 		}
 	}

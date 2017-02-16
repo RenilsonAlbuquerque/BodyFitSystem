@@ -7,24 +7,29 @@ import java.util.ArrayList;
 import com.mysql.jdbc.PreparedStatement;
 
 import beans.Professor;
-import exceptions.CRUDException;
-import exceptions.ConexaoBancoException;
 
-public class ProfessorDao implements IRepositorioFuncionarios<Professor>{
+public class ProfessorDao implements InterfaceCRUD<Professor,String>{
 	
+	private static ProfessorDao instance;
 	private PreparedStatement statement;
 	private ResultSet rSet;
 	
-	public ProfessorDao(){
+	private ProfessorDao(){
 		
 	}
 	
+	public static ProfessorDao getInstance(){
+		if(instance == null)
+			instance = new ProfessorDao();
+		return instance;
+	}
+	
 	@Override
-	public boolean existe(String cpf) throws ConexaoBancoException {
+	public boolean existe(String cpf) throws SQLException{
 		boolean resultado = false;
 		String sql = "SELECT * FROM professor WHERE CPF_PROF =" + cpf;
 		
-		try{
+		
 			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
@@ -32,83 +37,56 @@ public class ProfessorDao implements IRepositorioFuncionarios<Professor>{
 				resultado = true;
 			}
 			return resultado;
-			
-		}catch(SQLException e){
-			
-			throw new ConexaoBancoException();
-		}
-		
 	}
 
 	@Override
-	public void cadastrar(Professor objeto) throws ConexaoBancoException,CRUDException {
+	public boolean cadastrar(Professor objeto)throws SQLException {
 		String sql = "INSERT INTO academia.professor(CPF_PROF, CREF, TURNO) "
 				+ "values(?,?,?)";
 		
-		try{
 			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			statement.setString(1, objeto.getCpf());
 			statement.setString(2, objeto.getCref());
 			statement.setString(3, objeto.getTurno());
 			statement.execute();
 			
-		}catch(SQLException e){
-			throw new CRUDException("Erro ao cadastrar o Professor");
-		}
-		finally{
-			DBConnectionFactory.getInstance().closeConnetion();
-		}
+		return true;
 				
 	}
 
 	@Override
-	public void remover(Professor objeto) throws ConexaoBancoException,CRUDException {
+	public boolean remover(Professor objeto) throws SQLException {
 		String sql = "DELETE FROM academia.professor "
 				+ " WHERE CPF_PROF = ?";
 		
-			PreparedStatement smt;
-			try {
-				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
-				smt.setString(1, objeto.getCpf());
-				smt.execute();
-			}
-			catch(SQLException e){
-				throw new CRUDException("Erro ao remover o Professor do sistema");
-			}
-			finally{
-				DBConnectionFactory.getInstance().closeConnetion();
-			}
+				statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+				statement.setString(1, objeto.getCpf());
+				statement.execute();
+		
+			return true;
 		
 	}
 
 	@Override
-	public void atualizar(Professor objeto) throws ConexaoBancoException,CRUDException{
+	public boolean atualizar(Professor objeto)throws SQLException{
 		String sql = "UPDATE academia.professor SET CPF_PROF = ?, CREF = ?,TURNO = ? "
 				+ " WHERE CPF_PROF =" + objeto.getCpf();
 		
-			PreparedStatement smt;
-			try {
-				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
-				smt.setString(1, objeto.getCpf());
-				smt.setString(2, objeto.getCref());
-				smt.setString(3, objeto.getTurno());
-				smt.execute();
+			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			statement.setString(1, objeto.getCpf());
+			statement.setString(2, objeto.getCref());
+			statement.setString(3, objeto.getTurno());
+			statement.execute();
 				
-			} catch (Exception e) {
-	
-				throw new CRUDException("Erro ao alterar o Professor");
-			}
-			finally{
-				DBConnectionFactory.getInstance().closeConnetion();
-			}	
+		 
+			return true;
 		
 	}
 	@Override
-	public Professor buscar(String cpf) throws ConexaoBancoException, CRUDException {
+	public Professor buscar(String cpf) throws SQLException{
 		Professor professor = null;
 		String sql = "SELECT * FROM professor INNER JOIN academia.usuario ON professor.CPF_PROF = usuario.CPF_U WHERE CPF_PROF =" + cpf;
 		
-		try{
 			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
@@ -123,16 +101,13 @@ public class ProfessorDao implements IRepositorioFuncionarios<Professor>{
 			}
 			return professor;
 			
-		}catch(SQLException e){
-			
-			throw new ConexaoBancoException();
-		}
+		
 	}
 	@Override
-	public ArrayList<Professor> listar() throws ConexaoBancoException,CRUDException {
+	public ArrayList<Professor> listar() throws SQLException {
 		ArrayList<Professor> professores = new ArrayList<Professor>();
 		String query = "SELECT * FROM academia.professor INNER JOIN academia.usuario ON professor.CPF_PROF = usuario.CPF_U";
-		try{
+
 			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
@@ -148,12 +123,6 @@ public class ProfessorDao implements IRepositorioFuncionarios<Professor>{
 				Professor professor = new Professor(cpf,nome,senha,caminhoFoto,cref,turno,coordenador);
 				professores.add(professor);
 			}
-		}catch(SQLException  e){
-			throw new CRUDException("Erro ao listar os professores");
-		}
-		finally{
-			DBConnectionFactory.getInstance().closeConnetion();
-		}
 		
 		return professores;
 		

@@ -105,19 +105,23 @@ public class ControladorPGerenciaExercicioPadrao extends BorderPane{
 				public void changed(ObservableValue<? extends Exercicio	> observable, Exercicio oldValue, Exercicio newValue) {
 					if(!listaObjetos.getItems().isEmpty() && listaObjetos.getItems().get(0) instanceof Exercicio)
 						 ((ControladorVisualizacaoExercicio) painelDireita.getChildren().get(0)).setExercicio((Exercicio)listaObjetos.getSelectionModel().getSelectedItem());
-					
+					else{
+						((ControladorVisualizacaoExercicio) painelDireita.getChildren().get(0)).zerarCampos();
+					}
 				}
 			});
 			
 			
 		}
-		catch(ConexaoBancoException | CRUDException e){
+		/*
+		catch(NegocioException  e){
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Alerta de erro");
 			alert.setHeaderText(null);
 			alert.setContentText(e.getMessage());
 			alert.showAndWait();
-		}catch (NegocioException e) {
+		}
+		*/catch (NegocioException e) {
 			this.listaObjetos.setItems(FXCollections.observableArrayList(e.getMessage()));
 		}
 	}
@@ -168,15 +172,15 @@ public class ControladorPGerenciaExercicioPadrao extends BorderPane{
 		    @Override public void handle(ActionEvent e) {
 		    	try {
 		    		
-		    		Fachada.getInstance().cadastrarExercicioPadrao(new Exercicio(
+		    		Fachada.getInstance().cadastrarExercicio(new Exercicio(
+		    				Fachada.getInstance().getUsuarioLogado().getCpf(),
 		    				txtNome.getText(),txtCarga.getText(),Integer.valueOf(txtRepeticao.getText()),Integer.valueOf(txtIntervalo.getText()),true ));
 		    		
 		    		dialogo.close();
 		    		povoarlista();
-				} catch (ConexaoBancoException | NegocioException | CRUDException ex) {
+				} catch ( NegocioException ex) {
 					
-				} 
-						
+				} 		
 		    }
 		});
 		
@@ -235,8 +239,8 @@ public class ControladorPGerenciaExercicioPadrao extends BorderPane{
 						dialogo.close();
 						povoarlista();
 						listaObjetos.getSelectionModel().select(0);
-					} catch (ConexaoBancoException | NegocioException | CRUDException ex) {
-
+					} catch (NegocioException  ex) {
+						System.out.println(ex.getMessage());
 					}
 
 				}
@@ -262,10 +266,10 @@ public class ControladorPGerenciaExercicioPadrao extends BorderPane{
 			Optional<ButtonType> result = dialogo.showAndWait();
 			if(result.get() == ButtonType.OK){
 				try{
-					Fachada.getInstance().removerExercicioPadrao((Exercicio) listaObjetos.getSelectionModel().getSelectedItem());
+					Fachada.getInstance().removerExercicio((Exercicio) listaObjetos.getSelectionModel().getSelectedItem());
 					povoarlista();
 					listaObjetos.getSelectionModel().select(0);
-				}catch(ConexaoBancoException | CRUDException | NegocioException ex){
+				}catch( NegocioException ex){
 					
 				}
 			}

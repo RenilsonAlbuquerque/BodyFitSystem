@@ -7,7 +7,9 @@ public class Exercicio implements Comparable<Exercicio>{
 	private int intervalo;
 	private int repeticao;
 	private boolean padrao;
+	private String cpfProfessor;
 	
+	/*
 	public Exercicio(String nome, String carga, int intervalo, int repeticao,boolean padrao) {
 		super();
 		this.setNome(nome);
@@ -17,8 +19,18 @@ public class Exercicio implements Comparable<Exercicio>{
 		this.setCodigo(codigo);
 		this.setPadrao(padrao);
 	}
-	
-	public Exercicio(int codigo,String nome, String carga, int intervalo, int repeticao,boolean padrao) {
+	*/
+	public Exercicio(int codigo,String cpf,String nome, String carga, int intervalo, int repeticao,boolean padrao) {
+		super();
+		this.setNome(nome);
+		this.setCarga(carga);
+		this.setIntervalo(intervalo);
+		this.setRepeticao(repeticao);
+		this.setCodigo(codigo);
+		this.setCpfProfessor(cpf);
+		this.setPadrao(padrao);
+	}
+	public Exercicio(String cpf,String nome, String carga, int intervalo, int repeticao,boolean padrao) {
 		super();
 		this.setNome(nome);
 		this.setCarga(carga);
@@ -26,6 +38,7 @@ public class Exercicio implements Comparable<Exercicio>{
 		this.setRepeticao(repeticao);
 		this.setCodigo(codigo);
 		this.setPadrao(padrao);
+		this.setCpfProfessor(cpf);
 	}
 	public String getNome() {
 		return nome;
@@ -64,6 +77,15 @@ public class Exercicio implements Comparable<Exercicio>{
 
 	public void setPadrao(boolean padrao) {
 		this.padrao = padrao;
+	}
+	
+
+	public String getCpfProfessor() {
+		return this.cpfProfessor;
+	}
+
+	public void setCpfProfessor(String cpf) {
+		this.cpfProfessor = cpf;
 	}
 
 	@Override

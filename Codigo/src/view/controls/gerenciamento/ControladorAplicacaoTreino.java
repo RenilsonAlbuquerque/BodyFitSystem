@@ -52,7 +52,7 @@ public class ControladorAplicacaoTreino extends HBox{
 		
 		try 
 		{
-			ObservableList<Treino> data = FXCollections.observableArrayList(Fachada.getInstance().treinosAluno(aluno.getCpf()));
+			ObservableList<Treino> data = FXCollections.observableArrayList(Fachada.getInstance().listarTreinosPadrao());
 			
 			this.listaTreinosAluno.setCellFactory(new Callback<ListView<Treino>, CelulaListaTreinos>() {
 
@@ -63,7 +63,7 @@ public class ControladorAplicacaoTreino extends HBox{
 			});
 			
 			this.listaTreinosAluno.getItems().addAll(data);
-		} catch (ConexaoBancoException | CRUDException | NegocioException e) {
+		} catch (NegocioException e) {
 			ObservableList<String> data = FXCollections.observableArrayList(e.getMessage());
 			this.listaTreinosAluno.getItems().addAll(data);
 		}

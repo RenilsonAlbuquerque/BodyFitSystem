@@ -108,7 +108,7 @@ BEGIN
 END $$
 DELIMITER ;   
     
-insert into usuario (CPF_U,NOME,SENHA,USUARIOALUNO,USUARIOPOFESSOR,USUARIOADMINISTRADOR) VALUES ('10870298488','Renilson','1234',1,1,1);
+insert into usuario (CPF_U,NOME,SENHA,USUARIOALUNO,USUARIOPROFESSOR,USUARIOADMINISTRADOR) VALUES ('10870298488','Renilson','1234',1,1,1);
 insert into usuario (CPF_U,NOME,SENHA) VALUES ('10870298499','Josivaldo','123');
 
 insert into professor (CPF_PROF,CREF,TURNO,COORDENADOR) VALUES ('10870298488','573822','tarde',1);
@@ -120,7 +120,11 @@ INSERT INTO aluno(CPF_ALU,CPF_PROF, IDADE, ALTURA, PESO) values('10870298499','1
 insert into administrador(CPF_ADM,CARGO) VALUES ('10870298488','gerente');
 
 insert into administrador (CPF_ADM,CARGO) VALUES ('184719301','patrao');
-insert into treino (CPF_P,NOME) values ('10870298488','treino s');
+insert into treino (CPF_P,NOME,PADRAO) values ('10870298488','treino s',0);
+
+insert into treino_exercicio (CODIGO_TRE,CODIGO_EXE) values (2,1);
+insert into treino_exercicio (CODIGO_TRE,CODIGO_EXE) values (2,2);
+
 insert into exercicio (CODIGO_E,CPF_P,NOME,CARGA,REPETICOES,INTERVALO) values (1,'10870298488','exercicio1','100',12,30);
 insert into treino_exercicio (CODIGO_TRE,CODIGO_EXE) values (1,1);
 
@@ -149,12 +153,11 @@ drop function if exists autenticar;
 drop function if exists teste;
 
 insert into exercicio_padrao (NOME,CARGA,REPETICOES,INTERVALO) values('flexões','20',2,30);
+drop table if exists historico;
 drop table if exists aluno_treino;
 drop table if exists treino_exercicio;
 drop table if exists exercicio;
 drop table if exists treino;
-drop table if exists exercicio_padrao;
-drop table if exists treino_padrao;
 drop table if exists aluno;
 drop table if exists professor;
 drop table if exists administrador;

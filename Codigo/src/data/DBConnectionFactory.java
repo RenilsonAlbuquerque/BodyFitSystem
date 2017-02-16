@@ -15,36 +15,38 @@ public class DBConnectionFactory {
 	
 	
     private static final String URL = "jdbc:mysql://localhost:3303/academia?autoReconnect=true&useSSL=false";
-    private static final String USER = "root";
-    private static final String PASSWORD = "bancodedados2016.2";
+    private static final String USER = "usuario";
+    private static final String PASSWORD = "usuario54321";
     private static final String DRIVER_CLASS = "com.mysql.jdbc.Driver";
     
-	private DBConnectionFactory() throws ConexaoBancoException {
+	private DBConnectionFactory() throws SQLException{
 		setConnection();
 	}
 	
-	public static DBConnectionFactory getInstance() throws ConexaoBancoException{
+	public static DBConnectionFactory getInstance() throws SQLException{
 		if(instance == null){
 			instance = new DBConnectionFactory();
 		}
 		return instance;
 		
 	}
-    private void setConnection() throws ConexaoBancoException{
+    private void setConnection()throws SQLException {
     	
+		if (this.conexao == null) {
 			try {
 				Class.forName(DRIVER_CLASS).newInstance();
-				conexao =  DriverManager.getConnection(URL,USER,PASSWORD);
+				conexao = DriverManager.getConnection(URL, USER, PASSWORD);
+				conexao.setAutoCommit(false);
 			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 				e.printStackTrace();
-			} 
-			catch(SQLException e){
-				throw new ConexaoBancoException();
 			}
+		}
+			
     }
     
-	public Connection getConnection() throws ConexaoBancoException{
+	public Connection getConnection() throws SQLException{
 		
+
 		this.setConnection();
 		return conexao;
 	}

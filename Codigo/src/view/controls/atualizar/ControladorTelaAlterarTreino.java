@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import beans.Exercicio;
 import beans.Treino;
 import control.Fachada;
-import exceptions.CRUDException;
-import exceptions.ConexaoBancoException;
 import exceptions.NegocioException;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -29,6 +27,8 @@ import view.controls.visualizacao.ControladorVisualizacaoExercicio;
 
 public class ControladorTelaAlterarTreino extends GridPane{
 
+	private Treino treino;
+	
 	private ArrayList exerciciosPadrao;
 	private ArrayList exerciciosProfessor;
 	
@@ -54,6 +54,7 @@ public class ControladorTelaAlterarTreino extends GridPane{
 	
 	public ControladorTelaAlterarTreino(Treino treino){
 		try{
+			
 			FXMLLoader loader = new FXMLLoader(ControladorTelaCadastroTreino.class.getClass().getResource("/view/fxmls/cadastro/TelaCadastroTreino.fxml"));
 			loader.setController(this);
 			
@@ -71,26 +72,27 @@ public class ControladorTelaAlterarTreino extends GridPane{
 			e.printStackTrace();
 		}
 		
+		this.treino = treino;
 		try 
 		{
 			exerciciosPadrao= Fachada.getInstance().listarExerciciosPadrao();
 			
-		} catch (ConexaoBancoException | CRUDException | NegocioException e) {
+		} catch ( NegocioException e) {
 			this.exerciciosPadrao = new ArrayList<String>();
 			this.exerciciosPadrao.add(e.getMessage());
 		}
 		try{
 			exerciciosProfessor = Fachada.getInstance().listarExercicios(Fachada.getInstance().getUsuarioLogado().getCpf());
 			
-		} catch (ConexaoBancoException | CRUDException | NegocioException e) {
+		} catch ( NegocioException e) {
 			this.exerciciosProfessor = new ArrayList<String>();
 			this.exerciciosProfessor.add(e.getMessage());
 		}
 
 		this.listaExerciciosAdcionar.setVisible(false);
 		
-		this.listaExerciciosTreino.setItems(FXCollections.observableArrayList(treino.getExerciciosArray()));
-		this.txtNomeTreino.setText(treino.getNome());
+		this.listaExerciciosTreino.setItems(FXCollections.observableArrayList(this.treino.getExerciciosArray()));
+		this.txtNomeTreino.setText(this.treino.getNome());
 		this.btnSalvar.setText("Alterar");
 	}
 	
@@ -132,10 +134,11 @@ public class ControladorTelaAlterarTreino extends GridPane{
 	private void acaoBotaoSalvar(ActionEvent e){
 		
 		if(!this.listaExerciciosTreino.getItems().isEmpty()){
-			Treino treino = new Treino(this.txtNomeTreino.getText());
-			treino.getExerciciosArray().addAll(this.listaExerciciosTreino.getItems());
+			this.treino.setNome(this.txtNomeTreino.getText());
+			this.treino.getExerciciosArray().clear();
+			this.treino.getExerciciosArray().addAll(this.listaExerciciosTreino.getItems());
 			try {
-				Fachada.getInstance().alterarTreino(treino, Fachada.getInstance().getUsuarioLogado().getCpf());
+				Fachada.getInstance().alterarTreino(this.treino);
 				Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
 				DialogPane d = dialogo.getDialogPane();
 				d.getStylesheets().add(
@@ -144,7 +147,7 @@ public class ControladorTelaAlterarTreino extends GridPane{
 				dialogo.setContentText("Treino alterado");
 				dialogo.setHeaderText(null);
 				dialogo.show();
-			} catch (ConexaoBancoException | NegocioException | CRUDException e1) {
+			} catch (NegocioException e1) {
 				Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
     			DialogPane d = dialogo.getDialogPane();
     			d.getStylesheets().add(

@@ -7,6 +7,7 @@ import beans.PerfisEnum;
 import control.Fachada;
 import exceptions.CRUDException;
 import exceptions.ConexaoBancoException;
+import exceptions.NegocioException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -49,7 +50,7 @@ public class ControladorTelaEscolhaPerfil extends FlowPane{
 			 	
 			 	this.cpf = cpf;
 			 	
-			 	ArrayList<PerfisEnum> perfis = Fachada.getInstance().getPerfis(cpf);
+			 	ArrayList<PerfisEnum> perfis = Fachada.getInstance().getPerfisUsuario(cpf);
 			 	
 			 	if(perfis.indexOf(PerfisEnum.aluno) > -1)
 			 		painel.getChildren().add(botaoAluno);
@@ -66,7 +67,7 @@ public class ControladorTelaEscolhaPerfil extends FlowPane{
 			 	painel.add(botaoVoltar, 0, 4);
 			 	
 			 	
-			} catch (IOException | ConexaoBancoException | CRUDException e) {
+			} catch (IOException | NegocioException e) {
 				e.printStackTrace();
 			}
 		 
@@ -82,7 +83,7 @@ public class ControladorTelaEscolhaPerfil extends FlowPane{
 					(int)Screen.getPrimary().getVisualBounds().getWidth(),
 					(int)Screen.getPrimary().getVisualBounds().getHeight());
 					*/
-		} catch (ConexaoBancoException | CRUDException e) {
+		} catch (NegocioException e) {
 			
 			e.printStackTrace();
 		}
@@ -97,7 +98,7 @@ public class ControladorTelaEscolhaPerfil extends FlowPane{
 					(int)Screen.getPrimary().getVisualBounds().getWidth(),
 					(int)Screen.getPrimary().getVisualBounds().getHeight());
 			ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorOpcoesProfessor());
-		} catch (ConexaoBancoException | CRUDException e) {
+		} catch (NegocioException e) {
 			
 			e.printStackTrace();
 		}
@@ -113,7 +114,7 @@ public class ControladorTelaEscolhaPerfil extends FlowPane{
 					(int)Screen.getPrimary().getVisualBounds().getWidth(),
 					(int)Screen.getPrimary().getVisualBounds().getHeight());
 					*/
-		} catch (ConexaoBancoException | CRUDException e) {
+		} catch (NegocioException e) {
 			
 			e.printStackTrace();
 		}
@@ -128,7 +129,7 @@ public class ControladorTelaEscolhaPerfil extends FlowPane{
 					(int)Screen.getPrimary().getVisualBounds().getWidth(),
 					(int)Screen.getPrimary().getVisualBounds().getHeight());
 			ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorOpcoesAdministrador());
-		} catch (ConexaoBancoException | CRUDException e) {
+		} catch (NegocioException e) {
 			
 			e.printStackTrace();
 		}

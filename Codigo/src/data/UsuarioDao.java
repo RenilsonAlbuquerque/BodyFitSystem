@@ -6,15 +6,12 @@ import java.util.ArrayList;
 
 import com.mysql.jdbc.PreparedStatement;
 
-import beans.Aluno;
 import beans.PerfisEnum;
 import beans.Usuario;
-import exceptions.CRUDException;
-import exceptions.ConexaoBancoException;
 
 
 
-public class UsuarioDao implements IRepositorioUsuario {
+public class UsuarioDao implements InterfaceCRUD<Usuario,String>{
 
 	private PreparedStatement statement;
 	private ResultSet rSet;
@@ -22,45 +19,13 @@ public class UsuarioDao implements IRepositorioUsuario {
 	public UsuarioDao(){
 		
 	}
-	
+		
 	@Override
-	public boolean autenticar(String cpf, String senha) throws ConexaoBancoException {
-		boolean resultado = false;
-		String query = "SELECT * FROM academia.usuario WHERE CPF_U = '" + cpf +"'" ;
-		try{
-			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
-			this.rSet = (ResultSet) statement.executeQuery();
-			
-		
-		if(rSet.next()){
-			String rSenha = rSet.getString("SENHA");
-			if(rSenha.equals(senha)){
-				
-				resultado = true;
-			}
-			else
-				resultado = false;
-		}
-		else
-			resultado =  false;
-		
-		return resultado;
-		
-		}catch(SQLException e){
-			throw new ConexaoBancoException();
-		}
-		finally{
-			
-				DBConnectionFactory.getInstance().closeConnetion();
-		}
-		
-	}
-	@Override
-	public Usuario buscar(String cpf) throws ConexaoBancoException, CRUDException {
-		Usuario usuario = null;;
+	public Usuario buscar(String cpf)throws SQLException{
+		Usuario usuario = null;
 		String sql = "SELECT * FROM usuario WHERE CPF_U =" + cpf;
 		
-		try{
+		
 			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
@@ -68,67 +33,48 @@ public class UsuarioDao implements IRepositorioUsuario {
 				String nome = rSet.getString("NOME");
 				String senha = rSet.getString("SENHA");
 				String caminhoFoto = rSet.getString("CAMINHO_FOTO");
-				usuario = new Usuario(cpf,nome,senha,caminhoFoto);
+				ArrayList<PerfisEnum> perfis = new ArrayList<PerfisEnum>();
+				if(rSet.getInt("USUARIOALUNO") == 1)
+					perfis.add(PerfisEnum.aluno);
+				if(rSet.getInt("USUARIOPROFESSOR") == 1)
+					perfis.add(PerfisEnum.professor);
+				if(rSet.getInt("USUARIOADMINISTRADOR") == 1)
+					perfis.add(PerfisEnum.administrador);
+					usuario = new Usuario(cpf,nome,senha,caminhoFoto,perfis);
 			}
 			return usuario;
-			
-		}catch(SQLException e){
-			
-			throw new ConexaoBancoException();
-		}
-		finally{
-
-			DBConnectionFactory.getInstance().closeConnetion();
-		}
 	}
 
 	@Override
-	public void cadastrar(Usuario objeto) throws ConexaoBancoException, CRUDException {
+	public boolean cadastrar(Usuario objeto)throws SQLException {
 		String sql = "INSERT INTO academia.usuario(CPF_U,NOME, SENHA, CAMINHO_FOTO) "
-				+ "values(?,?,MD5(?),?)";
+				+ "values(?,?,?,?)";
 		
-		try{
 			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			statement.setString(1, objeto.getCpf());
 			statement.setString(2, objeto.getNome());
 			statement.setString(3, objeto.getSenha());
 			statement.setString(4, objeto.getCaminhoFoto());
 			statement.execute();
-		}catch(SQLException e){
-			throw new CRUDException("Erro ao cadastrar o Usuário");
-		}
-		finally{
-			DBConnectionFactory.getInstance().closeConnetion();
-		}
-			
+		return true;
 	}
 
 	@Override
-	public void remover(Usuario objeto) throws ConexaoBancoException, CRUDException {
-		String sql = "DELETE FROM academia.usuario "
-				+ " WHERE CPF_U = (?)";
+	public boolean remover(Usuario objeto) throws SQLException {
+		String sql = "DELETE FROM academia.usuario WHERE CPF_U = ?";
 		
-			PreparedStatement smt;
-			try {
-				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
-				smt.setString(1, objeto.getCpf());
-				smt.execute();
-			}
-			catch(SQLException e){
-				throw new CRUDException("Erro ao deletar o Usuário");
-			}
-			finally{
-				DBConnectionFactory.getInstance().closeConnetion();
-			}
 		
+		statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+		statement.setString(1, objeto.getCpf());
+		statement.execute();		
+		return true;
 	}
 
 	@Override
-	public void atualizar(Usuario objeto) throws ConexaoBancoException, CRUDException {
+	public boolean atualizar(Usuario objeto)throws SQLException{
 		String sql = "UPDATE academia.usuario SET CPF_U = ?, NOME =?, SENHA =?, CAMINHO_FOTO =? "
 				+ " WHERE CPF_U =" +objeto.getCpf();
 		
-			try {
 				DBConnectionFactory.getInstance().getConnection().setAutoCommit(true);
 				statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 				
@@ -138,52 +84,33 @@ public class UsuarioDao implements IRepositorioUsuario {
 				statement.setString(4, objeto.getCaminhoFoto());
 				
 				statement.execute();
-				
-				
-			} catch (SQLException e) {
-	
-				throw new CRUDException("Erro ao alterar o usuario");
-				
-			}
-			finally{
-				DBConnectionFactory.getInstance().closeConnetion();
-			}		
-			
+				return true;
 	}
 	
 	@Override
-	public ArrayList<Usuario> listar() throws ConexaoBancoException, CRUDException {
+	public ArrayList<Usuario> listar()throws SQLException  {
 		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 		String query = "SELECT * FROM academia.usuario";
-		try{
-			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
-			this.rSet = (ResultSet) statement.executeQuery();
+		
+		this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
+		this.rSet = (ResultSet) statement.executeQuery();
 			
-			while(rSet.next()){
-				String cpf = rSet.getString("CPF_U");
-				String nome = rSet.getString("NOME");
-				String senha = rSet.getString("SENHA");
-				String caminhoFoto = rSet.getString("CAMINHO_FOTO");
-				
-				
-								
-				usuarios.add(new Usuario(cpf,nome,senha,caminhoFoto));
-			}
-		}catch(SQLException  e){
-			throw new CRUDException("Erro ao listar os alunos");
-		}
-		finally{
-			DBConnectionFactory.getInstance().closeConnetion();
+		while(rSet.next()){
+			String cpf = rSet.getString("CPF_U");
+			String nome = rSet.getString("NOME");
+			String senha = rSet.getString("SENHA");
+			String caminhoFoto = rSet.getString("CAMINHO_FOTO");
+						
+			usuarios.add(new Usuario(cpf,nome,senha,caminhoFoto));
 		}
 		return usuarios;
 	}
 	
 	@Override
-	public boolean existe(String cpf) throws ConexaoBancoException{
+	public boolean existe(String cpf)throws SQLException{
 		boolean resultado = false;
 		String sql = "SELECT * FROM usuario WHERE CPF_U ='" + cpf+"'";
 		
-		try{
 			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
@@ -191,11 +118,7 @@ public class UsuarioDao implements IRepositorioUsuario {
 				resultado = true;
 			}
 			return resultado;
-			
-		}catch(SQLException  e){
-			
-			throw new ConexaoBancoException();
-		}
+		
 	}
 
 

@@ -7,10 +7,8 @@ import java.util.ArrayList;
 import com.mysql.jdbc.PreparedStatement;
 
 import beans.Exercicio;
-import exceptions.CRUDException;
-import exceptions.ConexaoBancoException;
 
-public class ExercicioDao implements IRepositorioExercicio<Exercicio>{
+public class ExercicioDao implements IRepositorioAtividades<Exercicio,Integer>{
 	
 	private PreparedStatement statement;
 	private ResultSet rSet;
@@ -20,267 +18,122 @@ public class ExercicioDao implements IRepositorioExercicio<Exercicio>{
 	}
 	
 	@Override
-	public boolean existe(int codigo) throws ConexaoBancoException {
+	public boolean existe(Integer codigo) throws SQLException {
 		
 		boolean resultado = false;
-		String sql = "SELECT * FROM academia.exercicio_padrao WHERE CODIGO_EP = " + codigo;
+		String sql = "SELECT * FROM academia.exercicio WHERE CODIGO_E = " + codigo;
 		
-		try{
 			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			if(rSet.next()){
 				resultado = true;
 			}
-			return resultado;
-			
-		}catch(SQLException e){
-			
-			throw new ConexaoBancoException();
-		}
+			return resultado;	
 		
 	}
-	@Override
-	public boolean existe(int codigo,String cpf) throws ConexaoBancoException {
-		
-		boolean resultado = false;
-		String sql = "SELECT * FROM academia.exercicio WHERE CODIGO_E = ? AND  CPF_P = ?";
-		
-		try{
-			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
-			this.statement.setInt(1, codigo);
-			this.statement.setString(2, cpf);
-			this.rSet = (ResultSet) statement.executeQuery();
-			
-			if(rSet.next()){
-				resultado = true;
-			}
-			return resultado;
-			
-		}catch(SQLException e){
-			
-			throw new ConexaoBancoException();
-		}
-		
-	}
+	
 
 	@Override
-	public void cadastrar(Exercicio objeto) throws ConexaoBancoException,CRUDException {
-		String sql = "INSERT INTO academia.exercicio_padrao (NOME,CARGA,REPETICOES,INTERVALO,PADRAO) "
-				+ "values(?,?,?,?,?)";
-		
-		try{
+	public boolean cadastrar(Exercicio objeto) throws SQLException {
+		String sql = "INSERT INTO academia.exercicio(CPF_P,NOME,CARGA,REPETICOES,INTERVALO,PADRAO) "
+				+ "values(?,?,?,?,?,?)";
+			
+			
 			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
-			statement.setString(1, objeto.getNome());
-			statement.setString(2, objeto.getCarga());
-			statement.setInt(3, objeto.getRepeticao());
-			statement.setInt(4, objeto.getIntervalo());
-			statement.setBoolean(5, objeto.isPadrao());
-			statement.execute();
-		}catch(SQLException e){
-			throw new CRUDException("Erro ao cadastrar o Exercício padrão");
-		}
-		finally{
-			DBConnectionFactory.getInstance().closeConnetion();
-		}
-				
-	}
-	@Override
-	public void cadastrar(Exercicio objeto, String cpfProf) throws ConexaoBancoException,CRUDException {
-		String sql = "INSERT INTO academia.exercicio(CPF_P,NOME,CARGA,REPETICOES,INTERVALO) "
-				+ "values(?,?,?,?,?) WHERE (CODIGO_T,CPF_P) = (?,?)";
-		
-		try{
-			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
-			statement.setString(1, cpfProf);
+			statement.setString(1, objeto.getCpfProfessor());
 			statement.setString(2, objeto.getNome());
 			statement.setString(3, objeto.getCarga());
 			statement.setInt(4, objeto.getRepeticao());
 			statement.setInt(5, objeto.getIntervalo());
-			statement.setInt(6, objeto.getCodigo());
-			statement.setInt(7, objeto.getIntervalo());
+			statement.setBoolean(6, objeto.isPadrao());
 			statement.execute();
-		}catch(SQLException e){
-			throw new CRUDException("Erro ao cadastrar o Exercicio do professor");
-		}
-		finally{
-			DBConnectionFactory.getInstance().closeConnetion();
-		}
+			
+		return true;	
+	}
+	
 				
-	}
+	
 	@Override
-	public void remover(Exercicio objeto) throws ConexaoBancoException,CRUDException {
-		String sql = "DELETE FROM academia.exercicio_padrao "
-				+ " WHERE CODIGO_EP = ?";
+	public boolean remover(Exercicio objeto) throws SQLException {
+		String sql = "DELETE FROM academia.exercicio WHERE CODIGO_E = ?";
 		
-			PreparedStatement smt;
-			try {
-				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
-				smt.setInt(1, objeto.getCodigo());
-				smt.execute();
-			}
-			catch(SQLException e){
-				throw new CRUDException("Erro ao deletar o Exercício padrão");
-			}
-			finally{
-				DBConnectionFactory.getInstance().closeConnetion();
-			}
-		
+				statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+				statement.setInt(1, objeto.getCodigo());
+				statement.execute();
+			
+			return true;	
 	}
+	
 	@Override
-	public void remover(Exercicio objeto,String cpfProf) throws ConexaoBancoException,CRUDException {
-		String sql = "DELETE FROM academia.exercicio WHERE (CODIGO_E,CPF_P) = (?,'?')";
+	public boolean atualizar(Exercicio objeto) throws SQLException{
 		
-			PreparedStatement smt;
-			try {
-				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
-				smt.setInt(1, objeto.getCodigo());
-				smt.setString(2, cpfProf);
-				smt.execute();
-			}
-			catch(SQLException e){
-				throw new CRUDException("Erro ao deletar o Exercício");
-			}
-			finally{
-				DBConnectionFactory.getInstance().closeConnetion();
-			}
-		
-	}
-	@Override
-	public void atualizar(Exercicio objeto) throws ConexaoBancoException,CRUDException{
-		String sql = "UPDATE academia.exercicio_padrao SET  NOME = ?,CARGA = ?,REPETICOES =?, INTERVALO =? "
-				+ " WHERE CODIGO_EP =" + objeto.getCodigo();
-		
-			PreparedStatement smt;
-			try {
-				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
-				smt.setString(1, objeto.getNome());
-				smt.setString(2, objeto.getCarga());
-				smt.setInt(3, objeto.getRepeticao());
-				smt.setInt(4, objeto.getIntervalo());
-				smt.execute();
+		String sql = "UPDATE exercicio SET NOME = ?,CARGA= ?,REPETICOES =?,INTERVALO=?  "
+				+ " WHERE CODIGO_E = " + objeto.getCodigo();
+				statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+				statement.setString(1, objeto.getNome());
+				statement.setString(2, objeto.getCarga());
+				statement.setInt(3, objeto.getRepeticao());
+				statement.setInt(4, objeto.getIntervalo());
+				statement.execute();
 				
-			} catch (Exception e) {
-	
-				throw new CRUDException("Erro ao alterar o exercício padrão");
-			}
-			finally{
-				DBConnectionFactory.getInstance().closeConnetion();
-			}		
+		return true;
 	}
 	
-	@Override
-	public void atualizar(Exercicio objeto,String cpf) throws ConexaoBancoException,CRUDException{
-		String sql = "UPDATE academia.exercicio SET  NOME = ?,CARGA = ?,REPETICOES =?, INTERVALO =? "
-				+ " WHERE (CODIGO_E,CPF_P) =(" + objeto.getCodigo() +",'"+ cpf+"')";
-		
-			PreparedStatement smt;
-			try {
-				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
-				smt.setString(1, objeto.getNome());
-				smt.setString(2, objeto.getCarga());
-				smt.setInt(3, objeto.getRepeticao());
-				smt.setInt(4, objeto.getIntervalo());
-				smt.execute();
-				
-			} catch (Exception e) {
 	
-				throw new CRUDException("Erro ao alterar o exercício");
-			}
-			finally{
-				DBConnectionFactory.getInstance().closeConnetion();
-			}	
-		
-	}
 	
 	@Override
-	public ArrayList<Exercicio> listar() throws ConexaoBancoException,CRUDException {
+	public ArrayList<Exercicio> listar() throws SQLException{
 		ArrayList<Exercicio> exercicios = new ArrayList<Exercicio>();
-		String query = "SELECT * FROM exercicio where padrao = 1";
-		try{
+		String query = "SELECT * FROM exercicio";
+		
 			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
 				int codigo = rSet.getInt("CODIGO_E");
+				String cpfProf = rSet.getString("CPF_P");
 				String nome = rSet.getString("NOME");
 				String carga = rSet.getNString("CARGA");
 				int repeticoes = rSet.getInt("REPETICOES");
 				int intervalo = rSet.getInt("INTERVALO");
 				boolean padrao = rSet.getBoolean("PADRAO");
-				Exercicio exercicio = new Exercicio(codigo,nome,carga,repeticoes,intervalo,padrao);
+				Exercicio exercicio = new Exercicio(codigo,cpfProf,nome,carga,repeticoes,intervalo,padrao);
 				exercicios.add(exercicio);
 			}
-		}catch(SQLException  e){
-			throw new CRUDException("Erro ao listar os treinos padrão");
-		}
-		finally{
-			DBConnectionFactory.getInstance().closeConnetion();
-		}
 		
 		return exercicios;
 		
 	}
 		
-	@Override
-	public ArrayList<Exercicio> listar(String cpfProf) throws ConexaoBancoException,CRUDException {
-		ArrayList<Exercicio> exercicios = new ArrayList<Exercicio>();
-		String query = "SELECT * FROM academia.exercicio WHERE CPF_P = "+ cpfProf;
-		try{
-			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
-			this.rSet = (ResultSet) statement.executeQuery();
-			
-			while(rSet.next()){
-				int codigo = rSet.getInt("CODIGO_E");
-				String nome = rSet.getString("NOME");
-				String carga = rSet.getNString("CARGA");
-				int repeticoes = rSet.getInt("REPETICOES");
-				int intervalo = rSet.getInt("INTERVALO");
-				boolean padrao = rSet.getBoolean("PADRAO");
-				Exercicio exercicio = new Exercicio(codigo,nome,carga,repeticoes,intervalo,padrao);
-				exercicios.add(exercicio);
-			}
-		}catch(SQLException  e){
-			throw new CRUDException("Erro ao listar os exercícios do professor");
-		}
-		finally{
-			DBConnectionFactory.getInstance().closeConnetion();
-		}
-		
-		return exercicios;
-	}
 	
+	
+
 	@Override
-	public ArrayList<Exercicio> listar(int codigoTreino) throws ConexaoBancoException,CRUDException {
-		ArrayList<Exercicio> exercicios = new ArrayList<Exercicio>();
-		String query = "SELECT * FROM academia.exercio WHERE CODIGO_T = "+ codigoTreino;
-		try{
-			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
-			this.rSet = (ResultSet) statement.executeQuery();
-			
-			while(rSet.next()){
-				int codigo = rSet.getInt("CODIGO_TP");
-				String nome = rSet.getString("NOME");
-				String carga = rSet.getNString("CARGA");
-				int repeticoes = rSet.getInt("REPETICOES");
-				int intervalo = rSet.getInt("INTERVALO");
-				boolean padrao = rSet.getBoolean("PADRAO");
-				Exercicio exercicio = new Exercicio(codigo,nome,carga,repeticoes,intervalo,padrao);
-				exercicios.add(exercicio);
-			}
-		}catch(SQLException  e){
-			throw new CRUDException("Erro ao listar os treinos do professor");
-		}
-		finally{
-			DBConnectionFactory.getInstance().closeConnetion();
-		}
-		
-		return exercicios;
-	}
-	@Override
-	public Exercicio buscar(Integer chave) throws ConexaoBancoException, CRUDException {
+	public boolean cadastrar(Exercicio objeto, String cpfProf) throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
+	}
+
+	@Override
+	public Exercicio buscar(Integer chave) throws SQLException {
+		Exercicio resultado = null;
+		String sql = "SELECT * FROM academia.exercicio WHERE CODIGO_E = " + chave;
+
+		this.statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+		this.rSet = (ResultSet) statement.executeQuery();
+
+		while (rSet.next()) {
+			int codigo = rSet.getInt("CODIGO_E");
+			String cpf = rSet.getString("CPF_P");
+			String nome = rSet.getString("NOME");
+			String carga = rSet.getNString("CARGA");
+			int repeticoes = rSet.getInt("REPETICOES");
+			int intervalo = rSet.getInt("INTERVALO");
+			boolean padrao = rSet.getBoolean("PADRAO");
+			resultado = new Exercicio(codigo,cpf, nome, carga, repeticoes, intervalo, padrao);
+		}
+		return resultado;
 	}
 
 	

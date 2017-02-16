@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
+import java.sql.SQLException;
+
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -23,7 +25,7 @@ public class TesteAdministradorDao {
 	@Before
 	public void iniciar(){
 		this.administrador = new Administrador("18754938744","chefe");
-		this.dao = new AdministradorDao();
+		this.dao = AdministradorDao.getInstance();
 	}
 	
 	@Test
@@ -32,7 +34,7 @@ public class TesteAdministradorDao {
 			this.dao.cadastrar(administrador);
 			assertEquals(dao.existe(administrador.getCpf()),true);
 			
-		}catch( ConexaoBancoException | CRUDException  e ){
+		}catch( SQLException  e ){
 			fail(e.getMessage());
 		}
 	}
@@ -43,7 +45,7 @@ public class TesteAdministradorDao {
 			
 			this.dao.atualizar(administrador);
 			assertEquals(dao.existe(administrador.getCpf()),true);
-		}catch(CRUDException | ConexaoBancoException e){
+		}catch(SQLException e){
 			fail(e.getMessage());
 		}
 	}
@@ -52,7 +54,7 @@ public class TesteAdministradorDao {
 	public void teste3listar(){
 		try{
 			assertNotNull(dao.listar());
-		}catch(CRUDException | ConexaoBancoException e){
+		}catch(SQLException e){
 			fail(e.getMessage());
 		}
 	}
@@ -62,7 +64,7 @@ public class TesteAdministradorDao {
 		try{
 			dao.remover(administrador);
 			assertEquals(dao.existe(administrador.getCpf()),true);
-		}catch(CRUDException | ConexaoBancoException e){
+		}catch(SQLException e){
 			fail(e.getMessage());
 		}
 	}

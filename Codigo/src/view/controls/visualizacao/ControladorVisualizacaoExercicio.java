@@ -53,5 +53,11 @@ public class ControladorVisualizacaoExercicio extends VBox {
 		this.lblRepeticoes.setText(String.valueOf(exercicio.getRepeticao()));
 		
 	}
-	
+	public void zerarCampos(){
+		this.lblNome.setText("--");
+		this.lblCarga.setText("--");
+		this.lblIntervalo.setText("--");
+		this.lblRepeticoes.setText("--");
+		
+	}
 }

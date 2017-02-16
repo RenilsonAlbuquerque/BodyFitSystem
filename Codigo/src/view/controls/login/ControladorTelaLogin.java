@@ -56,8 +56,10 @@ public class ControladorTelaLogin extends FlowPane{
 				campoCPF.setText("");
 				campoSenha.setText("");
 			}
-		} catch (ConexaoBancoException | CRUDException | NegocioException e) {
-			System.out.println(e.getMessage());
+		} catch ( NegocioException e) {
+			labelErro.setText(e.getMessage());
+			campoCPF.setText("");
+			campoSenha.setText("");
 		}
 		
 	}	

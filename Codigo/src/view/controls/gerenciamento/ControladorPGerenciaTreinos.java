@@ -5,11 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Optional;
 
-import beans.Exercicio;
 import beans.Treino;
 import control.Fachada;
-import exceptions.CRUDException;
-import exceptions.ConexaoBancoException;
 import exceptions.NegocioException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -19,7 +16,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
@@ -95,13 +91,15 @@ public class ControladorPGerenciaTreinos extends BorderPane{
 				}
 			});
 		}
-		catch(ConexaoBancoException | CRUDException e){
+		/*
+		catch(NegocioException e){
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Alerta de erro");
 			alert.setHeaderText(null);
 			alert.setContentText(e.getMessage());
 			alert.showAndWait();
-		}catch (NegocioException e) {
+		}
+		*/catch (NegocioException e) {
 			this.listaObjetos.setItems(FXCollections.observableArrayList(e.getMessage()));
 		}
 		
@@ -119,6 +117,7 @@ public class ControladorPGerenciaTreinos extends BorderPane{
 		if (listaObjetos.getSelectionModel().getSelectedItem() != null
 				&& listaObjetos.getSelectionModel().getSelectedItem() instanceof Treino) {
 			Treino treino = (Treino) listaObjetos.getSelectionModel().getSelectedItem();
+			
 			Alert dialogo = new Alert(Alert.AlertType.CONFIRMATION);
 			DialogPane d = dialogo.getDialogPane();
 			d.getStylesheets().add(
@@ -129,12 +128,12 @@ public class ControladorPGerenciaTreinos extends BorderPane{
 			Optional<ButtonType> result = dialogo.showAndWait();
 			if(result.get() == ButtonType.OK){
 				try{
-					Fachada.getInstance().removerTreinoPadrao((Treino) listaObjetos.getSelectionModel().getSelectedItem());
-					//this.treinos.remove(treino);
+					Fachada.getInstance().removerTreino((Treino) listaObjetos.getSelectionModel().getSelectedItem());
+					this.treinos.remove(treino);
 					povoarlista(Fachada.getInstance().getUsuarioLogado().getCpf());
-					listaObjetos.getSelectionModel().select(0);
-				}catch(ConexaoBancoException | CRUDException | NegocioException ex){
-					
+					//listaObjetos.getSelectionModel().select(0);
+				}catch(NegocioException ex){
+					System.out.println(ex.getMessage());
 				}
 			}
 			

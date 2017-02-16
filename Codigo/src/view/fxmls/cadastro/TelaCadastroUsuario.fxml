@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<FlowPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="583.0" prefWidth="821.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="496.0" prefWidth="788.0">
+         <children>
+            <AnchorPane prefHeight="489.0" prefWidth="367.0">
+               <children>
+                  <Circle fill="DODGERBLUE" layoutX="184.0" layoutY="105.0" radius="80.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Label layoutX="14.0" layoutY="211.0" prefHeight="17.0" prefWidth="118.0" text="Nome:" />
+                  <TextField fx:id="txtNome" layoutX="14.0" layoutY="228.0" prefHeight="25.0" prefWidth="301.0" />
+                  <Label layoutX="14.0" layoutY="274.0" text="CPF:" />
+                  <TextField fx:id="txtCPF" layoutX="14.0" layoutY="291.0" prefHeight="25.0" prefWidth="301.0" />
+                  <Label layoutX="14.0" layoutY="340.0" prefHeight="17.0" prefWidth="60.0" text="Senha:" />
+                  <TextField fx:id="txtSenha" layoutX="14.0" layoutY="357.0" prefHeight="25.0" prefWidth="301.0" />
+                  <Label layoutX="14.0" layoutY="405.0" text="Confirmar Senha:" />
+                  <TextField fx:id="txtConfirmaSenha" layoutX="14.0" layoutY="422.0" prefHeight="25.0" prefWidth="301.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="496.0" prefWidth="403.0">
+               <children>
+                  <ListView fx:id="listaPerfis" layoutX="52.0" layoutY="103.0" prefHeight="280.0" prefWidth="291.0" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="52.0" layoutY="71.0" prefHeight="17.0" prefWidth="266.0" text="Lista de Perfis" />
+                  <HBox layoutX="52.0" layoutY="383.0" prefHeight="60.0" prefWidth="291.0">
+                     <children>
+                        <Button fx:id="botaoAluno" mnemonicParsing="false" prefHeight="58.0" prefWidth="98.0" text="Aluno" />
+                        <Button fx:id="botaoProfessor" mnemonicParsing="false" prefHeight="58.0" prefWidth="98.0" text="Professor" />
+                        <Button fx:id="botaoAdministrador" mnemonicParsing="false" prefHeight="58.0" prefWidth="95.0" text="Administrador" />
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="85.0" prefWidth="821.0">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="42.0" prefWidth="147.0" text="Cadastrar" />
+         </children>
+      </HBox>
+   </children>
+</FlowPane>

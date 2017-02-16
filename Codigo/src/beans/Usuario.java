@@ -8,7 +8,7 @@ public class Usuario implements Comparable<Usuario>
 	private String nome;
 	private String senha;
 	private String caminhoFoto;
-	private ArrayList<PerfisEnum> perfis;
+	private ArrayList<PerfisEnum> perfis;	
 
 	
 	public Usuario(String cpf, String nome, String senha, String caminhoFoto,ArrayList<PerfisEnum> perfis){

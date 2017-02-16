@@ -7,8 +7,6 @@ import java.util.Optional;
 
 import beans.Exercicio;
 import control.Fachada;
-import exceptions.CRUDException;
-import exceptions.ConexaoBancoException;
 import exceptions.NegocioException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -21,7 +19,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
@@ -32,7 +29,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import view.controls.Principal;
 import view.controls.login.ControladorTelaLogin;
 import view.controls.visualizacao.ControladorVisualizacaoExercicio;
 
@@ -103,20 +99,15 @@ public class ControladorPGerenciaExercicios extends BorderPane{
 			this.listaObjetos.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Exercicio>() {
 				@Override
 				public void changed(ObservableValue<? extends Exercicio	> observable, Exercicio oldValue, Exercicio newValue) {
-					if(!listaObjetos.getItems().isEmpty() && listaObjetos.getItems().get(0) instanceof Exercicio)
-						 ((ControladorVisualizacaoExercicio) painelDireita.getChildren().get(0)).setExercicio((Exercicio)listaObjetos.getSelectionModel().getSelectedItem());
-					
+					if( listaObjetos.getSelectionModel().getSelectedItem() != null && !listaObjetos.getItems().isEmpty() && listaObjetos.getItems().get(0) instanceof Exercicio)
+						((ControladorVisualizacaoExercicio) painelDireita.getChildren().get(0)).setExercicio((Exercicio)listaObjetos.getSelectionModel().getSelectedItem());	 
+					else{
+						((ControladorVisualizacaoExercicio) painelDireita.getChildren().get(0)).zerarCampos();
+					}
 				}
 			});		
 		}
-		catch(ConexaoBancoException | CRUDException e){
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Alerta de erro");
-			alert.setHeaderText(null);
-			alert.setContentText(e.getMessage());
-			alert.showAndWait();
-			e.printStackTrace();
-		}catch (NegocioException e) {
+		catch (NegocioException e) {
 			
 			this.listaObjetos.setItems(FXCollections.observableArrayList(e.getMessage()));
 		}
@@ -169,13 +160,15 @@ public class ControladorPGerenciaExercicios extends BorderPane{
 		    	try {
 		    		
 		    		Fachada.getInstance().cadastrarExercicio(new Exercicio(
-		    				txtNome.getText(),txtCarga.getText(),Integer.valueOf(txtRepeticao.getText()),Integer.valueOf(txtIntervalo.getText()),false),
-		    				Fachada.getInstance().getUsuarioLogado().getCpf());
-		    		
+		    				Fachada.getInstance().getUsuarioLogado().getCpf(),
+		    				txtNome.getText(),txtCarga.getText(),Integer.valueOf(txtRepeticao.getText()),Integer.valueOf(txtIntervalo.getText()),false
+		    				));
+		    	
 		    		dialogo.close();
 		    		povoarlista();
-				} catch (ConexaoBancoException | NegocioException | CRUDException ex) {
+				} catch ( NegocioException ex) {
 					lblErro.setText(ex.getMessage());
+					ex.printStackTrace();
 				} 
 						
 		    }
@@ -226,20 +219,24 @@ public class ControladorPGerenciaExercicios extends BorderPane{
 			botaoCadastrar.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent e) {
+					
 					try {
 						exercicio.setNome(txtNome.getText());
 						exercicio.setCarga(txtCarga.getText());
 						exercicio.setRepeticao(Integer.valueOf(txtRepeticao.getText()));
 						exercicio.setIntervalo(Integer.valueOf(txtIntervalo.getText()));
-						Fachada.getInstance().alterarExercicio(exercicio,Fachada.getInstance().getUsuarioLogado().getCpf());
-
+						Fachada.getInstance().alterarExercicio(exercicio);
+						
 						dialogo.close();
+					
 						povoarlista();
+						
 						listaObjetos.getSelectionModel().select(0);
-					} catch (ConexaoBancoException | NegocioException | CRUDException ex) {
-
 					}
-
+					catch (NegocioException ex) {
+						
+					}
+					
 				}
 			});
 
@@ -263,10 +260,10 @@ public class ControladorPGerenciaExercicios extends BorderPane{
 			Optional<ButtonType> result = dialogo.showAndWait();
 			if(result.get() == ButtonType.OK){
 				try{
-					Fachada.getInstance().removerExercicio((Exercicio) listaObjetos.getSelectionModel().getSelectedItem(),Fachada.getInstance().getUsuarioLogado().getCpf());
+					Fachada.getInstance().removerExercicio((Exercicio) listaObjetos.getSelectionModel().getSelectedItem());
 					povoarlista();
 					listaObjetos.getSelectionModel().select(0);
-				}catch(ConexaoBancoException | CRUDException | NegocioException ex){
+				}catch(NegocioException ex){
 					
 				}
 			}

@@ -7,24 +7,26 @@ import java.util.ArrayList;
 import com.mysql.jdbc.PreparedStatement;
 
 import beans.Administrador;
-import exceptions.CRUDException;
-import exceptions.ConexaoBancoException;
 
-public class AdministradorDao implements IRepositorioFuncionarios<Administrador>{
+public class AdministradorDao implements InterfaceCRUD<Administrador,String>{
 	
+	private static AdministradorDao instance;
 	private PreparedStatement statement;
 	private ResultSet rSet;
 	
-	public AdministradorDao(){
+	private AdministradorDao(){
 		
 	}
-
+	public static AdministradorDao getInstance(){
+		if(instance == null)
+			instance = new AdministradorDao();
+		return instance;
+	}
 	@Override
-	public boolean existe(String cpf) throws ConexaoBancoException {
+	public boolean existe(String cpf) throws SQLException{
 		boolean resultado = false;
 		String sql = "SELECT * FROM administrador WHERE CPF_ADM =" + cpf;
 		
-		try{
 			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
@@ -32,84 +34,55 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 				resultado = true;
 			}
 			return resultado;
-			
-		}catch(SQLException e){
-			
-			throw new ConexaoBancoException();
-		}
-		finally{
-			DBConnectionFactory.getInstance().closeConnetion();
-		}
 		
 	}
 
 	@Override
-	public void cadastrar(Administrador objeto) throws ConexaoBancoException,CRUDException {
+	public boolean cadastrar(Administrador objeto) throws SQLException {
 		String sql = "INSERT INTO academia.administrador(CPF_ADM, CARGO) "
 				+ "values(?,?)";
 		
-		try{
 			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			statement.setString(1, objeto.getCpf());
 			statement.setString(2, objeto.getCargo());
 			statement.execute();
-			
-		}catch(SQLException e){
-			throw new CRUDException(e.getMessage());
-		}
-		finally{
-			DBConnectionFactory.getInstance().closeConnetion();
-		}
+		return true;	
+		
 				
 	}
 
 	@Override
-	public void remover(Administrador objeto) throws ConexaoBancoException,CRUDException {
+	public boolean remover(Administrador objeto)throws SQLException{
 		String sql = "DELETE FROM academia.administrador "
 				+ " WHERE CPF_ADM = ?";
 		
-			PreparedStatement smt;
-			try {
-				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
-				smt.setString(1, objeto.getCpf());
-				smt.execute();
-			}
-			catch(SQLException e){
-				throw new CRUDException("Erro ao deletar o Administrador");
-			}
-			finally{
-				DBConnectionFactory.getInstance().closeConnetion();
-			}
+			
+			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			statement.setString(1, objeto.getCpf());
+			statement.execute();
+			
+			return true;
 		
 	}
 
 	@Override
-	public void atualizar(Administrador objeto) throws ConexaoBancoException,CRUDException{
+	public boolean atualizar(Administrador objeto)throws SQLException{
 		String sql = "UPDATE academia.administrador SET CPF_ADM = ?, CARGO = ? "
 				+ " WHERE CPF_ADM =" + objeto.getCpf();
 		
-			PreparedStatement smt;
-			try {
-				smt = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
-				smt.setString(1, objeto.getCpf());
-				smt.setString(2, objeto.getCargo());
-				smt.execute();
+			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			statement.setString(1, objeto.getCpf());
+			statement.setString(2, objeto.getCargo());
+			statement.execute();
 				
-			} catch (Exception e) {
-	
-				throw new CRUDException("Erro ao alterar o Administrador");
-			}
-			finally{
-				DBConnectionFactory.getInstance().closeConnetion();
-			}	
-		
+			
+		return true;
 	}
 	@Override
-	public Administrador buscar(String cpf) throws ConexaoBancoException, CRUDException {
+	public Administrador buscar(String cpf)throws SQLException{
 		Administrador adm = null;
 		String sql = "SELECT * FROM administrador INNER JOIN academia.usuario ON administrador.CPF_ADM = usuario.CPF_U WHERE CPF_ADM =" + cpf;
 		
-		try{
 			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
@@ -122,19 +95,13 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 			}
 			return adm;
 			
-		}catch(SQLException e){
-			
-			throw new ConexaoBancoException();
-		}
-		finally{
-			DBConnectionFactory.getInstance().closeConnetion();
-		}
+		
 	}
 	@Override
-	public ArrayList<Administrador> listar() throws ConexaoBancoException,CRUDException {
+	public ArrayList<Administrador> listar() throws SQLException{
 		ArrayList<Administrador> administradores = new ArrayList<Administrador>();
 		String query = "SELECT * FROM academia.administrador INNER JOIN academia.usuario ON administrador.CPF_ADM = usuario.CPF_U";
-		try{
+		
 			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
@@ -148,12 +115,6 @@ public class AdministradorDao implements IRepositorioFuncionarios<Administrador>
 				Administrador adm = new Administrador(cpf,nome,senha,caminhoFoto,cargo);
 				administradores.add(adm);
 			}
-		}catch(SQLException  e){
-			throw new CRUDException("Erro ao listar os administradores");
-		}
-		finally{
-			DBConnectionFactory.getInstance().closeConnetion();
-		}
 		
 		return administradores;
 		

@@ -93,13 +93,15 @@ public class ControladorPGerenciaAluno extends BorderPane{
 			this.listaObjetos.setItems(FXCollections.observableArrayList(alunos));
 			Collections.sort(this.listaObjetos.getItems());
 		}
-		catch(ConexaoBancoException | CRUDException e){
+		/*
+		catch(NegocioException  e){
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Alerta de erro");
 			alert.setHeaderText(null);
 			alert.setContentText(e.getMessage());
 			alert.showAndWait();
-		}catch (NegocioException e) {
+		}
+		*/catch (NegocioException e) {
 			this.listaObjetos.setItems(FXCollections.observableArrayList(e.getMessage()));
 		}
 		

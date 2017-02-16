@@ -72,14 +72,14 @@ public class ControladorTelaCadastroTreino extends GridPane{
 		{
 			exerciciosPadrao= Fachada.getInstance().listarExerciciosPadrao();
 			
-		} catch (ConexaoBancoException | CRUDException | NegocioException e) {
+		} catch ( NegocioException e) {
 			this.exerciciosPadrao = new ArrayList<String>();
 			this.exerciciosPadrao.add(e.getMessage());
 		}
 		try{
 			exerciciosProfessor = Fachada.getInstance().listarExercicios(Fachada.getInstance().getUsuarioLogado().getCpf());
 			
-		} catch (ConexaoBancoException | CRUDException | NegocioException e) {
+		} catch ( NegocioException e) {
 			this.exerciciosProfessor = new ArrayList<String>();
 			this.exerciciosProfessor.add(e.getMessage());
 		}
@@ -112,14 +112,14 @@ public class ControladorTelaCadastroTreino extends GridPane{
 		{
 			exerciciosPadrao= Fachada.getInstance().listarExerciciosPadrao();
 			
-		} catch (ConexaoBancoException | CRUDException | NegocioException e) {
+		} catch ( NegocioException e) {
 			this.exerciciosPadrao = new ArrayList<String>();
 			this.exerciciosPadrao.add(e.getMessage());
 		}
 		try{
 			exerciciosProfessor = Fachada.getInstance().listarExercicios(Fachada.getInstance().getUsuarioLogado().getCpf());
 			
-		} catch (ConexaoBancoException | CRUDException | NegocioException e) {
+		} catch ( NegocioException e) {
 			this.exerciciosProfessor = new ArrayList<String>();
 			this.exerciciosProfessor.add(e.getMessage());
 		}
@@ -169,8 +169,11 @@ public class ControladorTelaCadastroTreino extends GridPane{
 		if(!this.listaExerciciosTreino.getItems().isEmpty()){
 			Treino treino = new Treino(this.txtNomeTreino.getText());
 			treino.getExerciciosArray().addAll(this.listaExerciciosTreino.getItems());
+			treino.setProfessor( Fachada.getInstance().getUsuarioLogado().getCpf());
+			treino.setPadrao(false);
+			
 			try {
-				Fachada.getInstance().cadastrarTreino(treino, Fachada.getInstance().getUsuarioLogado().getCpf());
+				Fachada.getInstance().cadastrarTreino(treino);
 				Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
 				DialogPane d = dialogo.getDialogPane();
 				d.getStylesheets().add(
@@ -179,7 +182,7 @@ public class ControladorTelaCadastroTreino extends GridPane{
 				dialogo.setContentText("Treino cadastrado");
 				dialogo.setHeaderText(null);
 				dialogo.show();
-			} catch (ConexaoBancoException | NegocioException | CRUDException e1) {
+			} catch (NegocioException  e1) {
 				Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
     			DialogPane d = dialogo.getDialogPane();
     			d.getStylesheets().add(
@@ -188,6 +191,7 @@ public class ControladorTelaCadastroTreino extends GridPane{
     			dialogo.setContentText(e1.getMessage());
     			dialogo.setHeaderText(null);
     			dialogo.show();
+    			e1.printStackTrace();
 			}
 		}else{
 			Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
