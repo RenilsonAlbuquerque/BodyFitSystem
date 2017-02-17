@@ -9,8 +9,6 @@ import beans.PerfisEnum;
 import beans.Professor;
 import beans.Treino;
 import beans.Usuario;
-import exceptions.CRUDException;
-import exceptions.ConexaoBancoException;
 import exceptions.NegocioException;
 
 public class Fachada {
@@ -62,7 +60,7 @@ public class Fachada {
 	public ArrayList<PerfisEnum> getPerfisUsuario(String cpf) throws NegocioException{
 		return this.usuario.buscar(cpf).getPerfis();
 	}
-	public void atualizarUsuario(Usuario usuario) throws NegocioException, ConexaoBancoException, CRUDException{
+	public void atualizarUsuario(Usuario usuario) throws NegocioException{
 		this.usuario.atualizar(usuario);
 		if(usuario instanceof Aluno)
 			this.aluno.atualizar((Aluno)usuario);
@@ -72,19 +70,13 @@ public class Fachada {
 			this.professor.atualizar((Professor)usuario);
 	}
 	
-	public void cadastrarAluno(Aluno aluno) throws ConexaoBancoException, NegocioException, CRUDException{
-		if(this.usuario.existe(aluno.getCpf()) == false)
-			this.usuario.cadastrar(aluno);
+	public void cadastrarAluno(Aluno aluno) throws NegocioException{
 		this.aluno.cadastrar(aluno);
 	}
-	public void cadastrarProfessor(Professor professor) throws ConexaoBancoException, NegocioException, CRUDException{
-		if(this.usuario.existe(professor.getCpf()) == false)
-			this.usuario.cadastrar(professor);
+	public void cadastrarProfessor(Professor professor) throws NegocioException{
 		this.professor.cadastrar(professor);
 	}
-	public void cadastrarAdministrador(Administrador administrador) throws ConexaoBancoException, NegocioException, CRUDException{
-		if(this.usuario.existe(administrador.getCpf()) == false)
-			this.usuario.cadastrar(administrador);
+	public void cadastrarAdministrador(Administrador administrador) throws NegocioException{
 		this.administrador.cadastrar(administrador);
 	}
 	

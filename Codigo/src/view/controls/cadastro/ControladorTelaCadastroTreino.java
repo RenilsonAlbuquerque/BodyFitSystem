@@ -2,13 +2,10 @@ package view.controls.cadastro;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import beans.Exercicio;
 import beans.Treino;
 import control.Fachada;
-import exceptions.CRUDException;
-import exceptions.ConexaoBancoException;
 import exceptions.NegocioException;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;

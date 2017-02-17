@@ -13,8 +13,6 @@ import org.junit.runners.MethodSorters;
 
 import beans.Administrador;
 import data.AdministradorDao;
-import exceptions.CRUDException;
-import exceptions.ConexaoBancoException;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TesteAdministradorDao {

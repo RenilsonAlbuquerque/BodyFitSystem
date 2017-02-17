@@ -109,17 +109,21 @@ END $$
 DELIMITER ;   
     
 insert into usuario (CPF_U,NOME,SENHA,USUARIOALUNO,USUARIOPROFESSOR,USUARIOADMINISTRADOR) VALUES ('10870298488','Renilson','1234',1,1,1);
-insert into usuario (CPF_U,NOME,SENHA) VALUES ('10870298499','Josivaldo','123');
+
+insert into usuario (CPF_U,NOME,SENHA,USUARIOALUNO,USUARIOPROFESSOR,USUARIOADMINISTRADOR) VALUES ('10870298499','Josivaldo','123',0,1,1);
+insert into professor (CPF_PROF,CREF,TURNO,COORDENADOR) VALUES ('10870298499','573452','manha',0);
+insert into administrador (CPF_ADM,CARGO) VALUES ('10870298499','patrao');
+
 
 insert into professor (CPF_PROF,CREF,TURNO,COORDENADOR) VALUES ('10870298488','573822','tarde',1);
-insert into professor (CPF_PROF,CREF,TURNO,COORDENADOR) VALUES ('10870298499','573452','manha',0);
+
 
 INSERT INTO aluno(CPF_ALU,CPF_PROF, IDADE, ALTURA, PESO) values('10870298488','10870298499',22,1.82,78);
 INSERT INTO aluno(CPF_ALU,CPF_PROF, IDADE, ALTURA, PESO) values('10870298499','10870298499',27,1.90,85);
 
 insert into administrador(CPF_ADM,CARGO) VALUES ('10870298488','gerente');
 
-insert into administrador (CPF_ADM,CARGO) VALUES ('184719301','patrao');
+
 insert into treino (CPF_P,NOME,PADRAO) values ('10870298488','treino s',0);
 
 insert into treino_exercicio (CODIGO_TRE,CODIGO_EXE) values (2,1);
@@ -169,8 +173,6 @@ delete from aluno_treino;
 delete from treino_exercicio;
 delete from exercicio;
 delete from treino;
-delete from exercicio_padrao;
-delete from treino_padrao;
 delete from aluno;
 delete from professor;
 delete from administrador;

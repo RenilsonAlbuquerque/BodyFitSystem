@@ -1,5 +1,7 @@
 package beans;
 
+import java.util.ArrayList;
+
 public class Aluno extends Usuario {
 	private int idade;
 	private float peso;
@@ -7,6 +9,13 @@ public class Aluno extends Usuario {
 	
 	
 	
+	public Aluno(String cpf, String nome, String senha, String caminhoFoto,ArrayList<PerfisEnum> perfis,
+			int idade, float peso, float altura) {
+		super(cpf,nome,senha,caminhoFoto,perfis);
+		this.setIdade(idade);
+		this.setAltura(altura);
+		this.setPeso(peso);
+	}
 	public Aluno(String cpf, String nome, String senha, String caminhoFoto,
 			int idade, float peso, float altura) {
 		super(cpf,nome,senha,caminhoFoto);
@@ -20,6 +29,8 @@ public class Aluno extends Usuario {
 		this.setAltura(altura);
 		this.setPeso(peso);
 	}
+	
+	
 	
 	public int getIdade() {
 		return idade;

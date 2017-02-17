@@ -19,6 +19,7 @@ public class Usuario implements Comparable<Usuario>
 		this.setPerfis(perfis);
 		
 	}
+	
 	public Usuario(String cpf, String nome, String senha, String caminhoFoto){
 		this.setCpf(cpf);
 		this.setNome(nome);
@@ -26,6 +27,7 @@ public class Usuario implements Comparable<Usuario>
 		this.setCaminhoFoto(caminhoFoto);
 		
 	}
+	
 	public Usuario(String cpf){
 		this.setCpf(cpf);
 	}
@@ -60,6 +62,10 @@ public class Usuario implements Comparable<Usuario>
 	}
 	public void setPerfis(ArrayList<PerfisEnum> perfis) {
 		this.perfis = perfis;
+	}
+	@Override
+	public String toString(){
+		return this.getNome();
 	}
 	@Override
 	public int compareTo(Usuario usuario) {

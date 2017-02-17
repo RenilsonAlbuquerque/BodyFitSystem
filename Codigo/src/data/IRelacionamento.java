@@ -3,8 +3,6 @@ package data;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import beans.TreinoExercicio;
-
 public interface IRelacionamento<T> {
 	
 	public boolean inserir(T objeto)throws SQLException;

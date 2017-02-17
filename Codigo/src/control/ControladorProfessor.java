@@ -3,6 +3,7 @@ package control;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import beans.PerfisEnum;
 import beans.Professor;
 import beans.Usuario;
 import data.DBConnectionFactory;
@@ -32,13 +33,27 @@ public class ControladorProfessor {
 	
 	public void cadastrar(Professor professor) throws NegocioException{
 		try {
-			if(usuario.existe(professor.getCpf())){
-				
-				this.repositorio.cadastrar(professor);
+			
+			if(!this.repositorio.existe(professor.getCpf())){
+					
+				if(!this.usuario.existe(professor.getCpf())){
+					this.usuario.cadastrar(professor);
+					this.repositorio.cadastrar(professor);
+				}else{
+					
+					Usuario u = usuario.buscar(professor.getCpf());
+					u.getPerfis().add(PerfisEnum.professor);
+					this.usuario.atualizar(u);
+					this.repositorio.cadastrar(professor);
+				}
 				DBConnectionFactory.getInstance().getConnection().commit();
 				
-			}else{
-				this.controladorUsuario.cadastrar(professor);
+			}else{			
+				try {
+					DBConnectionFactory.getInstance().getConnection().rollback();
+				} catch (SQLException e1) {}
+				throw new NegocioException("O professor já está cadastrado");
+				
 			}
 				
 		} catch (SQLException e) {

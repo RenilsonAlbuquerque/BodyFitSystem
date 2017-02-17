@@ -39,16 +39,14 @@ public class AdministradorDao implements InterfaceCRUD<Administrador,String>{
 
 	@Override
 	public boolean cadastrar(Administrador objeto) throws SQLException {
-		String sql = "INSERT INTO academia.administrador(CPF_ADM, CARGO) "
-				+ "values(?,?)";
+		String sql = "INSERT INTO administrador(CPF_ADM, CARGO) "
+				+ " values(?,?)";
 		
 			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			statement.setString(1, objeto.getCpf());
 			statement.setString(2, objeto.getCargo());
 			statement.execute();
 		return true;	
-		
-				
 	}
 
 	@Override

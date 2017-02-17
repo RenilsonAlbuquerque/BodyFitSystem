@@ -48,6 +48,7 @@ public class DBConnectionFactory {
 		
 
 		this.setConnection();
+		this.conexao.setAutoCommit(false);
 		return conexao;
 	}
 	

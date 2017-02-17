@@ -41,13 +41,14 @@ public class ProfessorDao implements InterfaceCRUD<Professor,String>{
 
 	@Override
 	public boolean cadastrar(Professor objeto)throws SQLException {
-		String sql = "INSERT INTO academia.professor(CPF_PROF, CREF, TURNO) "
-				+ "values(?,?,?)";
+		String sql = "INSERT INTO academia.professor(CPF_PROF, CREF, TURNO,COORDENADOR) "
+				+ "values(?,?,?,?)";
 		
 			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			statement.setString(1, objeto.getCpf());
 			statement.setString(2, objeto.getCref());
 			statement.setString(3, objeto.getTurno());
+			statement.setBoolean(4, objeto.isCoordenador());
 			statement.execute();
 			
 		return true;
@@ -69,13 +70,14 @@ public class ProfessorDao implements InterfaceCRUD<Professor,String>{
 
 	@Override
 	public boolean atualizar(Professor objeto)throws SQLException{
-		String sql = "UPDATE academia.professor SET CPF_PROF = ?, CREF = ?,TURNO = ? "
+		String sql = "UPDATE academia.professor SET  CREF = ?,TURNO = ?,COORDENADOR = ? "
 				+ " WHERE CPF_PROF =" + objeto.getCpf();
 		
 			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
-			statement.setString(1, objeto.getCpf());
-			statement.setString(2, objeto.getCref());
-			statement.setString(3, objeto.getTurno());
+			
+			statement.setString(1, objeto.getCref());
+			statement.setString(2, objeto.getTurno());
+			statement.setBoolean(3, objeto.isCoordenador());
 			statement.execute();
 				
 		 
@@ -85,19 +87,16 @@ public class ProfessorDao implements InterfaceCRUD<Professor,String>{
 	@Override
 	public Professor buscar(String cpf) throws SQLException{
 		Professor professor = null;
-		String sql = "SELECT * FROM professor INNER JOIN academia.usuario ON professor.CPF_PROF = usuario.CPF_U WHERE CPF_PROF =" + cpf;
+		String sql = "SELECT * FROM professor WHERE CPF_PROF =" + cpf;
 		
 			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
 				String cref = rSet.getString("CREF");
-				String nome = rSet.getString("NOME");
-				String senha = rSet.getString("SENHA");
-				String caminhoFoto = rSet.getString("CAMINHO_FOTO");
 				String turno = rSet.getString("TURNO");
 				boolean coordenador = rSet.getBoolean("COORDENADOR");
-				professor = new Professor(cpf,nome,senha,caminhoFoto,cref,turno,coordenador);
+				professor = new Professor("",cref,turno,coordenador);
 			}
 			return professor;
 			
@@ -106,21 +105,17 @@ public class ProfessorDao implements InterfaceCRUD<Professor,String>{
 	@Override
 	public ArrayList<Professor> listar() throws SQLException {
 		ArrayList<Professor> professores = new ArrayList<Professor>();
-		String query = "SELECT * FROM academia.professor INNER JOIN academia.usuario ON professor.CPF_PROF = usuario.CPF_U";
+		String query = "SELECT * FROM professor";
 
 			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
-				String cpf = rSet.getString("CPF_PROF");
-				String nome = rSet.getString("NOME");
-				String senha = rSet.getString("SENHA");
-				String caminhoFoto = rSet.getString("CAMINHO_FOTO");
 				String cref = rSet.getString("CREF");
 				String turno = rSet.getString("TURNO");
 				boolean coordenador = rSet.getBoolean("COORDENADOR");
 				
-				Professor professor = new Professor(cpf,nome,senha,caminhoFoto,cref,turno,coordenador);
+				Professor professor = new Professor("",cref,turno,coordenador);
 				professores.add(professor);
 			}
 		

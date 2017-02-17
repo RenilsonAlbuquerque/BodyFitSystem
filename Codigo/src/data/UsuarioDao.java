@@ -40,21 +40,25 @@ public class UsuarioDao implements InterfaceCRUD<Usuario,String>{
 					perfis.add(PerfisEnum.professor);
 				if(rSet.getInt("USUARIOADMINISTRADOR") == 1)
 					perfis.add(PerfisEnum.administrador);
-					usuario = new Usuario(cpf,nome,senha,caminhoFoto,perfis);
+				
+				usuario = new Usuario(cpf,nome,senha,caminhoFoto,perfis);
 			}
 			return usuario;
 	}
 
 	@Override
 	public boolean cadastrar(Usuario objeto)throws SQLException {
-		String sql = "INSERT INTO academia.usuario(CPF_U,NOME, SENHA, CAMINHO_FOTO) "
-				+ "values(?,?,?,?)";
+		String sql = "INSERT INTO usuario(CPF_U,NOME, SENHA, CAMINHO_FOTO,USUARIOALUNO,USUARIOPROFESSOR,USUARIOADMINISTRADOR) "
+				+ "values(?,?,?,?,?,?,?)";
 		
 			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			statement.setString(1, objeto.getCpf());
 			statement.setString(2, objeto.getNome());
 			statement.setString(3, objeto.getSenha());
 			statement.setString(4, objeto.getCaminhoFoto());
+			statement.setBoolean(5, objeto.getPerfis().contains(PerfisEnum.aluno));
+			statement.setBoolean(6, objeto.getPerfis().contains(PerfisEnum.professor) );
+			statement.setBoolean(7, objeto.getPerfis().contains(PerfisEnum.administrador) );
 			statement.execute();
 		return true;
 	}
@@ -72,17 +76,20 @@ public class UsuarioDao implements InterfaceCRUD<Usuario,String>{
 
 	@Override
 	public boolean atualizar(Usuario objeto)throws SQLException{
-		String sql = "UPDATE academia.usuario SET CPF_U = ?, NOME =?, SENHA =?, CAMINHO_FOTO =? "
-				+ " WHERE CPF_U =" +objeto.getCpf();
+		String sql = "UPDATE usuario SET NOME =?, SENHA =?, CAMINHO_FOTO =?, USUARIOALUNO =?, USUARIOPROFESSOR = ?, "
+				+ " USUARIOADMINISTRADOR = ? WHERE CPF_U =" +objeto.getCpf();
 		
 				DBConnectionFactory.getInstance().getConnection().setAutoCommit(true);
 				statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 				
-				statement.setString(1, objeto.getCpf());
-				statement.setString(2, objeto.getNome());
-				statement.setString(3, objeto.getSenha());
-				statement.setString(4, objeto.getCaminhoFoto());
-				
+				//statement.setString(, objeto.getCpf());
+				statement.setString(1, objeto.getNome());
+				statement.setString(2, objeto.getSenha());
+				statement.setString(3, objeto.getCaminhoFoto());
+				statement.setBoolean(4, objeto.getPerfis().contains(PerfisEnum.aluno));
+				statement.setBoolean(5, objeto.getPerfis().contains(PerfisEnum.professor));
+				statement.setBoolean(6, objeto.getPerfis().contains(PerfisEnum.administrador));
+				//statement.setString(7, objeto.getCpf());
 				statement.execute();
 				return true;
 	}
@@ -100,8 +107,19 @@ public class UsuarioDao implements InterfaceCRUD<Usuario,String>{
 			String nome = rSet.getString("NOME");
 			String senha = rSet.getString("SENHA");
 			String caminhoFoto = rSet.getString("CAMINHO_FOTO");
-						
-			usuarios.add(new Usuario(cpf,nome,senha,caminhoFoto));
+			int aluno = rSet.getInt("USUARIOALUNO");
+			int professor = rSet.getInt("USUARIOPROFESSOR");
+			int administrador = rSet.getInt("USUARIOADMINISTRADOR");
+			ArrayList<PerfisEnum> perfis = new ArrayList<PerfisEnum>();
+			if(aluno == 1)
+				perfis.add(PerfisEnum.aluno);
+			if(professor == 1)
+				perfis.add(PerfisEnum.professor);
+			if(administrador == 1)
+				perfis.add(PerfisEnum.administrador);
+			
+			
+			usuarios.add(new Usuario(cpf,nome,senha,caminhoFoto,perfis));
 		}
 		return usuarios;
 	}

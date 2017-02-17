@@ -5,8 +5,6 @@ import java.util.ArrayList;
 
 import beans.PerfisEnum;
 import control.Fachada;
-import exceptions.CRUDException;
-import exceptions.ConexaoBancoException;
 import exceptions.NegocioException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,8 +15,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Screen;
 import view.controls.Principal;
+import view.controls.gerenciamento.ControladorADMGerenciaUsuario;
 import view.controls.menu.ControladorMenuPrincipal;
-import view.controls.menu.ControladorOpcoesAdministrador;
 import view.controls.menu.ControladorOpcoesProfessor;
 
 public class ControladorTelaEscolhaPerfil extends FlowPane{
@@ -128,7 +126,7 @@ public class ControladorTelaEscolhaPerfil extends FlowPane{
 			Principal.setCurrentStage(ControladorMenuPrincipal.getInstance(),
 					(int)Screen.getPrimary().getVisualBounds().getWidth(),
 					(int)Screen.getPrimary().getVisualBounds().getHeight());
-			ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorOpcoesAdministrador());
+			ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorADMGerenciaUsuario());
 		} catch (NegocioException e) {
 			
 			e.printStackTrace();

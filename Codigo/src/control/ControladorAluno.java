@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import beans.Aluno;
+import beans.PerfisEnum;
 import beans.Usuario;
 import data.AlunoDao;
 import data.DBConnectionFactory;
@@ -32,13 +33,27 @@ private ControladorUsuario controladorUsuario;
 	
 	public void cadastrar(Aluno aluno) throws NegocioException{
 		try {
-			if(usuario.existe(aluno.getCpf())){
-				
-				this.repositorio.cadastrar(aluno);
+			
+			if(!this.repositorio.existe(aluno.getCpf())){
+					
+				if(!this.usuario.existe(aluno.getCpf())){
+					this.usuario.cadastrar(aluno);
+					this.repositorio.cadastrar(aluno);
+				}else{
+					
+					Usuario u = usuario.buscar(aluno.getCpf());
+					u.getPerfis().add(PerfisEnum.professor);
+					this.usuario.atualizar(u);
+					this.repositorio.cadastrar(aluno);
+				}
 				DBConnectionFactory.getInstance().getConnection().commit();
 				
-			}else{
-				this.controladorUsuario.cadastrar(aluno);
+			}else{			
+				try {
+					DBConnectionFactory.getInstance().getConnection().rollback();
+				} catch (SQLException e1) {}
+				throw new NegocioException("O aluno já está cadastrado");
+				
 			}
 				
 		} catch (SQLException e) {

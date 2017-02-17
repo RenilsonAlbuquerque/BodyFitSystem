@@ -1,10 +1,20 @@
 package beans;
 
+import java.util.ArrayList;
+
 public class Professor extends Usuario{
 	private String cref;
 	private String turno;
 	private boolean coordenador;
 			
+	public Professor(String cpf, String nome, String senha, String caminhoFoto,ArrayList<PerfisEnum> perfis,
+			String cref, String turno,boolean coordenador) {
+		super(cpf,nome,senha,caminhoFoto,perfis);
+		this.setCref(cref);
+		this.setTurno(turno);
+		this.setCoordenador(coordenador);
+		
+	}
 	public Professor(String cpf, String nome, String senha, String caminhoFoto,
 			String cref, String turno,boolean coordenador) {
 		super(cpf,nome,senha,caminhoFoto);
@@ -24,7 +34,6 @@ public class Professor extends Usuario{
 	public String getCref() {
 		return cref;
 	}
-
 	public void setCref(String cref) {
 		this.cref = cref;
 	}
@@ -40,5 +49,6 @@ public class Professor extends Usuario{
 	public void setCoordenador(boolean coordenador) {
 		this.coordenador = coordenador;
 	}
+	
 	
 }

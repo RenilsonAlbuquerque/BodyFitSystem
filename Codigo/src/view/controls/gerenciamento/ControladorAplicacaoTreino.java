@@ -5,8 +5,6 @@ import java.io.IOException;
 import beans.Aluno;
 import beans.Treino;
 import control.Fachada;
-import exceptions.CRUDException;
-import exceptions.ConexaoBancoException;
 import exceptions.NegocioException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

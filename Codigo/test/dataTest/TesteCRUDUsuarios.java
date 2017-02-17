@@ -17,8 +17,6 @@ import data.AdministradorDao;
 import data.AlunoDao;
 import data.ProfessorDao;
 import data.UsuarioDao;
-import exceptions.CRUDException;
-import exceptions.ConexaoBancoException;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TesteCRUDUsuarios {

@@ -1,8 +1,6 @@
 package view.controls.login;
 
 import control.Fachada;
-import exceptions.CRUDException;
-import exceptions.ConexaoBancoException;
 import exceptions.NegocioException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -3,7 +3,6 @@ package view.controls.visualizacao;
 import java.io.IOException;
 
 import control.Fachada;
-import exceptions.CRUDException;
 import exceptions.ConexaoBancoException;
 import exceptions.NegocioException;
 import javafx.event.ActionEvent;
@@ -93,7 +92,7 @@ public class ControladorVisualizacaoPerfilProprio extends HBox{
 					else{
 						erro.setText("A senha atual não está certa");
 					}
-				} catch (ConexaoBancoException | NegocioException | CRUDException ex) {
+				} catch (NegocioException ex) {
 					erro.setText(ex.getMessage());
 				} 		
 		    }

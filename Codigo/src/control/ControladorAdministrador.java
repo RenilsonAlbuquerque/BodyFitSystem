@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import beans.Administrador;
+import beans.PerfisEnum;
 import beans.Usuario;
 import data.AdministradorDao;
 import data.DBConnectionFactory;
@@ -33,13 +34,26 @@ public class ControladorAdministrador {
 	
 	public void cadastrar(Administrador administrador) throws NegocioException{
 		try {
-			if(usuario.existe(administrador.getCpf())){
-				
-				this.repositorio.cadastrar(administrador);
+			if(!this.repositorio.existe(administrador.getCpf())){
+					
+				if(!this.usuario.existe(administrador.getCpf())){
+					this.usuario.cadastrar(administrador);
+					this.repositorio.cadastrar(administrador);
+				}else{
+					
+					Usuario u = usuario.buscar(administrador.getCpf());
+					u.getPerfis().add(PerfisEnum.administrador);
+					this.usuario.atualizar(u);
+					this.repositorio.cadastrar(administrador);
+				}
 				DBConnectionFactory.getInstance().getConnection().commit();
 				
-			}else{
-				this.controladorUsuario.cadastrar(administrador);
+			}else{			
+				try {
+					DBConnectionFactory.getInstance().getConnection().rollback();
+				} catch (SQLException e1) {}
+				throw new NegocioException("O administrador já está cadastrado");
+				
 			}
 				
 		} catch (SQLException e) {
