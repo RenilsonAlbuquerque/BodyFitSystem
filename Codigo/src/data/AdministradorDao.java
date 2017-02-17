@@ -79,17 +79,15 @@ public class AdministradorDao implements InterfaceCRUD<Administrador,String>{
 	@Override
 	public Administrador buscar(String cpf)throws SQLException{
 		Administrador adm = null;
-		String sql = "SELECT * FROM administrador INNER JOIN academia.usuario ON administrador.CPF_ADM = usuario.CPF_U WHERE CPF_ADM =" + cpf;
+		String sql = "SELECT * FROM administrador WHERE CPF_ADM =" + cpf;
 		
 			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
-				String nome = rSet.getString("NOME");
-				String senha = rSet.getString("SENHA");
-				String caminhoFoto = rSet.getString("CAMINHO_FOTO");
+				String cpfAdm = rSet.getString("CPF_ADM");
 				String cargo = rSet.getString("CARGO");
-				adm = new Administrador(cpf,nome,senha,caminhoFoto,cargo);
+				adm = new Administrador(cpfAdm,cargo);
 			}
 			return adm;
 			
@@ -98,19 +96,16 @@ public class AdministradorDao implements InterfaceCRUD<Administrador,String>{
 	@Override
 	public ArrayList<Administrador> listar() throws SQLException{
 		ArrayList<Administrador> administradores = new ArrayList<Administrador>();
-		String query = "SELECT * FROM academia.administrador INNER JOIN academia.usuario ON administrador.CPF_ADM = usuario.CPF_U";
+		String query = "SELECT * FROM administrador ";
 		
 			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
 				String cpf = rSet.getString("CPF_ADM");
-				String nome = rSet.getString("NOME");
-				String senha = rSet.getString("SENHA");
-				String caminhoFoto = rSet.getString("CAMINHO_FOTO");
 				String cargo = rSet.getString("CARGO");
 				
-				Administrador adm = new Administrador(cpf,nome,senha,caminhoFoto,cargo);
+				Administrador adm = new Administrador(cpf,cargo);
 				administradores.add(adm);
 			}
 		

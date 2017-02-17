@@ -1,4 +1,4 @@
-package view.controls.cadastro;
+package view.controls.atualizar;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,9 +32,12 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import view.controls.cadastro.ControladorTelaCadastroTreino;
 
-public class ControladorTelaCadastroUsuario extends FlowPane{
+
+public class ControladorTelaAlterarUsuario extends FlowPane{
 	
+	private Usuario usuario;
 	
 	private Stage telaAuxiliar;
 	
@@ -65,7 +68,7 @@ public class ControladorTelaCadastroUsuario extends FlowPane{
 	@FXML
 	private Button btnCadastrar;
 	
-	public ControladorTelaCadastroUsuario(){
+	public ControladorTelaAlterarUsuario(Usuario usuario,ArrayList perfis){
 		try{
 			FXMLLoader loader = new FXMLLoader(ControladorTelaCadastroTreino.class.getClass().getResource("/view/fxmls/cadastro/TelaCadastroUsuario.fxml"));
 			loader.setController(this);
@@ -85,6 +88,15 @@ public class ControladorTelaCadastroUsuario extends FlowPane{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+		
+		this.usuario = usuario;
+		this.txtNome.setText(usuario.getNome());
+		this.txtCPF.setText(usuario.getCpf());
+		this.txtCPF.setEditable(false);
+		this.txtSenha.setText(usuario.getSenha());
+		this.txtConfirmaSenha.setText(usuario.getSenha());
+		
+		this.listaPerfis.getItems().addAll(perfis);
 	}
 	
 	@FXML
@@ -357,5 +369,5 @@ public class ControladorTelaCadastroUsuario extends FlowPane{
 			
 		}
 	}
-	
+
 }

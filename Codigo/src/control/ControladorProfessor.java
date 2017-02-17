@@ -96,7 +96,14 @@ public class ControladorProfessor {
 	public ArrayList<Professor> listar() throws NegocioException{
 		ArrayList<Professor> resultado = new ArrayList<Professor>();
 		try {
-			resultado = repositorio.listar();
+			for(Professor p : repositorio.listar()){
+				Usuario u = this.usuario.buscar(p.getCpf());
+				p.setCpf(u.getCpf());
+				p.setNome(u.getNome());
+				p.setSenha(u.getSenha());
+				p.setCaminhoFoto(u.getCaminhoFoto());
+				resultado.add(p);
+			}
 		} catch (SQLException e) {
 			throw new NegocioException(e.getMessage());
 		}

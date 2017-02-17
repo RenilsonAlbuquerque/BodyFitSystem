@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import beans.Administrador;
 import beans.PerfisEnum;
+import beans.Professor;
 import beans.Usuario;
 import data.AdministradorDao;
 import data.DBConnectionFactory;
@@ -86,7 +87,12 @@ public class ControladorAdministrador {
 	
 	public Administrador buscar(String cpf) throws NegocioException{
 		try{
-			return this.repositorio.buscar(cpf);
+			Usuario u = this.usuario.buscar(cpf);
+			Administrador a =  this.repositorio.buscar(cpf);
+			a.setNome(u.getNome());
+			a.setSenha(u.getSenha());
+			a.setCaminhoFoto(u.getCaminhoFoto());
+			return a;
 		}catch(SQLException e){
 			throw new NegocioException(e.getMessage());
 		}
@@ -96,7 +102,15 @@ public class ControladorAdministrador {
 	public ArrayList<Administrador> listar() throws NegocioException{
 		ArrayList<Administrador> resultado = new ArrayList<Administrador>();
 		try {
-			resultado = repositorio.listar();
+			
+			for(Administrador a : repositorio.listar()){
+				Usuario u = this.usuario.buscar(a.getCpf());
+				a.setCpf(u.getCpf());
+				a.setNome(u.getNome());
+				a.setSenha(u.getSenha());
+				a.setCaminhoFoto(u.getCaminhoFoto());
+				resultado.add(a);
+			}
 		} catch (SQLException e) {
 			throw new NegocioException(e.getMessage());
 		}

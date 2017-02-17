@@ -6,12 +6,13 @@ public class Aluno extends Usuario {
 	private int idade;
 	private float peso;
 	private float altura;
+	private String cpfProfessor;
 	
 	
-	
-	public Aluno(String cpf, String nome, String senha, String caminhoFoto,ArrayList<PerfisEnum> perfis,
+	public Aluno(String cpf,String cpfProf, String nome, String senha, String caminhoFoto,ArrayList<PerfisEnum> perfis,
 			int idade, float peso, float altura) {
 		super(cpf,nome,senha,caminhoFoto,perfis);
+		this.setCpfProfessor(cpfProf);
 		this.setIdade(idade);
 		this.setAltura(altura);
 		this.setPeso(peso);
@@ -23,13 +24,13 @@ public class Aluno extends Usuario {
 		this.setAltura(altura);
 		this.setPeso(peso);
 	}
-	public Aluno(String cpf,int idade, float peso, float altura) {
+	public Aluno(String cpf,String cpfProfessor,int idade, float altura, float peso) {
 		super(cpf);
 		this.setIdade(idade);
+		this.setCpfProfessor(cpfProfessor);
 		this.setAltura(altura);
 		this.setPeso(peso);
 	}
-	
 	
 	
 	public int getIdade() {
@@ -51,6 +52,12 @@ public class Aluno extends Usuario {
 		this.altura = altura;
 	}
 	
+	public String getCpfProfessor() {
+		return cpfProfessor;
+	}
+	public void setCpfProfessor(String cpfProfessor) {
+		this.cpfProfessor = cpfProfessor;
+	}
 	@Override
 	public String toString(){
 		return this.getNome();

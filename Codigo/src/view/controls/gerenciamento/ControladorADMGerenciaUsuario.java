@@ -23,6 +23,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import view.controls.atualizar.ControladorTelaAlterarUsuario;
 import view.controls.cadastro.ControladorTelaCadastroUsuario;
 import view.controls.login.ControladorTelaLogin;
 
@@ -73,6 +74,7 @@ public class ControladorADMGerenciaUsuario extends HBox{
 			    this.atualizaLista(newText);
 			    
 			});
+			this.rbAluno.setSelected(true);
 			//this.getChildren().add(0,new ControladorTelaVisualizacao(aluno));
 		}catch(IOException e){
 			e.printStackTrace();
@@ -108,6 +110,7 @@ public class ControladorADMGerenciaUsuario extends HBox{
 		
 	}
 	public void povoarlista(PerfisEnum perfil){
+		this.listaObjetos.getItems().clear();
 		try {
 			if(perfil == PerfisEnum.aluno)
 				this.usuarios =  Fachada.getInstance().listarAlunos(); 
@@ -115,6 +118,7 @@ public class ControladorADMGerenciaUsuario extends HBox{
 				this.usuarios =  Fachada.getInstance().listarProfessores();
 			if(perfil == PerfisEnum.administrador)
 				this.usuarios =  Fachada.getInstance().listarAdministradores();
+			
 			this.listaObjetos.setItems(FXCollections.observableArrayList(usuarios));
 			Collections.sort(this.listaObjetos.getItems());
 		}
@@ -147,7 +151,15 @@ public class ControladorADMGerenciaUsuario extends HBox{
 	
 	@FXML
 	private void acaoBtAlterar(ActionEvent e){
-		
+		if (this.listaObjetos.getSelectionModel().getSelectedItem() instanceof Usuario) {
+			ArrayList perfis = new ArrayList();
+
+			Stage s = new Stage();
+			s.setScene(new Scene(new ControladorTelaAlterarUsuario(
+					(Usuario) this.listaObjetos.getSelectionModel().getSelectedItem(), perfis)));
+			s.getScene().getStylesheets().add("/view/style/stylesheet.css");
+			s.show();
+		}
 	}
 	@FXML
 	private void acaoBtExcluir(ActionEvent e){

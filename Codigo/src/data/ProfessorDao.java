@@ -111,11 +111,12 @@ public class ProfessorDao implements InterfaceCRUD<Professor,String>{
 			this.rSet = (ResultSet) statement.executeQuery();
 			
 			while(rSet.next()){
+				String cpf = rSet.getString("CPF_PROF");
 				String cref = rSet.getString("CREF");
 				String turno = rSet.getString("TURNO");
 				boolean coordenador = rSet.getBoolean("COORDENADOR");
 				
-				Professor professor = new Professor("",cref,turno,coordenador);
+				Professor professor = new Professor(cpf,cref,turno,coordenador);
 				professores.add(professor);
 			}
 		

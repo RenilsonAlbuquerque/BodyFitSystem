@@ -91,7 +91,15 @@ private ControladorUsuario controladorUsuario;
 	public ArrayList<Aluno> listar() throws NegocioException{
 		ArrayList<Aluno> resultado = new ArrayList<Aluno>();
 		try {
-			resultado = repositorio.listar();
+			
+			for(Aluno a : repositorio.listar()){
+				Usuario u = this.usuario.buscar(a.getCpf());
+				a.setCpf(u.getCpf());
+				a.setNome(u.getNome());
+				a.setSenha(u.getSenha());
+				a.setCaminhoFoto(u.getCaminhoFoto());
+				resultado.add(a);
+			}
 		} catch (SQLException e) {
 			throw new NegocioException(e.getMessage());
 		}
