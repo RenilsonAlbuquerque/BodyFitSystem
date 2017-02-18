@@ -241,53 +241,58 @@ public class ControladorTelaCadastroUsuario extends FlowPane{
 	@FXML
 	private void acaoBtCadastrar(){
 		
+		Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
+		DialogPane d = dialogo.getDialogPane();
+		d.getStylesheets().add(
+				   getClass().getResource("/view/style/stylesheet.css").toExternalForm());
+				d.getStyleClass().add("dialog-pane");
+		
+		dialogo.setHeaderText(null);
 		try{
 			this.cadastrar();
-			Alert alerta = new Alert(AlertType.INFORMATION);
-			alerta.setHeaderText("Cadastrado");
-			alerta.show();
+			dialogo.setContentText("Cadastrado!");
+			dialogo.show();
 		}
 		catch(NegocioException e){
-			Alert alerta = new Alert(AlertType.ERROR);
-			alerta.setHeaderText(e.getMessage());
-			alerta.show();
-			e.printStackTrace();
+			dialogo.setAlertType(Alert.AlertType.ERROR);
+			dialogo.setContentText(e.getMessage());
+			dialogo.show();
 		}
 		
 	}
 	private void cadastrar() throws  NegocioException{
 		if (!this.listaPerfis.getItems().isEmpty()) {
-			ArrayList<PerfisEnum> perfis = new ArrayList<PerfisEnum>(); 
-			
+			ArrayList<Usuario> perfis = new ArrayList<Usuario>(); 
+
 			for (Object o : this.listaPerfis.getItems()) {
 				if (o instanceof Aluno) {
-					Fachada.getInstance().cadastrarAluno(
-							new Aluno(this.txtCPF.getText(),((Aluno)o).getCpfProfessor(),
-								this.txtNome.getText(), this.txtSenha.getText(), "",perfis,
+					perfis.add(new Aluno(this.txtCPF.getText(),((Aluno)o).getCpfProfessor(),
+								this.txtNome.getText(), this.txtSenha.getText(), "",new ArrayList<PerfisEnum>(),
 								((Aluno)o).getIdade(),
 								((Aluno)o).getPeso(),
-								((Aluno)o).getAltura()));
+								((Aluno)o).getAltura())
+					);
+					
 					continue;
 				}
 				
 				if (o instanceof Professor) {
-					perfis.add(PerfisEnum.professor);
-					Fachada.getInstance().cadastrarProfessor(
-							new Professor(this.txtCPF.getText(), this.txtNome.getText(), this.txtSenha.getText(), "",perfis,
+				
+					perfis.add(new Professor(this.txtCPF.getText(), this.txtNome.getText(), this.txtSenha.getText(), "",new ArrayList<PerfisEnum>(),
 								((Professor)o).getCref(),
 								((Professor)o).getTurno(),
 								((Professor)o).isCoordenador()));
 					continue;
 				}
 				if (o instanceof Administrador) {
-					perfis.add(PerfisEnum.administrador);
-					Fachada.getInstance().cadastrarAdministrador(
-							new Administrador(this.txtCPF.getText(), this.txtNome.getText(), this.txtSenha.getText(), "",perfis,
+					
+					perfis.add(new Administrador(this.txtCPF.getText(), this.txtNome.getText(), this.txtSenha.getText(), "",new ArrayList<PerfisEnum>(),
 								((Administrador)o).getCargo()));
 					continue;
 				}
 				
-			}		
+			}	
+			Fachada.getInstance().cadastrarUsuario(perfis);
 		}
 		else{
 			throw new NegocioException("você precisa adicionar ao menos um perfil de usuário");

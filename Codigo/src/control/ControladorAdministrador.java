@@ -32,7 +32,7 @@ public class ControladorAdministrador {
 			instance = new ControladorAdministrador();
 		return instance;
 	}
-	
+	/*
 	public void cadastrar(Administrador administrador) throws NegocioException{
 		try {
 			if(!this.repositorio.existe(administrador.getCpf())){
@@ -109,6 +109,7 @@ public class ControladorAdministrador {
 				a.setNome(u.getNome());
 				a.setSenha(u.getSenha());
 				a.setCaminhoFoto(u.getCaminhoFoto());
+				a.setPerfis(u.getPerfis());
 				resultado.add(a);
 			}
 		} catch (SQLException e) {

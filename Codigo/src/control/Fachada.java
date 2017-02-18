@@ -58,8 +58,9 @@ public class Fachada {
 		return this.usuario.autenticar(cpf, senha);
 	}
 	public ArrayList<PerfisEnum> getPerfisUsuario(String cpf) throws NegocioException{
-		return this.usuario.buscar(cpf).getPerfis();
+		return this.usuario.getPerfis(cpf);
 	}
+	
 	public void atualizarUsuario(Usuario usuario) throws NegocioException{
 		this.usuario.atualizar(usuario);
 		if(usuario instanceof Aluno)
@@ -70,6 +71,25 @@ public class Fachada {
 			this.professor.atualizar((Professor)usuario);
 	}
 	
+	public ArrayList<Usuario> getPerfisObject(Usuario usuario) throws NegocioException{
+		ArrayList<Usuario> resultado = new ArrayList<Usuario>();
+		if(usuario.getPerfis().contains(PerfisEnum.aluno))
+			resultado.add(aluno.buscar(usuario.getCpf()));
+		if(usuario.getPerfis().contains(PerfisEnum.professor))
+			resultado.add(professor.buscar(usuario.getCpf()));
+		if(usuario.getPerfis().contains(PerfisEnum.administrador))
+			resultado.add(administrador.buscar(usuario.getCpf()));
+		
+		return resultado;
+		
+	}
+	public void cadastrarUsuario(ArrayList<Usuario> usuarios) throws NegocioException{
+		this.usuario.cadastrar(usuarios);
+	}
+	public void alterarUsuario(ArrayList<Usuario> perfis) throws NegocioException{
+		this.usuario.atualizar(perfis);
+	}
+	/*
 	public void cadastrarAluno(Aluno aluno) throws NegocioException{
 		this.aluno.cadastrar(aluno);
 	}
@@ -79,6 +99,7 @@ public class Fachada {
 	public void cadastrarAdministrador(Administrador administrador) throws NegocioException{
 		this.administrador.cadastrar(administrador);
 	}
+	*/
 	
 	public void cadastrarTreino(Treino treino) throws NegocioException{
 		this.treino.cadastrar(treino);
@@ -127,6 +148,10 @@ public class Fachada {
 	public ArrayList<Exercicio> listarExercicios(String cpfProf) throws NegocioException{
 		return this.exercicio.listar(cpfProf);
 	}
+	public void remover(Usuario usuario) throws NegocioException{
+		this.usuario.remover(usuario);
+	}
+	/*
 	public void removerAluno(Aluno aluno) throws NegocioException{
 		this.aluno.remover(aluno);
 	}
@@ -136,6 +161,7 @@ public class Fachada {
 	public void removerAdministrador(Administrador administrador) throws NegocioException{
 		this.administrador.remover(administrador);
 	}
+	*/
 	public void removerTreino(Treino treino) throws NegocioException{
 		this.treino.remover(treino);
 	}

@@ -2,6 +2,7 @@ package view.controls.atualizar;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import beans.Administrador;
 import beans.Aluno;
@@ -20,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DialogPane;
@@ -32,7 +34,9 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import view.controls.Principal;
 import view.controls.cadastro.ControladorTelaCadastroTreino;
+import view.controls.login.ControladorTelaLogin;
 
 
 public class ControladorTelaAlterarUsuario extends FlowPane{
@@ -89,6 +93,7 @@ public class ControladorTelaAlterarUsuario extends FlowPane{
 			e.printStackTrace();
 		}
 		
+		this.btnCadastrar.setText("Atualizar");
 		this.usuario = usuario;
 		this.txtNome.setText(usuario.getNome());
 		this.txtCPF.setText(usuario.getCpf());
@@ -97,6 +102,7 @@ public class ControladorTelaAlterarUsuario extends FlowPane{
 		this.txtConfirmaSenha.setText(usuario.getSenha());
 		
 		this.listaPerfis.getItems().addAll(perfis);
+		this.listaPerfis.refresh();
 	}
 	
 	@FXML
@@ -252,54 +258,65 @@ public class ControladorTelaAlterarUsuario extends FlowPane{
 	
 	@FXML
 	private void acaoBtCadastrar(){
+		Alert dialogo = new Alert(Alert.AlertType.NONE);
+		DialogPane d = dialogo.getDialogPane();
+		d.getStylesheets().add(
+				   getClass().getResource("/view/style/stylesheet.css").toExternalForm());
+				d.getStyleClass().add("dialog-pane");
 		
+		dialogo.setHeaderText(null);
+		dialogo.show();
 		try{
-			this.cadastrar();
-			Alert alerta = new Alert(AlertType.INFORMATION);
-			alerta.setHeaderText("Cadastrado");
-			alerta.show();
+			this.alterar();
+			dialogo.setContentText("Alterado!");
 		}
 		catch(NegocioException e){
-			Alert alerta = new Alert(AlertType.ERROR);
-			alerta.setHeaderText(e.getMessage());
-			alerta.show();
-			e.printStackTrace();
+			dialogo.setAlertType(Alert.AlertType.ERROR);
+			dialogo.setContentText(e.getMessage());
+			Optional<ButtonType> result = dialogo.showAndWait();
+			if(result.get() == ButtonType.OK){
+				dialogo.close();
+			}
+			else{
+				dialogo.close();
+			}
 		}
 		
 	}
-	private void cadastrar() throws  NegocioException{
+	private void alterar() throws  NegocioException{
 		if (!this.listaPerfis.getItems().isEmpty()) {
-			ArrayList<PerfisEnum> perfis = new ArrayList<PerfisEnum>(); 
-			
+			ArrayList<Usuario> perfis = new ArrayList<Usuario>(); 
+
 			for (Object o : this.listaPerfis.getItems()) {
 				if (o instanceof Aluno) {
-					Fachada.getInstance().cadastrarAluno(
-							new Aluno(this.txtCPF.getText(),((Aluno)o).getCpfProfessor(),
-								this.txtNome.getText(), this.txtSenha.getText(), "",perfis,
+					perfis.add(new Aluno(this.txtCPF.getText(),((Aluno)o).getCpfProfessor(),
+								this.txtNome.getText(), this.txtSenha.getText(), "",new ArrayList<PerfisEnum>(),
 								((Aluno)o).getIdade(),
 								((Aluno)o).getPeso(),
-								((Aluno)o).getAltura()));
+								((Aluno)o).getAltura())
+					);
+					
 					continue;
 				}
 				
 				if (o instanceof Professor) {
-					perfis.add(PerfisEnum.professor);
-					Fachada.getInstance().cadastrarProfessor(
-							new Professor(this.txtCPF.getText(), this.txtNome.getText(), this.txtSenha.getText(), "",perfis,
+				
+					perfis.add(new Professor(this.txtCPF.getText(), this.txtNome.getText(), this.txtSenha.getText(), "",new ArrayList<PerfisEnum>(),
 								((Professor)o).getCref(),
 								((Professor)o).getTurno(),
 								((Professor)o).isCoordenador()));
 					continue;
 				}
 				if (o instanceof Administrador) {
-					perfis.add(PerfisEnum.administrador);
-					Fachada.getInstance().cadastrarAdministrador(
-							new Administrador(this.txtCPF.getText(), this.txtNome.getText(), this.txtSenha.getText(), "",perfis,
+					
+					perfis.add(new Administrador(this.txtCPF.getText(), this.txtNome.getText(), this.txtSenha.getText(), "",new ArrayList<PerfisEnum>(),
 								((Administrador)o).getCargo()));
 					continue;
 				}
 				
-			}		
+			}	
+			Fachada.getInstance().alterarUsuario(perfis);
+			
 		}
 		else{
 			throw new NegocioException("você precisa adicionar ao menos um perfil de usuário");

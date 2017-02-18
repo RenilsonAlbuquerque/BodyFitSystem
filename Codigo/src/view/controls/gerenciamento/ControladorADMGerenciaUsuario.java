@@ -3,6 +3,7 @@ package view.controls.gerenciamento;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Optional;
 
 import beans.PerfisEnum;
 import beans.Usuario;
@@ -15,6 +16,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -23,6 +27,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import view.controls.Principal;
 import view.controls.atualizar.ControladorTelaAlterarUsuario;
 import view.controls.cadastro.ControladorTelaCadastroUsuario;
 import view.controls.login.ControladorTelaLogin;
@@ -152,18 +157,38 @@ public class ControladorADMGerenciaUsuario extends HBox{
 	@FXML
 	private void acaoBtAlterar(ActionEvent e){
 		if (this.listaObjetos.getSelectionModel().getSelectedItem() instanceof Usuario) {
-			ArrayList perfis = new ArrayList();
-
+			Usuario u = (Usuario) this.listaObjetos.getSelectionModel().getSelectedItem();
 			Stage s = new Stage();
-			s.setScene(new Scene(new ControladorTelaAlterarUsuario(
-					(Usuario) this.listaObjetos.getSelectionModel().getSelectedItem(), perfis)));
+			try {
+				s.setScene(new Scene(new ControladorTelaAlterarUsuario(
+						(Usuario) this.listaObjetos.getSelectionModel().getSelectedItem(), 
+						Fachada.getInstance().getPerfisObject((Usuario)listaObjetos.getSelectionModel().getSelectedItem()))));
+			} catch (NegocioException e1) {
+				e1.printStackTrace();
+			}
 			s.getScene().getStylesheets().add("/view/style/stylesheet.css");
 			s.show();
 		}
 	}
 	@FXML
 	private void acaoBtExcluir(ActionEvent e){
-		
+		if (this.listaObjetos.getSelectionModel().getSelectedItem() instanceof Usuario) {
+			Alert dialogo = new Alert(Alert.AlertType.CONFIRMATION);
+			DialogPane d = dialogo.getDialogPane();
+			d.getStylesheets().add(getClass().getResource("/view/style/stylesheet.css").toExternalForm());
+			d.getStyleClass().add("dialog-pane");
+			dialogo.setContentText("A operação seguinte apagará todos os perfis do usuário selecionado \n Deseja continuar?");
+			dialogo.setHeaderText(null);
+			Optional<ButtonType> result = dialogo.showAndWait();
+			if (result.get() == ButtonType.OK) {
+				try {
+					Fachada.getInstance().remover((Usuario) this.listaObjetos.getSelectionModel().getSelectedItem());
+				} catch (NegocioException e1) {
+
+				}
+			}
+		}
+		;
 	}
 	
 }

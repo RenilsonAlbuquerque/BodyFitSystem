@@ -7,12 +7,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
-import view.controls.gerenciamento.ControladorPGerenciaExercicioPadrao;
 import view.controls.gerenciamento.ControladorPGerenciaExercicios;
 import view.controls.gerenciamento.ControladorPGerenciaTreinos;
 import view.controls.login.ControladorTelaLogin;
 
-public class ControladorTelaTreinosExercicios extends FlowPane {
+public class ControladorTelaTreinosExerciciosProfessor extends FlowPane{
 	
 	@FXML
 	private Button btnBancoTreinos;
@@ -26,23 +25,14 @@ public class ControladorTelaTreinosExercicios extends FlowPane {
 	@FXML
 	private Button btnMeusExercicios;
 	
-	public ControladorTelaTreinosExercicios(){
+	public ControladorTelaTreinosExerciciosProfessor(){
 		try{
-			FXMLLoader loader = new FXMLLoader(ControladorTelaLogin.class.getClass().getResource("/view/fxmls/menus/TelaTreinosExercicios.fxml"));
+			FXMLLoader loader = new FXMLLoader(ControladorTelaLogin.class.getClass().getResource("/view/fxmls/menus/TelaTreinosExerciciosProfessor.fxml"));
 			loader.setController(this);
 			this.getChildren().add(loader.load());
 		}catch(IOException e){
 			e.getMessage();
 		}
-	}
-	
-	@FXML
-	public void acaoBancoTreinos(){
-		
-	}
-	@FXML
-	public void acaoBancoExercicios(){
-		ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorPGerenciaExercicioPadrao());
 	}
 	@FXML
 	public void acaoMeusTreinos(){

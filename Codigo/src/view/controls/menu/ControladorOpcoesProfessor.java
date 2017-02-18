@@ -35,7 +35,7 @@ public class ControladorOpcoesProfessor extends HBox {
 	}
 	@FXML
 	public void acaoTreinosExercicios(ActionEvent e ){
-		ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorTelaTreinosExercicios());
+		ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorTelaTreinosExerciciosCoordenador());
 	}
 	
 }

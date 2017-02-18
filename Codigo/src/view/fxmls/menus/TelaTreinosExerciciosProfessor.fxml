@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<FlowPane alignment="CENTER" hgap="15.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="583.0" prefWidth="731.0" vgap="15.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="btnMeusTreinos" mnemonicParsing="false" onAction="#acaoMeusTreinos" prefHeight="230.0" prefWidth="350.0" text="Meus Treinos" />
+      <Button fx:id="btnMeusexErcicios" mnemonicParsing="false" onAction="#acaoMeusExercicios" prefHeight="230.0" prefWidth="350.0" text="Meus Exercícios" />
+   </children>
+</FlowPane>

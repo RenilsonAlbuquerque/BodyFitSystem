@@ -30,7 +30,7 @@ private ControladorUsuario controladorUsuario;
 			instance = new ControladorAluno();
 		return instance;
 	}
-	
+	/*
 	public void cadastrar(Aluno aluno) throws NegocioException{
 		try {
 			
@@ -64,6 +64,7 @@ private ControladorUsuario controladorUsuario;
 		}
 		
 	}
+	*/
 	public void atualizar(Aluno aluno) throws NegocioException{
 		try {
 			if (this.repositorio.existe(aluno.getCpf())) {
@@ -97,6 +98,7 @@ private ControladorUsuario controladorUsuario;
 				a.setCpf(u.getCpf());
 				a.setNome(u.getNome());
 				a.setSenha(u.getSenha());
+				a.setPerfis(u.getPerfis());
 				a.setCaminhoFoto(u.getCaminhoFoto());
 				resultado.add(a);
 			}

@@ -30,7 +30,7 @@ public class ControladorProfessor {
 			instance = new ControladorProfessor();
 		return instance;
 	}
-	
+	/*
 	public void cadastrar(Professor professor) throws NegocioException{
 		try {
 			
@@ -102,6 +102,7 @@ public class ControladorProfessor {
 				p.setNome(u.getNome());
 				p.setSenha(u.getSenha());
 				p.setCaminhoFoto(u.getCaminhoFoto());
+				p.setPerfis(u.getPerfis());
 				resultado.add(p);
 			}
 		} catch (SQLException e) {
