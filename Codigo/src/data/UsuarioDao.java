@@ -77,7 +77,7 @@ public class UsuarioDao implements InterfaceCRUD<Usuario,String>{
 	@Override
 	public boolean atualizar(Usuario objeto)throws SQLException{
 		String sql = "UPDATE usuario SET NOME =?, SENHA =?, CAMINHO_FOTO =?, USUARIOALUNO =?, USUARIOPROFESSOR = ?, "
-				+ " USUARIOADMINISTRADOR = ? WHERE CPF_U =" +objeto.getCpf();
+				+ " USUARIOADMINISTRADOR = ? WHERE CPF_U = ?";
 		
 				DBConnectionFactory.getInstance().getConnection().setAutoCommit(true);
 				statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
@@ -89,7 +89,7 @@ public class UsuarioDao implements InterfaceCRUD<Usuario,String>{
 				statement.setBoolean(4, objeto.getPerfis().contains(PerfisEnum.aluno));
 				statement.setBoolean(5, objeto.getPerfis().contains(PerfisEnum.professor));
 				statement.setBoolean(6, objeto.getPerfis().contains(PerfisEnum.administrador));
-				//statement.setString(7, objeto.getCpf());
+				statement.setString(7, objeto.getCpf());
 				statement.execute();
 				return true;
 	}

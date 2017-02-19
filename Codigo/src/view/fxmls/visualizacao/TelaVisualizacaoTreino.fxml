@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
-</AnchorPane>
-
+<VBox prefHeight="459.0" prefWidth="483.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="nomeTreino" prefHeight="34.0" prefWidth="484.0">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="29.0" />
+         </font></Label>
+      <ListView fx:id="listaExercicios" prefHeight="447.0" prefWidth="499.0" />
+   </children>
+</VBox>

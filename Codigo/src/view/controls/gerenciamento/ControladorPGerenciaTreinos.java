@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 import beans.Treino;
+import control.Contexto;
 import control.Fachada;
 import exceptions.NegocioException;
 import javafx.beans.value.ChangeListener;
@@ -130,7 +131,7 @@ public class ControladorPGerenciaTreinos extends BorderPane{
 				try{
 					Fachada.getInstance().removerTreino((Treino) listaObjetos.getSelectionModel().getSelectedItem());
 					this.treinos.remove(treino);
-					povoarlista(Fachada.getInstance().getUsuarioLogado().getCpf());
+					povoarlista(Contexto.getInstance().getUsuarioLogado().getCpf());
 					//listaObjetos.getSelectionModel().select(0);
 				}catch(NegocioException ex){
 					System.out.println(ex.getMessage());

@@ -23,7 +23,7 @@ public class ControladorAdministrador {
 	private ControladorAdministrador(){
 		this.repositorio = AdministradorDao.getInstance();
 		this.usuario = new UsuarioDao();
-		this.controladorUsuario = new ControladorUsuario();
+		this.controladorUsuario = ControladorUsuario.getInstance();
 		
 	}
 	

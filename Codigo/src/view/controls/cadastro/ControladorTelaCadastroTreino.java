@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import beans.Exercicio;
 import beans.Treino;
+import control.Contexto;
 import control.Fachada;
 import exceptions.NegocioException;
 import javafx.collections.FXCollections;
@@ -74,7 +75,7 @@ public class ControladorTelaCadastroTreino extends GridPane{
 			this.exerciciosPadrao.add(e.getMessage());
 		}
 		try{
-			exerciciosProfessor = Fachada.getInstance().listarExercicios(Fachada.getInstance().getUsuarioLogado().getCpf());
+			exerciciosProfessor = Fachada.getInstance().listarExercicios(Contexto.getInstance().getUsuarioLogado().getCpf());
 			
 		} catch ( NegocioException e) {
 			this.exerciciosProfessor = new ArrayList<String>();
@@ -114,7 +115,7 @@ public class ControladorTelaCadastroTreino extends GridPane{
 			this.exerciciosPadrao.add(e.getMessage());
 		}
 		try{
-			exerciciosProfessor = Fachada.getInstance().listarExercicios(Fachada.getInstance().getUsuarioLogado().getCpf());
+			exerciciosProfessor = Fachada.getInstance().listarExercicios(Contexto.getInstance().getUsuarioLogado().getCpf());
 			
 		} catch ( NegocioException e) {
 			this.exerciciosProfessor = new ArrayList<String>();
@@ -166,7 +167,7 @@ public class ControladorTelaCadastroTreino extends GridPane{
 		if(!this.listaExerciciosTreino.getItems().isEmpty()){
 			Treino treino = new Treino(this.txtNomeTreino.getText());
 			treino.getExerciciosArray().addAll(this.listaExerciciosTreino.getItems());
-			treino.setProfessor( Fachada.getInstance().getUsuarioLogado().getCpf());
+			treino.setProfessor( Contexto.getInstance().getUsuarioLogado().getCpf());
 			treino.setPadrao(false);
 			
 			try {

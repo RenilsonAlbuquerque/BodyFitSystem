@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.Stack;
 
+import control.Contexto;
 import control.Fachada;
 import data.FTPConnectionFactory;
 import exceptions.ConexaoFTPException;
@@ -95,12 +96,13 @@ public class ControladorMenuPrincipal extends BorderPane{
 	public void setDadosUsuario(){
 		
 		try {
-			this.fotoPerfil.setFill(new ImagePattern(new Image(FTPConnectionFactory.getInstance().retrieveImage(Fachada.getInstance().getUsuarioLogado().getCaminhoFoto()))));
+			this.fotoPerfil.setFill(new ImagePattern(new Image(FTPConnectionFactory.getInstance().retrieveImage(
+					Contexto.getInstance().getUsuarioLogado().getCaminhoFoto()))));
 		} catch (ConexaoFTPException e) {
 			this.fotoPerfil.setFill(new ImagePattern(new Image("imagens/Default User.png")));
 		}
 		
-		this.labelNomeUsuario.setText(Fachada.getInstance().getUsuarioLogado().getNome());
+		this.labelNomeUsuario.setText(Contexto.getInstance().getUsuarioLogado().getNome());
 	
 	}
 	
@@ -116,6 +118,7 @@ public class ControladorMenuPrincipal extends BorderPane{
 		Optional<ButtonType> result = dialogo.showAndWait();
 		if(result.get() == ButtonType.OK){
 			Principal.setCurrentStage(new ControladorTelaLogin());
+			Contexto.getInstance().setUsuarioLogado(null);
 				instance = null;
 		}
 			
@@ -134,7 +137,7 @@ public class ControladorMenuPrincipal extends BorderPane{
 	
 	@FXML
 	private void acaoBotaoTrocarPerfil(){
-		Principal.setCurrentStage(new ControladorTelaEscolhaPerfil(Fachada.getInstance().getUsuarioLogado().getCpf()));
+		Principal.setCurrentStage(new ControladorTelaEscolhaPerfil(Contexto.getInstance().getUsuarioLogado().getCpf()));
 		instance = null;
 	}
 	@FXML

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import beans.PerfisEnum;
+import control.Contexto;
 import control.Fachada;
 import exceptions.NegocioException;
 import javafx.event.ActionEvent;
@@ -75,7 +76,7 @@ public class ControladorTelaEscolhaPerfil extends FlowPane{
 	@FXML
 	private void acaoBotaoAluno(ActionEvent evt){
 		try {
-			Fachada.getInstance().setUsuarioLogado(cpf, PerfisEnum.aluno);
+			Contexto.getInstance().setUsuarioLogado(cpf, PerfisEnum.aluno);
 			/*
 			Principal.setCurrentStage(new ControladorMenuPrincipal(cpf,PerfisEnum.aluno),
 					(int)Screen.getPrimary().getVisualBounds().getWidth(),
@@ -91,7 +92,7 @@ public class ControladorTelaEscolhaPerfil extends FlowPane{
 	private void acaoBotaoProfessor(ActionEvent evt){
 			
 		try {
-			Fachada.getInstance().setUsuarioLogado(cpf, PerfisEnum.professor);
+			Contexto.getInstance().setUsuarioLogado(cpf, PerfisEnum.professor);
 			Principal.setCurrentStage(ControladorMenuPrincipal.getInstance(),
 					(int)Screen.getPrimary().getVisualBounds().getWidth(),
 					(int)Screen.getPrimary().getVisualBounds().getHeight());
@@ -106,12 +107,11 @@ public class ControladorTelaEscolhaPerfil extends FlowPane{
 	@FXML
 	private void acaoBotaoCoordenador(ActionEvent evt){
 		try {
-			Fachada.getInstance().setUsuarioLogado(cpf, PerfisEnum.coordenador);
-			/*
-			Principal.setCurrentStage(new ControladorMenuPrincipal(),
+			Contexto.getInstance().setUsuarioLogado(cpf, PerfisEnum.coordenador);
+			Principal.setCurrentStage(ControladorMenuPrincipal.getInstance(),
 					(int)Screen.getPrimary().getVisualBounds().getWidth(),
 					(int)Screen.getPrimary().getVisualBounds().getHeight());
-					*/
+			ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorOpcoesProfessor());
 		} catch (NegocioException e) {
 			
 			e.printStackTrace();
@@ -121,7 +121,7 @@ public class ControladorTelaEscolhaPerfil extends FlowPane{
 	private void acaoBotaoAdministrador(ActionEvent evt){
 		try {
 			
-			Fachada.getInstance().setUsuarioLogado(cpf, PerfisEnum.administrador);
+			Contexto.getInstance().setUsuarioLogado(cpf, PerfisEnum.administrador);
 			
 			Principal.setCurrentStage(ControladorMenuPrincipal.getInstance(),
 					(int)Screen.getPrimary().getVisualBounds().getWidth(),

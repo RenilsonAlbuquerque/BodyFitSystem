@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import beans.Exercicio;
 import beans.Treino;
+import control.Contexto;
 import control.Fachada;
 import exceptions.NegocioException;
 import javafx.collections.FXCollections;
@@ -82,7 +83,7 @@ public class ControladorTelaAlterarTreino extends GridPane{
 			this.exerciciosPadrao.add(e.getMessage());
 		}
 		try{
-			exerciciosProfessor = Fachada.getInstance().listarExercicios(Fachada.getInstance().getUsuarioLogado().getCpf());
+			exerciciosProfessor = Fachada.getInstance().listarExercicios(Contexto.getInstance().getUsuarioLogado().getCpf());
 			
 		} catch ( NegocioException e) {
 			this.exerciciosProfessor = new ArrayList<String>();

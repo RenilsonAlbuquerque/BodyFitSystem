@@ -1,4 +1,6 @@
 package data;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
@@ -59,9 +61,36 @@ public class FTPConnectionFactory {
 			this.closeConection();
 		}
 	}
+	public boolean saveImage(File arquivo,String nome){
+		
+		FileInputStream inputStream = null;
+		boolean resultado = false;
+		try {
+			this.initConection();
+			this.conexao.changeWorkingDirectory("/Imagens Usuarios/");
+			inputStream = new FileInputStream(arquivo);
+			//this.conexao.setFileTransferMode(FTPClient.ASCII_FILE_TYPE);
+			this.conexao.enterLocalPassiveMode();
+			resultado = conexao.storeFile(nome,inputStream);
+			System.out.println(conexao.getReplyCode());
+		} catch (IOException | ConexaoFTPException e) {
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				inputStream.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return resultado;
+		
+		
+	}
 	
 	public void closeConection(){
 		try {
+			
 			this.conexao.logout();
 			this.conexao.disconnect();
 			this.conexao = null;

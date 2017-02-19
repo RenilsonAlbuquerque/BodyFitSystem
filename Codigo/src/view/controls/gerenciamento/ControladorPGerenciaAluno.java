@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import beans.Aluno;
+import beans.Professor;
 import beans.Usuario;
+import control.Contexto;
 import control.Fachada;
 import exceptions.NegocioException;
 import javafx.beans.value.ChangeListener;
@@ -15,13 +17,14 @@ import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import view.controls.login.ControladorTelaLogin;
-import view.controls.menu.ControladorMenuPrincipal;
 import view.controls.visualizacao.ControladorTelaVisualizacao;
 
 public class ControladorPGerenciaAluno extends BorderPane{
@@ -49,9 +52,15 @@ public class ControladorPGerenciaAluno extends BorderPane{
 			loader.setController(this);
 			this.setCenter(loader.load());
 			
-			this.povoarlista();
+			if(((Professor)Contexto.getInstance().getUsuarioLogado()).isCoordenador())
+				this.povoarlista();
+			else
+				this.povoarlista(Contexto.getInstance().getUsuarioLogado().getCpf());
 			
-			this.painelDireita.getChildren().add(0,new ControladorTelaVisualizacao((Usuario)this.listaObjetos.getItems().get(0)));
+			if(listaObjetos.getItems().get(0) instanceof Usuario){
+				this.painelDireita.getChildren().add(0,new ControladorTelaVisualizacao((Usuario)this.listaObjetos.getItems().get(0)));
+			}
+			
 			
 			
 			this.txtBuscar.textProperty().addListener((obs, oldText, newText) -> {
@@ -69,10 +78,10 @@ public class ControladorPGerenciaAluno extends BorderPane{
 				}
 			});
 			
-			this.listaObjetos.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Aluno>() {
+			this.listaObjetos.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Object>() {
 				@Override
-				public void changed(ObservableValue<? extends Aluno> observable, Aluno oldValue, Aluno newValue) {
-					if(!listaObjetos.getItems().isEmpty())
+				public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+					if(!listaObjetos.getItems().isEmpty() && listaObjetos.getSelectionModel().getSelectedItem() instanceof Aluno)
 						((ControladorTelaVisualizacao) painelDireita.getChildren().get(0)).adcionarUsuario((Usuario) listaObjetos.getSelectionModel().getSelectedItem());
 					
 				}
@@ -89,18 +98,20 @@ public class ControladorPGerenciaAluno extends BorderPane{
 			this.listaObjetos.setItems(FXCollections.observableArrayList(alunos));
 			Collections.sort(this.listaObjetos.getItems());
 		}
-		/*
-		catch(NegocioException  e){
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Alerta de erro");
-			alert.setHeaderText(null);
-			alert.setContentText(e.getMessage());
-			alert.showAndWait();
-		}
-		*/catch (NegocioException e) {
+		catch (NegocioException e) {
 			this.listaObjetos.setItems(FXCollections.observableArrayList(e.getMessage()));
 		}
 		
+	}
+	public void povoarlista(String cpf){
+		try {
+			this.alunos =  Fachada.getInstance().listarAlunos(cpf);
+			this.listaObjetos.setItems(FXCollections.observableArrayList(alunos));
+			Collections.sort(this.listaObjetos.getItems());
+		}
+		catch (NegocioException e) {
+			this.listaObjetos.setItems(FXCollections.observableArrayList(e.getMessage()));
+		}
 	}
 	
 	public void atualizaLista(String parametro){
@@ -119,6 +130,15 @@ public class ControladorPGerenciaAluno extends BorderPane{
 	
 	@FXML
 	public void acaoRotinaTreinos(ActionEvent e){
-		ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorAplicacaoTreino((Aluno) this.listaObjetos.getSelectionModel().getSelectedItem()));
+		if(this.listaObjetos.getItems().get(0) instanceof Aluno){
+			Stage estagio = new Stage();
+			estagio.setScene(
+					new Scene(new ControladorAplicacaoTreino((Aluno) this.listaObjetos.getSelectionModel().getSelectedItem())));
+			estagio.getScene().getStylesheets().add("/view/style/stylesheet.css");
+			estagio.show();
+			
+			
+		}
+		
 	}
 }

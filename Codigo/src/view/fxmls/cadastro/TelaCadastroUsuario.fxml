@@ -13,7 +13,7 @@
          <children>
             <AnchorPane prefHeight="489.0" prefWidth="367.0">
                <children>
-                  <Circle fill="DODGERBLUE" layoutX="184.0" layoutY="105.0" radius="80.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="fotoPerfil" fill="DODGERBLUE" layoutX="184.0" layoutY="105.0" onMouseClicked="#acaoFotoPerfil" radius="80.0" stroke="BLACK" strokeType="INSIDE" />
                   <Label layoutX="14.0" layoutY="211.0" prefHeight="17.0" prefWidth="118.0" text="Nome:" />
                   <TextField fx:id="txtNome" layoutX="14.0" layoutY="228.0" prefHeight="25.0" prefWidth="301.0" />
                   <Label layoutX="14.0" layoutY="274.0" text="CPF:" />
@@ -22,7 +22,6 @@
                   <TextField fx:id="txtSenha" layoutX="14.0" layoutY="357.0" prefHeight="25.0" prefWidth="301.0" />
                   <Label layoutX="14.0" layoutY="405.0" text="Confirmar Senha:" />
                   <TextField fx:id="txtConfirmaSenha" layoutX="14.0" layoutY="422.0" prefHeight="25.0" prefWidth="301.0" />
-                  <Label fx:id="lbTrocarFoto" alignment="CENTER" layoutX="111.0" layoutY="33.0" opacity="0.63" prefHeight="151.0" prefWidth="147.0" />
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="496.0" prefWidth="403.0">

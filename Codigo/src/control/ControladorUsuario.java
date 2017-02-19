@@ -18,16 +18,30 @@ import exceptions.NegocioException;
 
 public class ControladorUsuario {
 	
+	
+	private static ControladorUsuario instance;	
+	
 	private InterfaceCRUD<Usuario,String> repositorio;
 	private InterfaceCRUD<Aluno,String> repositorioAluno;
 	private InterfaceCRUD<Administrador,String> repositorioAdministrador;
 	private InterfaceCRUD<Professor,String> repositorioProfessor;
 	
-	public ControladorUsuario(){
+	
+	
+	
+	
+	
+	private ControladorUsuario(){
 		this.repositorio = new UsuarioDao();
 		this.repositorioAluno = AlunoDao.getInstance();
 		this.repositorioProfessor = ProfessorDao.getInstance();
 		this.repositorioAdministrador = AdministradorDao.getInstance();
+	}
+	
+	public static ControladorUsuario getInstance(){
+		if(instance == null)
+			instance = new ControladorUsuario();
+		return instance;
 	}
 	
 	public boolean autenticar(String cpf,String senha) throws NegocioException{

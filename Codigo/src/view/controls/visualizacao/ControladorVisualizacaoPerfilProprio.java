@@ -2,8 +2,8 @@ package view.controls.visualizacao;
 
 import java.io.IOException;
 
+import control.Contexto;
 import control.Fachada;
-import exceptions.ConexaoBancoException;
 import exceptions.NegocioException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -40,7 +40,7 @@ public class ControladorVisualizacaoPerfilProprio extends HBox{
 			loader.setController(this);
 			
 			this.getChildren().add(loader.load());
-			this.painelPrincipal.getChildren().add(0,new ControladorTelaVisualizacao(Fachada.getInstance().getUsuarioLogado()));
+			this.painelPrincipal.getChildren().add(0,new ControladorTelaVisualizacao(Contexto.getInstance().getUsuarioLogado()));
 			
 			
 		}
@@ -84,9 +84,9 @@ public class ControladorVisualizacaoPerfilProprio extends HBox{
 		botaoConfirmar.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
 		    	try {
-					if(Fachada.getInstance().autenticar(Fachada.getInstance().getUsuarioLogado().getCpf(), senhaAntiga.getText())){
-						Fachada.getInstance().getUsuarioLogado().setSenha(novaSenha.getText());
-						Fachada.getInstance().atualizarUsuario(Fachada.getInstance().getUsuarioLogado());
+					if(Fachada.getInstance().autenticar(Contexto.getInstance().getUsuarioLogado().getCpf(), senhaAntiga.getText())){
+						Contexto.getInstance().getUsuarioLogado().setSenha(novaSenha.getText());
+						Fachada.getInstance().atualizarUsuario(Contexto.getInstance().getUsuarioLogado());
 						dialogo.close();
 					}
 					else{

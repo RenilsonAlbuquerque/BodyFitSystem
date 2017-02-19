@@ -15,7 +15,7 @@ public class Fachada {
 	
 
 	private static Fachada instance;
-	private Usuario usuarioLogado;
+	
 	
 	private ControladorUsuario usuario;
 	private ControladorAluno aluno;
@@ -25,7 +25,7 @@ public class Fachada {
 	private ControladorExercicio exercicio;
 
 	private Fachada(){
-		this.usuario = new ControladorUsuario();
+		this.usuario = ControladorUsuario.getInstance();
 		this.aluno = ControladorAluno.getInstance();
 		this.professor = ControladorProfessor.getInstance();
 		this.administrador = ControladorAdministrador.getInstance();
@@ -40,20 +40,7 @@ public class Fachada {
 		return instance;
 	}
 	
-	public Usuario getUsuarioLogado(){
-		return this.usuarioLogado;
-	}
-	public void setUsuarioLogado(Usuario usuario){
-		this.usuarioLogado = usuario;
-	}
-	public void setUsuarioLogado(String cpf,PerfisEnum perfil ) throws NegocioException{
-		if(perfil.equals(PerfisEnum.aluno))
-			this.usuarioLogado = this.aluno.buscar(cpf);
-		if(perfil.equals(PerfisEnum.professor))
-			this.usuarioLogado = this.professor.buscar(cpf);
-		if(perfil.equals(PerfisEnum.administrador))
-			this.usuarioLogado = this.administrador.buscar(cpf);
-	}
+	
 	public boolean autenticar(String cpf,String senha) throws NegocioException{
 		return this.usuario.autenticar(cpf, senha);
 	}
@@ -128,6 +115,9 @@ public class Fachada {
 	
 	public ArrayList<Aluno> listarAlunos() throws NegocioException{
 		return this.aluno.listar();
+	}
+	public ArrayList<Aluno> listarAlunos(String cpf) throws NegocioException{
+		return this.aluno.listar(cpf);
 	}
 	public ArrayList<Professor> listarProfessores() throws NegocioException{
 		return this.professor.listar();

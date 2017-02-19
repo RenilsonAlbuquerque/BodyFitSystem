@@ -3,7 +3,6 @@ package control;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import beans.PerfisEnum;
 import beans.Professor;
 import beans.Usuario;
 import data.DBConnectionFactory;
@@ -22,7 +21,7 @@ public class ControladorProfessor {
 	private ControladorProfessor(){
 		this.repositorio = ProfessorDao.getInstance();
 		this.usuario = new UsuarioDao();
-		this.controladorUsuario = new ControladorUsuario();
+		this.controladorUsuario = ControladorUsuario.getInstance();
 	}
 	
 	public static ControladorProfessor getInstance(){

@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 import beans.Exercicio;
+import control.Contexto;
 import control.Fachada;
 import exceptions.NegocioException;
 import javafx.beans.value.ChangeListener;
@@ -82,7 +83,7 @@ public class ControladorPGerenciaExercicios extends BorderPane{
 	public void povoarlista(){
 		try {
 			
-			this.exercicios =  Fachada.getInstance().listarExercicios(Fachada.getInstance().getUsuarioLogado().getCpf());
+			this.exercicios =  Fachada.getInstance().listarExercicios(Contexto.getInstance().getUsuarioLogado().getCpf());
 			this.listaObjetos.setItems(FXCollections.observableArrayList(exercicios));
 			Collections.sort(this.listaObjetos.getItems());
 			
@@ -160,7 +161,7 @@ public class ControladorPGerenciaExercicios extends BorderPane{
 		    	try {
 		    		
 		    		Fachada.getInstance().cadastrarExercicio(new Exercicio(
-		    				Fachada.getInstance().getUsuarioLogado().getCpf(),
+		    				Contexto.getInstance().getUsuarioLogado().getCpf(),
 		    				txtNome.getText(),txtCarga.getText(),Integer.valueOf(txtRepeticao.getText()),Integer.valueOf(txtIntervalo.getText()),false
 		    				));
 		    	

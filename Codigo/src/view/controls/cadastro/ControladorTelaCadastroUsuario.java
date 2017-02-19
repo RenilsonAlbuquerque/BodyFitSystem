@@ -1,7 +1,11 @@
 package view.controls.cadastro;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import beans.Administrador;
 import beans.Aluno;
@@ -10,7 +14,10 @@ import beans.Professor;
 import beans.TurnoEnum;
 import beans.Usuario;
 import control.Fachada;
+import data.FTPConnectionFactory;
+import exceptions.ConexaoFTPException;
 import exceptions.NegocioException;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,7 +25,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -27,16 +33,24 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class ControladorTelaCadastroUsuario extends FlowPane{
 	
+	private File foto;
 	
 	private Stage telaAuxiliar;
+	
+	@FXML
+	private Circle fotoPerfil;
 	
 	@FXML
 	private TextField txtNome;
@@ -80,6 +94,7 @@ public class ControladorTelaCadastroUsuario extends FlowPane{
 				}
 			});
 			
+			this.fotoPerfil.setFill(new ImagePattern(new Image("/imagens/Default User.png")));
 			telaAuxiliar = new Stage();
 			
 		}catch(IOException e){
@@ -174,7 +189,7 @@ public class ControladorTelaCadastroUsuario extends FlowPane{
 				@Override
 				public void handle(ActionEvent e) {
 					TurnoEnum t = (TurnoEnum) turno.getSelectionModel().getSelectedItem();
-					boolean coor = coordenador.isPressed();
+					boolean coor = coordenador.isSelected();
 					listaPerfis.getItems().add(new Professor("", cref.getText(), t.toString(), coor));
 					telaAuxiliar.close();
 				}
@@ -260,14 +275,40 @@ public class ControladorTelaCadastroUsuario extends FlowPane{
 		}
 		
 	}
+	@FXML
+	private void acaoFotoPerfil(){
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Escolha a foto");
+		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.jpg"));
+		this.foto =  fileChooser.showOpenDialog(new Stage());
+		if(foto != null){
+			 BufferedImage bufferedImage;
+			try {
+				bufferedImage = ImageIO.read(foto);
+				Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+				this.fotoPerfil.setFill(new ImagePattern(image
+					)
+				);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+             
+		}
+	}
 	private void cadastrar() throws  NegocioException{
 		if (!this.listaPerfis.getItems().isEmpty()) {
-			ArrayList<Usuario> perfis = new ArrayList<Usuario>(); 
-
+			ArrayList<Usuario> perfis = new ArrayList<Usuario>();
+			String caminhoFoto;
+			if(this.foto == null){
+				caminhoFoto = "Default User.png";
+			}
+			else
+				caminhoFoto = txtCPF.getText(); 
+				
 			for (Object o : this.listaPerfis.getItems()) {
 				if (o instanceof Aluno) {
 					perfis.add(new Aluno(this.txtCPF.getText(),((Aluno)o).getCpfProfessor(),
-								this.txtNome.getText(), this.txtSenha.getText(), "",new ArrayList<PerfisEnum>(),
+								this.txtNome.getText(), this.txtSenha.getText(), caminhoFoto,new ArrayList<PerfisEnum>(),
 								((Aluno)o).getIdade(),
 								((Aluno)o).getPeso(),
 								((Aluno)o).getAltura())
@@ -278,7 +319,8 @@ public class ControladorTelaCadastroUsuario extends FlowPane{
 				
 				if (o instanceof Professor) {
 				
-					perfis.add(new Professor(this.txtCPF.getText(), this.txtNome.getText(), this.txtSenha.getText(), "",new ArrayList<PerfisEnum>(),
+					perfis.add(new Professor(this.txtCPF.getText(), this.txtNome.getText(), this.txtSenha.getText(), caminhoFoto
+							,new ArrayList<PerfisEnum>(),
 								((Professor)o).getCref(),
 								((Professor)o).getTurno(),
 								((Professor)o).isCoordenador()));
@@ -286,13 +328,21 @@ public class ControladorTelaCadastroUsuario extends FlowPane{
 				}
 				if (o instanceof Administrador) {
 					
-					perfis.add(new Administrador(this.txtCPF.getText(), this.txtNome.getText(), this.txtSenha.getText(), "",new ArrayList<PerfisEnum>(),
+					perfis.add(new Administrador(this.txtCPF.getText(), this.txtNome.getText(), this.txtSenha.getText(),caminhoFoto,
+							new ArrayList<PerfisEnum>(),
 								((Administrador)o).getCargo()));
 					continue;
 				}
 				
 			}	
+			
 			Fachada.getInstance().cadastrarUsuario(perfis);
+			try {
+				FTPConnectionFactory.getInstance().saveImage(this.foto,this.txtCPF.getText());
+			} catch (ConexaoFTPException e) {
+				
+				e.printStackTrace();
+			}
 		}
 		else{
 			throw new NegocioException("você precisa adicionar ao menos um perfil de usuário");

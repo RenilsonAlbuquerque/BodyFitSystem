@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 import beans.Exercicio;
+import control.Contexto;
 import control.Fachada;
 import exceptions.NegocioException;
 import javafx.beans.value.ChangeListener;
@@ -169,7 +170,7 @@ public class ControladorPGerenciaExercicioPadrao extends BorderPane{
 		    	try {
 		    		
 		    		Fachada.getInstance().cadastrarExercicio(new Exercicio(
-		    				Fachada.getInstance().getUsuarioLogado().getCpf(),
+		    				Contexto.getInstance().getUsuarioLogado().getCpf(),
 		    				txtNome.getText(),txtCarga.getText(),Integer.valueOf(txtRepeticao.getText()),Integer.valueOf(txtIntervalo.getText()),true ));
 		    		
 		    		dialogo.close();

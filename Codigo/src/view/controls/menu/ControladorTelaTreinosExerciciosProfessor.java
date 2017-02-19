@@ -2,7 +2,7 @@ package view.controls.menu;
 
 import java.io.IOException;
 
-import control.Fachada;
+import control.Contexto;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -36,7 +36,7 @@ public class ControladorTelaTreinosExerciciosProfessor extends FlowPane{
 	}
 	@FXML
 	public void acaoMeusTreinos(){
-		ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorPGerenciaTreinos(Fachada.getInstance().getUsuarioLogado().getCpf()));
+		ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorPGerenciaTreinos(Contexto.getInstance().getUsuarioLogado().getCpf()));
 	}
 	@FXML
 	public void acaoMeusExercicios(){
