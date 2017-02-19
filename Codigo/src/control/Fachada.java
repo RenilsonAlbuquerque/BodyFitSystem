@@ -94,6 +94,9 @@ public class Fachada {
 	public void cadastrarExercicio(Exercicio exercicio) throws NegocioException{
 		this.exercicio.cadastrar(exercicio);
 	}
+	public void salvarRotinaTreino(Aluno aluno) throws NegocioException{
+		this.aluno.salvarRotinaDeTreino(aluno);
+	}
 	/*
 	public void alterarAluno(Aluno aluno) throws NegocioException, ConexaoBancoException, CRUDException{
 		this.aluno.atualizar(aluno);

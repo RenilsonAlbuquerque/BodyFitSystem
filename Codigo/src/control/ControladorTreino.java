@@ -2,10 +2,14 @@ package control;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
+import beans.AlunoExecuta;
 import beans.Exercicio;
 import beans.Treino;
 import beans.TreinoExercicio;
+import data.AlunoExecutaDAO;
 import data.DBConnectionFactory;
 import data.ExercicioDao;
 import data.IRelacionamento;
@@ -18,14 +22,16 @@ import exceptions.NegocioException;
 public class ControladorTreino {
 	private static ControladorTreino instance;
 	
-	public ITreinoDao repositorioTreinos;
-	public IRelacionamento<TreinoExercicio> treinosExercicios;
-	public InterfaceCRUD<Exercicio,Integer> repositorioExercicio;
+	private ITreinoDao repositorioTreinos;
+	private IRelacionamento<TreinoExercicio,Integer> treinosExercicios;
+	private InterfaceCRUD<Exercicio,Integer> repositorioExercicio;
+	
 	
 	private ControladorTreino(){
 		this.repositorioTreinos = TreinoDao.getInstance();
 		this.treinosExercicios = TreinoExercicioDAO.getInstance();
 		this.repositorioExercicio = new ExercicioDao();
+		
 	}
 	
 	public static ControladorTreino getInstance(){
@@ -50,7 +56,10 @@ public class ControladorTreino {
 			try {
 				DBConnectionFactory.getInstance().getConnection().rollback();
 			} catch (SQLException e1) {}
-			throw new NegocioException(e.getMessage());
+			if(e.getErrorCode() == 1062)
+				throw new NegocioException("Você não pode cadastrar o mesmo \n exercicio repetidamente no treino");
+			if(e.getErrorCode() == 1406)
+				throw new NegocioException("Digite um nome menor para o treino");
 		}
 	}
 	public void alterar(Treino treino) throws NegocioException{
@@ -129,11 +138,10 @@ public class ControladorTreino {
 		else
 			throw new NegocioException("Não existem Treinos desse professor cadastrados");
 	}
-	
+
 	
 	public void remover(Treino treino) throws NegocioException{
 		try{
-			System.out.println(treino.getCodigo());
 			if(this.repositorioTreinos.existe(treino.getCodigo())){
 				repositorioTreinos.remover(treino);
 				for(Exercicio e: treino.getExerciciosArray()){
@@ -173,4 +181,5 @@ public class ControladorTreino {
 		}
 		return false;
 	}
+	
 }

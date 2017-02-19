@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="780.0" spacing="40.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="469.0" prefWidth="425.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="49.0" prefWidth="425.0" text="Minha Lista de Treinos">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="22.0" />
+               </font>
+            </Label>
+            <ListView fx:id="listaObjetos" prefHeight="416.0" prefWidth="425.0" />
+         </children>
+      </VBox>
+      <VBox fx:id="painelDireita" alignment="CENTER" prefHeight="456.0" prefWidth="420.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="49.0" prefWidth="425.0" text="Treino do Dia">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="22.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="52.0" prefWidth="368.0">
+               <children>
+                  <Button fx:id="btImprimirTreino" mnemonicParsing="false" onAction="#acaoImprimirTreino" prefHeight="40.0" prefWidth="166.0" text="Imprimir" />
+                  <Button fx:id="btTreinar" mnemonicParsing="false" onAction="#acaobtTreinar" prefHeight="40.0" prefWidth="166.0" text="Treinar" />
+               </children>
+            </HBox>
+         </children>
+         <opaqueInsets>
+            <Insets left="30.0" />
+         </opaqueInsets>
+      </VBox>
+   </children>
+</HBox>

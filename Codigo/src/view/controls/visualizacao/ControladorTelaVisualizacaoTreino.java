@@ -47,6 +47,28 @@ public class ControladorTelaVisualizacaoTreino extends VBox{
 		}
 	}
 	
+	public ControladorTelaVisualizacaoTreino(){
+		try{
+			FXMLLoader loader = new FXMLLoader(ControladorTelaCadastroTreino.class.getClass().getResource("/view/fxmls/visualizacao/TelaVisualizacaoTreino.fxml"));
+			loader.setController(this);
+			
+			this.getChildren().add(loader.load());
+			
+			
+			this.listaExercicios.setCellFactory(new Callback<ListView<Exercicio>, CelulaListaExercicio>() {
+
+				@Override
+				public CelulaListaExercicio call(ListView<Exercicio> arg0) {
+					return new CelulaListaExercicio();
+				}
+			});
+			
+			
+			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
 	
 	class CelulaListaExercicio extends ListCell<Exercicio>{
 		

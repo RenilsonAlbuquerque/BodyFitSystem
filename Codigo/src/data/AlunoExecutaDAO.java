@@ -3,43 +3,31 @@ package data;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.mysql.jdbc.PreparedStatement;
 
-import beans.AlunoTreino;
+import beans.AlunoExecuta;
 
-public class AlunoTreinoDAO implements IRelacionamento<AlunoTreino,String>{
+public class AlunoExecutaDAO implements IRelacionamento<AlunoExecuta,String>{
 	
-	private static AlunoTreinoDAO instance;
+	private static AlunoExecutaDAO instance;
 	private PreparedStatement statement;
 	private ResultSet rSet;
 	
-	private AlunoTreinoDAO(){
+	private AlunoExecutaDAO(){
 		
 	}
 	
-	public static AlunoTreinoDAO getInstance(){
+	public static AlunoExecutaDAO getInstance(){
 		if(instance == null)
-			instance = new AlunoTreinoDAO();
+			instance = new AlunoExecutaDAO();
 		return instance;
 	}
 	
 	@Override
-	public boolean inserir(AlunoTreino objeto) throws SQLException{
-		String sql2 = "INSERT INTO aluno_treino(CPF_ALUNO,CODIGO_TREINO,ORDEM) VALUES (?,?,?)";
-		statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql2);
-		statement.setString(1, objeto.getCpfAluno());
-		statement.setInt(2, objeto.getCodigoTreino());
-		statement.setInt(3, objeto.getOrdem());
-		statement.execute();
-		
-		return true;
-	}
-
-
-	@Override
-	public boolean remover(AlunoTreino objeto) throws SQLException {
-		String sql2 = "DELETE FROM aluno_treino WHERE (CPF_ALUNO = ? AND CODIGO_TREINO = ?)";
+	public boolean inserir(AlunoExecuta objeto) throws SQLException{
+		String sql2 = "INSERT INTO aluno_executa(CPF_ALUNO,CODIGO_TREINO) VALUES (?,?)";
 		statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql2);
 		statement.setString(1, objeto.getCpfAluno());
 		statement.setInt(2, objeto.getCodigoTreino());
@@ -50,9 +38,21 @@ public class AlunoTreinoDAO implements IRelacionamento<AlunoTreino,String>{
 
 
 	@Override
-	public ArrayList<AlunoTreino> listar() throws SQLException {
-		ArrayList<AlunoTreino> relacionamentos = new ArrayList<AlunoTreino>();
-		String query = "SELECT * FROM aluno_treino";
+	public boolean remover(AlunoExecuta objeto) throws SQLException {
+		String sql2 = "DELETE FROM aluno_executa WHERE (CPF_ALUNO = ? AND CODIGO_TREINO = ?)";
+		statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql2);
+		statement.setString(1, objeto.getCpfAluno());
+		statement.setInt(2, objeto.getCodigoTreino());
+		statement.execute();
+		
+		return true;
+	}
+
+
+	@Override
+	public ArrayList<AlunoExecuta> listar() throws SQLException {
+		ArrayList<AlunoExecuta> relacionamentos = new ArrayList<AlunoExecuta>();
+		String query = "SELECT * FROM aluno_executa";
 		
 			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
 			this.rSet = (ResultSet) statement.executeQuery();
@@ -60,17 +60,17 @@ public class AlunoTreinoDAO implements IRelacionamento<AlunoTreino,String>{
 			while(rSet.next()){
 				String cpfAluno = rSet.getString("CPF_ALUNO");
 				int codigoTreino = rSet.getInt("CODIGO_TREINO");
-				int ordem = rSet.getInt("ORDEM");
-				AlunoTreino alunoTreino = new AlunoTreino(cpfAluno,codigoTreino,ordem);
-				relacionamentos.add(alunoTreino);
+				Date data = rSet.getDate("DATAEXECUCAO");
+				AlunoExecuta alunoExecuta = new AlunoExecuta(cpfAluno,codigoTreino,data);
+				relacionamentos.add(alunoExecuta);
 			}
 		
 		return relacionamentos;
 	}
 	@Override
-	public ArrayList<AlunoTreino> listar(String cpf) throws SQLException {
-		ArrayList<AlunoTreino> relacionamentos = new ArrayList<AlunoTreino>();
-		String query = "SELECT * FROM aluno_treino WHERE CPF_ALUNO = ?";
+	public ArrayList<AlunoExecuta> listar(String cpf) throws SQLException {
+		ArrayList<AlunoExecuta> relacionamentos = new ArrayList<AlunoExecuta>();
+		String query = "SELECT * FROM aluno_executa WHERE CPF_ALUNO = ?";
 		
 			this.statement= (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(query);
 			this.statement.setString(1, cpf);
@@ -79,9 +79,9 @@ public class AlunoTreinoDAO implements IRelacionamento<AlunoTreino,String>{
 			while(rSet.next()){
 				String cpfAluno = rSet.getString("CPF_ALUNO");
 				int codigoTreino = rSet.getInt("CODIGO_TREINO");
-				int ordem = rSet.getInt("ORDEM");
-				AlunoTreino alunoTreino = new AlunoTreino(cpfAluno,codigoTreino,ordem);
-				 relacionamentos.add(alunoTreino);
+				Date data = rSet.getDate("DATAEXECUCAO");
+				AlunoExecuta alunoExecuta = new AlunoExecuta(cpfAluno,codigoTreino,data);
+				relacionamentos.add(alunoExecuta);
 			}
 		return relacionamentos;
 	}

@@ -29,7 +29,7 @@ import view.controls.visualizacao.ControladorTelaVisualizacaoTreino;
 
 public class ControladorAplicacaoTreino extends FlowPane{
 	
-	
+	private Aluno aluno;
 	private ArrayList treinosPadrao;
 	private ArrayList treinosProfessor;
 	
@@ -55,6 +55,8 @@ public class ControladorAplicacaoTreino extends FlowPane{
 	private Button btnSalvar;
 	
 	public ControladorAplicacaoTreino(Aluno aluno){
+		
+		this.aluno = aluno;
 		
 		try{
 			FXMLLoader loader = new FXMLLoader(ControladorTelaLogin.class.getClass().getResource("/view/fxmls/gerenciamento/TelaAplicacaoTreinos.fxml"));
@@ -106,7 +108,7 @@ public class ControladorAplicacaoTreino extends FlowPane{
 		}
 		
 		
-		
+		this.listaTreinosAluno.getItems().addAll(this.aluno.getRotinaTreinos());
 
 	}
 	private void povoaLista(ArrayList lista){
@@ -133,7 +135,31 @@ public class ControladorAplicacaoTreino extends FlowPane{
 	
 	@FXML
 	private void acaoBtSalvar(){
-		
+		try {
+			ArrayList<Treino> treinos = new ArrayList<Treino>();
+			treinos.addAll(this.listaTreinosAluno.getItems());
+			aluno.setRotinaTreinos(treinos);
+			Fachada.getInstance().salvarRotinaTreino(aluno);
+			
+			Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
+			DialogPane d = dialogo.getDialogPane();
+			d.getStylesheets().add(
+					   getClass().getResource("/view/style/stylesheet.css").toExternalForm());
+					d.getStyleClass().add("dialog-pane");
+			dialogo.setContentText("Rotina de treinos Salva!");
+			dialogo.setHeaderText(null);
+			dialogo.show();
+			
+		} catch (NegocioException e) {
+			Alert dialogo = new Alert(Alert.AlertType.ERROR);
+			DialogPane d = dialogo.getDialogPane();
+			d.getStylesheets().add(
+					   getClass().getResource("/view/style/stylesheet.css").toExternalForm());
+					d.getStyleClass().add("dialog-pane");
+			dialogo.setContentText(e.getMessage());
+			dialogo.setHeaderText(null);
+			dialogo.show();
+		}
 	}
 	class CelulaListaTreinos extends ListCell<Treino>{
 		

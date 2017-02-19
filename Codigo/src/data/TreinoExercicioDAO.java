@@ -8,7 +8,7 @@ import com.mysql.jdbc.PreparedStatement;
 
 import beans.TreinoExercicio;
 
-public class TreinoExercicioDAO implements IRelacionamento<TreinoExercicio>{
+public class TreinoExercicioDAO implements IRelacionamento<TreinoExercicio,Integer>{
 	
 	
 	private static TreinoExercicioDAO instance;
@@ -68,7 +68,7 @@ public class TreinoExercicioDAO implements IRelacionamento<TreinoExercicio>{
 		return treinos;
 	}
 	@Override
-	public ArrayList<TreinoExercicio> listar(int codigo) throws SQLException {
+	public ArrayList<TreinoExercicio> listar(Integer codigo) throws SQLException {
 		ArrayList<TreinoExercicio> treinos = new ArrayList<TreinoExercicio>();
 		String query = "SELECT * FROM treino_exercicio WHERE CODIGO_TRE = ?";
 		

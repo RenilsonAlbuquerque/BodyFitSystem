@@ -189,7 +189,6 @@ public class ControladorTelaCadastroTreino extends GridPane{
     			dialogo.setContentText(e1.getMessage());
     			dialogo.setHeaderText(null);
     			dialogo.show();
-    			e1.printStackTrace();
 			}
 		}else{
 			Alert dialogo = new Alert(Alert.AlertType.INFORMATION);

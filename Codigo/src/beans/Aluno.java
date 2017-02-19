@@ -7,6 +7,8 @@ public class Aluno extends Usuario {
 	private float peso;
 	private float altura;
 	private String cpfProfessor;
+	private ArrayList<Treino> rotinaTreinos;
+	private int codigoTreinoDia;
 	
 	
 	public Aluno(String cpf,String cpfProf, String nome, String senha, String caminhoFoto,ArrayList<PerfisEnum> perfis,
@@ -16,6 +18,7 @@ public class Aluno extends Usuario {
 		this.setIdade(idade);
 		this.setAltura(altura);
 		this.setPeso(peso);
+		this.rotinaTreinos = new ArrayList<Treino>();
 	}
 	public Aluno(String cpf, String nome, String senha, String caminhoFoto,
 			int idade, float peso, float altura) {
@@ -23,6 +26,7 @@ public class Aluno extends Usuario {
 		this.setIdade(idade);
 		this.setAltura(altura);
 		this.setPeso(peso);
+		this.rotinaTreinos = new ArrayList<Treino>();
 	}
 	public Aluno(String cpf,String cpfProfessor,int idade, float altura, float peso) {
 		super(cpf);
@@ -30,7 +34,9 @@ public class Aluno extends Usuario {
 		this.setCpfProfessor(cpfProfessor);
 		this.setAltura(altura);
 		this.setPeso(peso);
+		this.rotinaTreinos = new ArrayList<Treino>();
 	}
+	
 	
 	
 	public int getIdade() {
@@ -57,6 +63,19 @@ public class Aluno extends Usuario {
 	}
 	public void setCpfProfessor(String cpfProfessor) {
 		this.cpfProfessor = cpfProfessor;
+	}
+	public ArrayList<Treino> getRotinaTreinos() {
+		return rotinaTreinos;
+	}
+	public void setRotinaTreinos(ArrayList<Treino> rotinaTreinos) {
+		this.rotinaTreinos = rotinaTreinos;
+	}
+	
+	public int getCodigoTreinoDia() {
+		return codigoTreinoDia;
+	}
+	public void setCodigoTreinoDia(int codigoTreinoDia) {
+		this.codigoTreinoDia = codigoTreinoDia;
 	}
 	@Override
 	public String toString(){

@@ -1,27 +1,41 @@
 package beans;
 
-public class AlunoTreino {
+public class AlunoTreino implements Comparable<AlunoTreino>{
 	
-	private int codigoAluno;
+	private String cpfAluno;
 	private int codigoTreino;
-
+	private int ordem;
 	
-	public AlunoTreino(int codigoAluno, int codigoTreino) {
+	public AlunoTreino(String cpfAluno, int codigoTreino,int ordem) {
 		super();
-		this.setCodigoAluno(codigoAluno);
+		this.setCodigoAluno(cpfAluno);
 		this.setCodigoTreino(codigoTreino);
+		this.setOrdem(ordem);
 	}
-	public int getCodigoAluno() {
-		return codigoAluno;
+	public String getCpfAluno() {
+		return cpfAluno;
 	}
-	public void setCodigoAluno(int codigoAluno) {
-		this.codigoAluno = codigoAluno;
+	public void setCodigoAluno(String cpfAluno) {
+		this.cpfAluno = cpfAluno;
 	}
 	public int getCodigoTreino() {
 		return codigoTreino;
 	}
 	public void setCodigoTreino(int codigoTreino) {
 		this.codigoTreino = codigoTreino;
+	}
+	public int getOrdem() {
+		return ordem;
+	}
+	public void setOrdem(int ordem) {
+		this.ordem = ordem;
+	}
+	@Override
+	public int compareTo(AlunoTreino o) {
+		if(this.ordem > o.getOrdem())
+			return 1;
+		else
+			return 0;
 	}
 
 }

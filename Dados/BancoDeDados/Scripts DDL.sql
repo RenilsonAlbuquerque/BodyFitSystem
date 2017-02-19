@@ -1,11 +1,10 @@
 drop database academia;
 
-create database if not exists `academia`;
 
 CREATE USER 'usuario'@'%' IDENTIFIED BY 'usuario54321';
 GRANT INSERT,SELECT,DELETE,UPDATE ON *.* TO 'usuario'@'%' WITH GRANT OPTION;
 
-
+create database if not exists academia;
  
 use academia;
 
@@ -83,6 +82,7 @@ CREATE TABLE if not exists treino_exercicio(
 CREATE TABLE if not exists aluno_treino(
 	CPF_ALUNO varchar(12) NOT NULL,
     CODIGO_TREINO int NOT NULL,
+    ORDEM int NOT NULL,
     PRIMARY KEY (CPF_ALUNO,CODIGO_TREINO),
     CONSTRAINT `FK_ALUTRE_CPFALU` FOREIGN KEY (CPF_ALUNO) REFERENCES aluno (CPF_ALU) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT `FK_ALUTRE_CODTRE` FOREIGN KEY (CODIGO_TREINO) REFERENCES treino (CODIGO_T)ON DELETE CASCADE ON UPDATE CASCADE
@@ -91,8 +91,9 @@ CREATE TABLE if not exists aluno_treino(
 CREATE TABLE IF NOT EXISTS aluno_executa(
 	CPF_ALUNO varchar(12) NOT NULL,
     CODIGO_TREINO int NOT NULL,
-	DATAEXECUCAO timestamp not null,
+	DATAEXECUCAO timestamp default current_timestamp(),
     PRIMARY KEY (CPF_ALUNO,CODIGO_TREINO,DATAEXECUCAO),
 	CONSTRAINT FOREIGN KEY (CPF_ALUNO) REFERENCES aluno_treino(CPF_ALUNO),
     CONSTRAINT FOREIGN KEY (CODIGO_TREINO) REFERENCES aluno_treino(CODIGO_TREINO)
 );
+

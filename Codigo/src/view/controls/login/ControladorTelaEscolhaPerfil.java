@@ -19,6 +19,7 @@ import view.controls.Principal;
 import view.controls.gerenciamento.ControladorADMGerenciaUsuario;
 import view.controls.menu.ControladorMenuPrincipal;
 import view.controls.menu.ControladorOpcoesProfessor;
+import view.controls.menu.ControladorTelaMenuAluno;
 
 public class ControladorTelaEscolhaPerfil extends FlowPane{
 	
@@ -44,7 +45,6 @@ public class ControladorTelaEscolhaPerfil extends FlowPane{
 			 	this.getChildren().add(loader.load());
 			 	
 			 	painel.getChildren().clear();
-			 	//painel.getChildren().removeAll();
 			 	this.setAlignment(Pos.CENTER);
 			 	
 			 	this.cpf = cpf;
@@ -77,11 +77,10 @@ public class ControladorTelaEscolhaPerfil extends FlowPane{
 	private void acaoBotaoAluno(ActionEvent evt){
 		try {
 			Contexto.getInstance().setUsuarioLogado(cpf, PerfisEnum.aluno);
-			/*
-			Principal.setCurrentStage(new ControladorMenuPrincipal(cpf,PerfisEnum.aluno),
+			Principal.setCurrentStage(ControladorMenuPrincipal.getInstance(),
 					(int)Screen.getPrimary().getVisualBounds().getWidth(),
 					(int)Screen.getPrimary().getVisualBounds().getHeight());
-					*/
+			ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorTelaMenuAluno());	
 		} catch (NegocioException e) {
 			
 			e.printStackTrace();
