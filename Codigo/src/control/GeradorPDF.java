@@ -40,6 +40,8 @@ public class GeradorPDF {
 			 documento.open();
 			 documento.addTitle("Treino do dia: " + treino.getNome());
 			 
+			 documento.add(new Paragraph("Treino do dia: " +treino.getNome()));
+			 documento.add(new Paragraph("   "));
              
 			 PdfPTable table = new PdfPTable(4);
 			 
@@ -80,7 +82,7 @@ public class GeradorPDF {
 		Document documento = new Document();
 		try {
 			
-			File arquivo = File.createTempFile("treino do dia", ".tmp");
+			File arquivo = File.createTempFile("Treino do dia", ".tmp");
 			PdfWriter.getInstance(documento, new FileOutputStream(arquivo));
 			
 			 documento.open();

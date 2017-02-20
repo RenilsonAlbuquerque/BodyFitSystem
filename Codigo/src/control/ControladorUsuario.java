@@ -82,7 +82,9 @@ public class ControladorUsuario {
 			try {
 				DBConnectionFactory.getInstance().getConnection().rollback();
 			} catch (SQLException e1) {}
-			throw new NegocioException(e.getMessage());
+			if(e.getErrorCode() == 1062)
+				throw new NegocioException("Já existe alguém cadastrado com esse CPF");
+			
 		}
 	}
 	public void cadastrar(ArrayList<Usuario> usuarios) throws NegocioException{
@@ -128,24 +130,17 @@ public class ControladorUsuario {
 				DBConnectionFactory.getInstance().getConnection().rollback();
 			} catch (SQLException e1) {
 			}
-			throw new NegocioException(e.getMessage());
+			if(e.getErrorCode() == 1062)
+				throw new NegocioException("Já existe alguém cadastrado com esse CPF");
+			if(e.getErrorCode() == 1406)
+				throw new NegocioException("Digite valores menores para os campos");
 		}
 		
 		
 	}
 	public void atualizar(ArrayList<Usuario> usuarios) throws NegocioException{
 		Usuario usuarioACadastrar = null;
-		/*
-		try{
-			usuarioACadastrar = this.repositorio.buscar(usuarios.get(0).getCpf());
-		}catch(SQLException e){
-			try {
-				DBConnectionFactory.getInstance().getConnection().rollback();
-			} catch (SQLException e1) {
-			}
-			throw new NegocioException(e.getMessage());
-		}
-		*/
+		
 		usuarioACadastrar = usuarios.get(0);
 		usuarioACadastrar.getPerfis().clear();
 		for(Usuario user : usuarios){
