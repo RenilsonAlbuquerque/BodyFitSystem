@@ -41,7 +41,7 @@
       <HBox alignment="CENTER" prefHeight="79.0" prefWidth="744.0" spacing="10.0">
          <children>
             <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#acaoBtSalvar" prefHeight="54.0" prefWidth="175.0" text="Salvar" />
-            <Button fx:id="btnImprimirTreino" mnemonicParsing="false" prefHeight="54.0" prefWidth="175.0" text="Imprimir" />
+            <Button fx:id="btnImprimirTreino" mnemonicParsing="false" onAction="#acaoBtImprimir" prefHeight="54.0" prefWidth="175.0" text="Imprimir" />
          </children></HBox>
    </children>
 </FlowPane>

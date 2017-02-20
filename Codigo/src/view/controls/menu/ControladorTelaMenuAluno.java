@@ -1,11 +1,13 @@
 package view.controls.menu;
 
+import java.awt.Desktop;
 import java.io.IOException;
 
 import beans.Aluno;
 import beans.Treino;
 import control.Contexto;
 import control.Fachada;
+import control.GeradorPDF;
 import exceptions.NegocioException;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -84,7 +86,11 @@ public class ControladorTelaMenuAluno extends HBox{
 	
 	@FXML
 	private void acaoImprimirTreino(){
-		
+		try {
+			Desktop.getDesktop().open(GeradorPDF.getInstance().criarPDFTreino(((Aluno)Contexto.getInstance().getUsuarioLogado()).getTreinoDoDia()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@FXML

@@ -1,15 +1,16 @@
 package view.controls.gerenciamento;
 
+import java.awt.Desktop;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import beans.Aluno;
-import beans.PerfisEnum;
-import beans.Professor;
 import beans.Treino;
 import control.Contexto;
 import control.Fachada;
+import control.GeradorPDF;
 import exceptions.NegocioException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -186,7 +187,40 @@ public class ControladorAplicacaoTreino extends FlowPane{
 			this.povoaLista(this.treinosProfessor);
 		}
 	}
-	
+	@FXML
+	private void acaoBtImprimir(){
+		
+		
+		if(!this.listaTreinosAluno.getItems().isEmpty()){
+			try{
+				List<Treino> treinos = this.listaTreinosAluno.getItems();
+				Desktop.getDesktop().open(
+						GeradorPDF.getInstance().criarPDFPadraoDeTreinos(new ArrayList<Treino>(treinos),aluno.getNome())
+						);
+			}catch(Exception e){
+				Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
+				DialogPane d = dialogo.getDialogPane();
+				d.getStylesheets().add(
+						   getClass().getResource("/view/style/stylesheet.css").toExternalForm());
+						d.getStyleClass().add("dialog-pane");
+				
+				dialogo.setHeaderText(null);
+				dialogo.setContentText(e.getMessage());
+				dialogo.show();
+			}
+		}
+		else{
+			Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
+			DialogPane d = dialogo.getDialogPane();
+			d.getStylesheets().add(
+					   getClass().getResource("/view/style/stylesheet.css").toExternalForm());
+					d.getStyleClass().add("dialog-pane");
+			
+			dialogo.setHeaderText(null);
+			dialogo.setContentText("O aluno não possui treinos cadastrados");
+			dialogo.show();
+		}
+	}
 	@FXML
 	private void acaoBtSalvar(){
 		try {
@@ -274,8 +308,9 @@ public class ControladorAplicacaoTreino extends FlowPane{
 	            adicionar.setOnAction(new EventHandler<ActionEvent>(){
 	            	@Override
 	            	public void handle(ActionEvent e){
-	            		if(listaTreinos.getSelectionModel().getSelectedIndex() != CelulaListaTreinoAdd.this.getIndex())
+	            		if(listaTreinos.getSelectionModel().getSelectedIndex() != CelulaListaTreinoAdd.this.getIndex() )
 	            			listaTreinos.getSelectionModel().clearAndSelect(CelulaListaTreinoAdd.this.getIndex());
+	            		if(listaTreinosAluno.getItems().size() < 6)
 	            		listaTreinosAluno.getItems().add((Treino) listaTreinos.getSelectionModel().getSelectedItem());
 	            	}
 	            });
