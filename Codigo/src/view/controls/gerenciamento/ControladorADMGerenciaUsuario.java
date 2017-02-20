@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 import beans.PerfisEnum;
+import beans.Treino;
 import beans.Usuario;
 import control.Fachada;
 import exceptions.NegocioException;
@@ -13,22 +14,31 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import view.controls.atualizar.ControladorTelaAlterarUsuario;
 import view.controls.cadastro.ControladorTelaCadastroUsuario;
+import view.controls.gerenciamento.ControladorAplicacaoTreino.CelulaListaTreino;
 import view.controls.login.ControladorTelaLogin;
+import view.controls.visualizacao.ControladorTelaVisualizacao;
 
 public class ControladorADMGerenciaUsuario extends HBox{
 	
@@ -72,6 +82,15 @@ public class ControladorADMGerenciaUsuario extends HBox{
 			    
 			});
 			this.rbAluno.setSelected(true);
+			
+			
+			this.listaObjetos.setCellFactory(new Callback<ListView<Treino>, CelulaListaUsuario>() {
+
+				@Override
+				public CelulaListaUsuario call(ListView<Treino> arg0) {
+					return new CelulaListaUsuario();
+				}
+			});
 		
 		}catch(IOException e){
 			e.printStackTrace();
@@ -182,6 +201,52 @@ public class ControladorADMGerenciaUsuario extends HBox{
 			}
 		}
 		
+	}
+	class CelulaListaUsuario extends ListCell<Usuario>{
+		
+		@Override
+		protected void updateItem(Usuario objeto,boolean empty){
+			super.updateItem(objeto,empty);
+			
+			if(empty){
+				setGraphic(null);
+			}else{
+	            GridPane painel = new GridPane();
+	            painel.getColumnConstraints().add(new ColumnConstraints(200));
+	            painel.getColumnConstraints().add(new ColumnConstraints(30));
+	            painel.getColumnConstraints().add(new ColumnConstraints(30));
+
+	            Label icon = new Label(objeto.getNome());
+	            icon.getStyleClass().add("cache-list-icon");
+	            painel.add(icon,0,0);     
+	            
+	       
+	              
+	            Button visualizar = new Button("V");
+	            visualizar.setOnAction(new EventHandler<ActionEvent>(){
+	            	@Override
+	            	public void handle(ActionEvent e){
+	            		
+	            		if(listaObjetos.getSelectionModel().getSelectedIndex() != CelulaListaUsuario.this.getIndex())
+	            			listaObjetos.getSelectionModel().select(CelulaListaUsuario.this.getIndex());
+	            		
+	            		Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
+	        			DialogPane d = dialogo.getDialogPane();
+	        			d.getStylesheets().add(
+	        					   getClass().getResource("/view/style/stylesheet.css").toExternalForm());
+	        					d.getStyleClass().add("dialog-pane");
+	        			dialogo.getDialogPane().setContent(
+	        					new ControladorTelaVisualizacao(objeto));
+	        			dialogo.setHeaderText(null);
+	        			dialogo.show();
+	            	}
+	            });
+	            painel.add(visualizar,12,0);
+	            
+	            setGraphic(painel);
+			}
+			
+		}
 	}
 	
 }
