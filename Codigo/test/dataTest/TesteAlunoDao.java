@@ -12,21 +12,21 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import beans.Aluno;
-import data.AlunoDao;
-import data.UsuarioDao;
+import data.AlunoDAO;
+import data.UsuarioDAO;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TesteAlunoDao {
 
 	private Aluno aluno;
-	private AlunoDao dao;
-	private UsuarioDao daoUs;
+	private AlunoDAO dao;
+	private UsuarioDAO daoUs;
 	
 	@Before
 	public void comecar(){
-		this.daoUs = new UsuarioDao();
+		this.daoUs = new UsuarioDAO();
 		this.aluno = new Aluno("10870298445", "Roberto", "senha", "caminho",22, 70, 1.90f);
-		this.dao = AlunoDao.getInstance();
+		this.dao = AlunoDAO.getInstance();
 		
 	}
 	

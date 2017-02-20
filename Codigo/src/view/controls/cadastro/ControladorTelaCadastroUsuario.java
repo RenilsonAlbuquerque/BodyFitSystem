@@ -48,6 +48,8 @@ public class ControladorTelaCadastroUsuario extends FlowPane{
 	private File foto;
 	
 	private Stage telaAuxiliar;
+	private GridPane painelAluno;
+	private GridPane painelProfessor;
 	
 	@FXML
 	private Circle fotoPerfil;
@@ -184,7 +186,7 @@ public class ControladorTelaCadastroUsuario extends FlowPane{
 			turno.getSelectionModel().select(0);
 			CheckBox coordenador = new CheckBox();
 
-			Button confirma = new Button("Adcionar");
+			Button confirma = new Button("Adicionar");
 			confirma.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent e) {
@@ -295,58 +297,57 @@ public class ControladorTelaCadastroUsuario extends FlowPane{
              
 		}
 	}
-	private void cadastrar() throws  NegocioException{
+
+	private void cadastrar() throws NegocioException {
 		if (!this.listaPerfis.getItems().isEmpty()) {
-			ArrayList<Usuario> perfis = new ArrayList<Usuario>();
-			String caminhoFoto;
-			if(this.foto == null){
-				caminhoFoto = "Default User.png";
-			}
-			else
-				caminhoFoto = txtCPF.getText(); 
-				
-			for (Object o : this.listaPerfis.getItems()) {
-				if (o instanceof Aluno) {
-					perfis.add(new Aluno(this.txtCPF.getText(),((Aluno)o).getCpfProfessor(),
-								this.txtNome.getText(), this.txtSenha.getText(), caminhoFoto,new ArrayList<PerfisEnum>(),
-								((Aluno)o).getIdade(),
-								((Aluno)o).getPeso(),
-								((Aluno)o).getAltura())
-					);
-					
-					continue;
+			if (this.txtSenha.getText().equals(this.txtConfirmaSenha.getText())) {
+				ArrayList<Usuario> perfis = new ArrayList<Usuario>();
+				String caminhoFoto;
+				if (this.foto == null) {
+					caminhoFoto = "Default User.png";
+				} else
+					caminhoFoto = txtCPF.getText();
+
+				for (Object o : this.listaPerfis.getItems()) {
+					if (o instanceof Aluno) {
+						perfis.add(
+								new Aluno(this.txtCPF.getText(), ((Aluno) o).getCpfProfessor(), this.txtNome.getText(),
+										this.txtSenha.getText(), caminhoFoto, new ArrayList<PerfisEnum>(),
+										((Aluno) o).getIdade(), ((Aluno) o).getPeso(), ((Aluno) o).getAltura()));
+
+						continue;
+					}
+
+					if (o instanceof Professor) {
+
+						perfis.add(new Professor(this.txtCPF.getText(), this.txtNome.getText(), this.txtSenha.getText(),
+								caminhoFoto, new ArrayList<PerfisEnum>(), ((Professor) o).getCref(),
+								((Professor) o).getTurno(), ((Professor) o).isCoordenador()));
+						continue;
+					}
+					if (o instanceof Administrador) {
+
+						perfis.add(new Administrador(this.txtCPF.getText(), this.txtNome.getText(),
+								this.txtSenha.getText(), caminhoFoto, new ArrayList<PerfisEnum>(),
+								((Administrador) o).getCargo()));
+						continue;
+					}
+
 				}
-				
-				if (o instanceof Professor) {
-				
-					perfis.add(new Professor(this.txtCPF.getText(), this.txtNome.getText(), this.txtSenha.getText(), caminhoFoto
-							,new ArrayList<PerfisEnum>(),
-								((Professor)o).getCref(),
-								((Professor)o).getTurno(),
-								((Professor)o).isCoordenador()));
-					continue;
+
+				Fachada.getInstance().cadastrarUsuario(perfis);
+				try {
+					if (foto != null)
+						FTPConnectionFactory.getInstance().saveImage(this.foto, this.txtCPF.getText());
+				} catch (ConexaoFTPException e) {
+
+					e.printStackTrace();
 				}
-				if (o instanceof Administrador) {
-					
-					perfis.add(new Administrador(this.txtCPF.getText(), this.txtNome.getText(), this.txtSenha.getText(),caminhoFoto,
-							new ArrayList<PerfisEnum>(),
-								((Administrador)o).getCargo()));
-					continue;
-				}
-				
-			}	
-			
-			Fachada.getInstance().cadastrarUsuario(perfis);
-			try {
-				FTPConnectionFactory.getInstance().saveImage(this.foto,this.txtCPF.getText());
-			} catch (ConexaoFTPException e) {
-				
-				e.printStackTrace();
-			}
-		}
-		else{
+			} else
+				throw new NegocioException("As senhas não conferem");
+		} else
 			throw new NegocioException("você precisa adicionar ao menos um perfil de usuário");
-		}
+
 	}
 	
 	class CelulaListaUsuario extends ListCell<Usuario>{

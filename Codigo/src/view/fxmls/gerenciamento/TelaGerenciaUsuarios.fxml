@@ -5,32 +5,23 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="808.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="painelDireita" alignment="CENTER" prefHeight="522.0" prefWidth="838.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox fx:id="painelEsquerda" alignment="CENTER" prefHeight="509.0" prefWidth="431.0" spacing="10.0">
+      <HBox fx:id="paineTopo" alignment="CENTER_LEFT" prefHeight="64.0" prefWidth="401.0" spacing="10.0">
          <children>
-            <TextField fx:id="txtBuscar" prefHeight="25.0" prefWidth="254.0" />
-            <ListView fx:id="listaObjetos" prefHeight="412.0" prefWidth="372.0" />
+            <TextField fx:id="txtBuscar" prefHeight="25.0" prefWidth="446.0" promptText="Buscar" />
+            <RadioButton fx:id="rbAluno" mnemonicParsing="false" text="Aluno" />
+            <RadioButton fx:id="rbProfessor" mnemonicParsing="false" text="Professor" />
+            <RadioButton fx:id="rbAdministrador" mnemonicParsing="false" text="Administrador" />
          </children>
-      </VBox>
-      <VBox fx:id="painelDireita" alignment="CENTER" prefHeight="509.0" prefWidth="424.0">
+      </HBox>
+      <ListView fx:id="listaObjetos" prefHeight="412.0" prefWidth="372.0" />
+      <HBox fx:id="painelOpcoes" alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <HBox fx:id="painelRadaioButtons" alignment="CENTER" prefHeight="64.0" prefWidth="401.0" spacing="10.0">
-               <children>
-                  <RadioButton fx:id="rbAluno" mnemonicParsing="false" text="Aluno" />
-                  <RadioButton fx:id="rbProfessor" mnemonicParsing="false" text="Professor" />
-                  <RadioButton fx:id="rbAdministrador" mnemonicParsing="false" text="Administrador" />
-               </children>
-            </HBox>
-            <HBox fx:id="painelOpcoes" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Button fx:id="btnCadsatrar" mnemonicParsing="false" onAction="#acaoBtCadastrar" prefHeight="86.0" prefWidth="118.0" text="Cadastrar " />
-                  <Button fx:id="btnAlterar" mnemonicParsing="false" onAction="#acaoBtAlterar" prefHeight="86.0" prefWidth="118.0" text="Alterar" />
-                  <Button fx:id="btnExcluir" mnemonicParsing="false" onAction="#acaoBtExcluir" prefHeight="86.0" prefWidth="118.0" text="Excluir" />
-               </children>
-            </HBox>
+            <Button fx:id="btnCadsatrar" mnemonicParsing="false" onAction="#acaoBtCadastrar" prefHeight="86.0" prefWidth="118.0" text="Cadastrar " />
+            <Button fx:id="btnAlterar" mnemonicParsing="false" onAction="#acaoBtAlterar" prefHeight="86.0" prefWidth="118.0" text="Alterar" />
+            <Button fx:id="btnExcluir" mnemonicParsing="false" onAction="#acaoBtExcluir" prefHeight="86.0" prefWidth="118.0" text="Excluir" />
          </children>
-      </VBox>
+      </HBox>
    </children>
-</HBox>
+</VBox>

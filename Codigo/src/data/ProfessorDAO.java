@@ -8,19 +8,19 @@ import com.mysql.jdbc.PreparedStatement;
 
 import beans.Professor;
 
-public class ProfessorDao implements InterfaceCRUD<Professor,String>{
+public class ProfessorDAO implements InterfaceCRUD<Professor,String>{
 	
-	private static ProfessorDao instance;
+	private static ProfessorDAO instance;
 	private PreparedStatement statement;
 	private ResultSet rSet;
 	
-	private ProfessorDao(){
+	private ProfessorDAO(){
 		
 	}
 	
-	public static ProfessorDao getInstance(){
+	public static ProfessorDAO getInstance(){
 		if(instance == null)
-			instance = new ProfessorDao();
+			instance = new ProfessorDAO();
 		return instance;
 	}
 	

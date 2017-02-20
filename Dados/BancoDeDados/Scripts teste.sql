@@ -134,6 +134,8 @@ insert into treino_exercicio (CODIGO_TRE,CODIGO_EXE) values (1,1);
 
 insert into aluno_executa(CODIGO_ALUNO,CODIGO_TREINO) values ('10870298488',2);
 
+insert into aluno_treino(CPF_ALUNO,CODIGO_TREINO) values('10870298499',2,1);
+insert into aluno_treino(CPF_ALUNO,CODIGO_TREINO) values('10870298499',3,2);
 
 DELETE FROM `treino` WHERE (CODIGO_T,CPF_P) = (1,'10870298488');
 DELETE FROM `exercicio` WHERE CODIGO_E = (1);
@@ -145,6 +147,7 @@ call removerTreino(1,'10870298488');
 
 UPDATE academia.usuario SET  NOME = 'Carlos',SENHA = '1234', CAMINHO_FOTO = 'caminhododestino' WHERE CPF_U = (10870298488);
 
+select *from aluno_executa;
 select *from aluno_treino;
 select * from treino_exercicio;
 select * from exercicio;
@@ -175,7 +178,7 @@ drop table if exists usuario;
 
 
 
-delete from aluno_treino;
+delete from aluno_treino where CPF_ALUNO = '123' and CODIGO_TREINO = 2;
 delete from treino_exercicio;
 delete from exercicio;
 delete from treino;

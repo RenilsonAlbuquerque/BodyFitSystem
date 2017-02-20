@@ -1,5 +1,6 @@
 package view.controls.login;
 
+import control.Contexto;
 import control.Fachada;
 import exceptions.NegocioException;
 import javafx.event.ActionEvent;
@@ -23,11 +24,14 @@ public class ControladorTelaLogin extends FlowPane{
 	@FXML
 	private Button botaoLogin;
 	@FXML
+	private Button botaoLimpar;
+	@FXML
 	private TextField campoCPF;
 	@FXML
 	private PasswordField campoSenha;
 	@FXML
 	private Label labelErro;
+
 
 	public ControladorTelaLogin(){
 		 try {
@@ -47,6 +51,7 @@ public class ControladorTelaLogin extends FlowPane{
 	private void acaoBotaoLogin(ActionEvent evt){
 		try {
 			if(Fachada.getInstance().autenticar(campoCPF.getText(), campoSenha.getText())){
+			
 				Principal.setCurrentStage(new ControladorTelaEscolhaPerfil(campoCPF.getText()));
 			}
 			else{
@@ -59,6 +64,13 @@ public class ControladorTelaLogin extends FlowPane{
 			campoCPF.setText("");
 			campoSenha.setText("");
 		}
+		
+	}	
+	
+	@FXML
+	private void acaoBotaoLimpar(ActionEvent evt){
+		this.campoCPF.setText("");
+		this.campoSenha.setText("");
 		
 	}	
 

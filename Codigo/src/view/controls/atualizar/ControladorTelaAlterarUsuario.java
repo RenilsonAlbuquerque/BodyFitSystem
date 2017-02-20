@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
@@ -27,7 +26,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DialogPane;
@@ -322,22 +320,28 @@ public class ControladorTelaAlterarUsuario extends FlowPane{
 	private void alterar() throws  NegocioException{
 		if (!this.listaPerfis.getItems().isEmpty()) {
 			ArrayList<Usuario> perfis = new ArrayList<Usuario>(); 
+			String caminhoFoto;
+			if(this.foto == null){
+				caminhoFoto = "Default User.png";
+			}
+			else
+				caminhoFoto = txtCPF.getText(); 
 
 			for (Object o : this.listaPerfis.getItems()) {
 				if (o instanceof Aluno) {
 					perfis.add(new Aluno(this.txtCPF.getText(),((Aluno)o).getCpfProfessor(),
-								this.txtNome.getText(), this.txtSenha.getText(), "",new ArrayList<PerfisEnum>(),
+								this.txtNome.getText(), this.txtSenha.getText(),caminhoFoto,new ArrayList<PerfisEnum>(),
 								((Aluno)o).getIdade(),
 								((Aluno)o).getPeso(),
 								((Aluno)o).getAltura())
 					);
-					
+	
 					continue;
 				}
 				
 				if (o instanceof Professor) {
 				
-					perfis.add(new Professor(this.txtCPF.getText(), this.txtNome.getText(), this.txtSenha.getText(), "",new ArrayList<PerfisEnum>(),
+					perfis.add(new Professor(this.txtCPF.getText(), this.txtNome.getText(), this.txtSenha.getText(),caminhoFoto,new ArrayList<PerfisEnum>(),
 								((Professor)o).getCref(),
 								((Professor)o).getTurno(),
 								((Professor)o).isCoordenador()));
@@ -345,13 +349,18 @@ public class ControladorTelaAlterarUsuario extends FlowPane{
 				}
 				if (o instanceof Administrador) {
 					
-					perfis.add(new Administrador(this.txtCPF.getText(), this.txtNome.getText(), this.txtSenha.getText(), "",new ArrayList<PerfisEnum>(),
+					perfis.add(new Administrador(this.txtCPF.getText(), this.txtNome.getText(), this.txtSenha.getText(), caminhoFoto,new ArrayList<PerfisEnum>(),
 								((Administrador)o).getCargo()));
 					continue;
 				}
 				
 			}	
 			Fachada.getInstance().alterarUsuario(perfis);
+			try {
+				FTPConnectionFactory.getInstance().saveImage(this.foto,this.txtCPF.getText());
+			} catch (ConexaoFTPException e) {	
+				e.printStackTrace();
+			}
 			
 		}
 		else{

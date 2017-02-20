@@ -46,6 +46,9 @@
     -fx-text-fill: white;
 }
 
+.text-field {
+    -fx-prompt-text-fill: gray;
+}
 #painelDeTitulos{
 	
 	-fx-base:black;
@@ -70,7 +73,7 @@
 /*----------listas-------------- */
 .list{
 	/*-fx-background-color:darkslategrey;*/
-	-fx-border-color: rgb(105,105,105);
+	-fx-border-color:white;
 	-fx-border-style:solid ;	
 }
 
@@ -85,6 +88,7 @@
     -fx-text-fill: black;
 }
 /*---------------lista---------- */
+/* 
 .cache-list-name {  
     -fx-font-size: 1.2em;
     -fx-font-weight: bold;
@@ -98,4 +102,6 @@
 .cache-list-found .cache-list-icon {
     -fx-text-fill: #669900;
 }
+* */
+
 

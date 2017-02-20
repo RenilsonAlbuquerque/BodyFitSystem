@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import beans.Aluno;
-import data.UsuarioDao;
+import data.UsuarioDAO;
 import exceptions.ConexaoBancoException;
 
 
@@ -19,12 +19,12 @@ import exceptions.ConexaoBancoException;
 public class TesteUsuarioDao {
 	
 	private Aluno usuario;
-	private UsuarioDao dao;
+	private UsuarioDAO dao;
 	
 	@Before
 	public void iniciar(){
 		this.usuario = new Aluno("12345678910","Renilson","1234", "caminho",22, 70, 1.90f);
-		this.dao = new UsuarioDao();
+		this.dao = new UsuarioDAO();
 	}
 	
 	

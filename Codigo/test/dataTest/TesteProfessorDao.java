@@ -12,18 +12,18 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import beans.Professor;
-import data.ProfessorDao;
+import data.ProfessorDAO;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TesteProfessorDao {
 	
-	private ProfessorDao dao;
+	private ProfessorDAO dao;
 	private Professor professor;
 	
 	
 	@Before
 	public void iniciar(){
-		this.dao = ProfessorDao.getInstance();
+		this.dao = ProfessorDAO.getInstance();
 		this.professor = new Professor("10784567244","Cref","manhã",true);
 	}
 	

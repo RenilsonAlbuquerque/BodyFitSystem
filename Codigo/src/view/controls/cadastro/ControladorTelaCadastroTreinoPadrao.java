@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -25,12 +26,12 @@ import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 import view.controls.visualizacao.ControladorVisualizacaoExercicio;
 
-
-public class ControladorTelaCadastroTreino extends GridPane{
-
+public class ControladorTelaCadastroTreinoPadrao extends GridPane{
+	
 	private ArrayList exerciciosPadrao;
 	private ArrayList exerciciosProfessor;
 	
+
 	
 	@FXML
 	private ListView listaExerciciosTreino;
@@ -47,25 +48,19 @@ public class ControladorTelaCadastroTreino extends GridPane{
 	private Button btnExerciciosPadrao;
 	
 	
-	public ControladorTelaCadastroTreino(){
+	public ControladorTelaCadastroTreinoPadrao(){
 		try{
 			FXMLLoader loader = new FXMLLoader(ControladorTelaCadastroTreino.class.getClass().getResource("/view/fxmls/cadastro/TelaCadastroTreino.fxml"));
 			loader.setController(this);
 			
 			this.getChildren().add(loader.load());
 			
+			
 			this.listaExerciciosTreino.setCellFactory(new Callback<ListView<Exercicio>, CelulaListaTreino>() {
 
 				@Override
 				public CelulaListaTreino call(ListView<Exercicio> arg0) {
 					return new CelulaListaTreino();
-				}
-			});
-			
-			this.listaExerciciosAdcionar.setCellFactory(new Callback<ListView<Exercicio>, CelulaListaExercicio>() {
-				@Override
-				public CelulaListaExercicio call(ListView<Exercicio> arg0) {
-					return new CelulaListaExercicio();
 				}
 			});
 			
@@ -78,29 +73,28 @@ public class ControladorTelaCadastroTreino extends GridPane{
 			exerciciosPadrao= Fachada.getInstance().listarExerciciosPadrao();
 			
 		} catch ( NegocioException e) {
-			this.exerciciosPadrao = new ArrayList<Exercicio>();
-			//this.exerciciosPadrao.add(e.getMessage());
+			this.exerciciosPadrao = new ArrayList<String>();
+			this.exerciciosPadrao.add(e.getMessage());
 		}
 		try{
 			exerciciosProfessor = Fachada.getInstance().listarExercicios(Contexto.getInstance().getUsuarioLogado().getCpf());
 			
 		} catch ( NegocioException e) {
-			this.exerciciosProfessor = new ArrayList<Exercicio>();
-			//this.exerciciosProfessor.add(e.getMessage());
+			this.exerciciosProfessor = new ArrayList<String>();
+			this.exerciciosProfessor.add(e.getMessage());
 		}
 
 		this.listaExerciciosAdcionar.setVisible(false);
 
 	}
-	
-	
+
 	
 	
 	
 	private void povoaLista(ArrayList lista){
 		
 		this.listaExerciciosAdcionar.getItems().clear();
-		/*
+
 		if(lista.get(0) instanceof Exercicio){
 			this.listaExerciciosAdcionar.setCellFactory(new Callback<ListView<Exercicio>, CelulaListaExercicio>() {
 				@Override
@@ -125,7 +119,6 @@ public class ControladorTelaCadastroTreino extends GridPane{
 			});
 			
 		}
-		*/
 		this.listaExerciciosAdcionar.refresh();
 		this.listaExerciciosAdcionar.setItems(FXCollections.observableArrayList(lista));
 	}
@@ -137,7 +130,7 @@ public class ControladorTelaCadastroTreino extends GridPane{
 			Treino treino = new Treino(this.txtNomeTreino.getText());
 			treino.getExerciciosArray().addAll(this.listaExerciciosTreino.getItems());
 			treino.setProfessor( Contexto.getInstance().getUsuarioLogado().getCpf());
-			treino.setPadrao(false);
+			treino.setPadrao(true);
 			
 			try {
 				Fachada.getInstance().cadastrarTreino(treino);
@@ -311,4 +304,5 @@ public class ControladorTelaCadastroTreino extends GridPane{
 		
 	
 	
+
 }

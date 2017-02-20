@@ -11,12 +11,12 @@ import beans.Usuario;
 
 
 
-public class UsuarioDao implements InterfaceCRUD<Usuario,String>{
+public class UsuarioDAO implements InterfaceCRUD<Usuario,String>{
 
 	private PreparedStatement statement;
 	private ResultSet rSet;
 	
-	public UsuarioDao(){
+	public UsuarioDAO(){
 		
 	}
 		

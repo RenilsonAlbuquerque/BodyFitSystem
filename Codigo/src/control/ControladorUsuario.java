@@ -8,12 +8,12 @@ import beans.Aluno;
 import beans.PerfisEnum;
 import beans.Professor;
 import beans.Usuario;
-import data.AdministradorDao;
-import data.AlunoDao;
+import data.AdministradorDAO;
+import data.AlunoDAO;
 import data.DBConnectionFactory;
 import data.InterfaceCRUD;
-import data.ProfessorDao;
-import data.UsuarioDao;
+import data.ProfessorDAO;
+import data.UsuarioDAO;
 import exceptions.NegocioException;
 
 public class ControladorUsuario {
@@ -32,10 +32,10 @@ public class ControladorUsuario {
 	
 	
 	private ControladorUsuario(){
-		this.repositorio = new UsuarioDao();
-		this.repositorioAluno = AlunoDao.getInstance();
-		this.repositorioProfessor = ProfessorDao.getInstance();
-		this.repositorioAdministrador = AdministradorDao.getInstance();
+		this.repositorio = new UsuarioDAO();
+		this.repositorioAluno = AlunoDAO.getInstance();
+		this.repositorioProfessor = ProfessorDAO.getInstance();
+		this.repositorioAdministrador = AdministradorDAO.getInstance();
 	}
 	
 	public static ControladorUsuario getInstance(){
@@ -135,6 +135,7 @@ public class ControladorUsuario {
 	}
 	public void atualizar(ArrayList<Usuario> usuarios) throws NegocioException{
 		Usuario usuarioACadastrar = null;
+		/*
 		try{
 			usuarioACadastrar = this.repositorio.buscar(usuarios.get(0).getCpf());
 		}catch(SQLException e){
@@ -144,6 +145,8 @@ public class ControladorUsuario {
 			}
 			throw new NegocioException(e.getMessage());
 		}
+		*/
+		usuarioACadastrar = usuarios.get(0);
 		usuarioACadastrar.getPerfis().clear();
 		for(Usuario user : usuarios){
 			if(user instanceof Aluno){

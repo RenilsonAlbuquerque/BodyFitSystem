@@ -44,6 +44,7 @@ public class Contexto {
 			a.setCpf(usuario.getCpf());
 			a.setSenha(usuario.getSenha());
 			a.setCaminhoFoto(usuario.getCaminhoFoto());
+			a.setPerfis(usuario.getPerfis());
 			this.usuarioLogado = a;
 		}
 			
@@ -53,6 +54,7 @@ public class Contexto {
 			p.setCpf(usuario.getCpf());
 			p.setSenha(usuario.getSenha());
 			p.setCaminhoFoto(usuario.getCaminhoFoto());
+			p.setPerfis(usuario.getPerfis());
 			this.usuarioLogado = p;
 		}
 		if(perfil.equals(PerfisEnum.administrador)){
@@ -61,6 +63,7 @@ public class Contexto {
 			a.setCpf(usuario.getCpf());
 			a.setSenha(usuario.getSenha());
 			a.setCaminhoFoto(usuario.getCaminhoFoto());
+			a.setPerfis(usuario.getPerfis());
 			this.usuarioLogado = a;
 		}
 			

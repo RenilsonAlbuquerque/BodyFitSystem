@@ -12,6 +12,7 @@ public class AlunoTreino implements Comparable<AlunoTreino>{
 		this.setCodigoTreino(codigoTreino);
 		this.setOrdem(ordem);
 	}
+	
 	public String getCpfAluno() {
 		return cpfAluno;
 	}

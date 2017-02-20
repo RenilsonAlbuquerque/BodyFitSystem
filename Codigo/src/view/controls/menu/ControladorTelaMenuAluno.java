@@ -5,6 +5,8 @@ import java.io.IOException;
 import beans.Aluno;
 import beans.Treino;
 import control.Contexto;
+import control.Fachada;
+import exceptions.NegocioException;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -58,13 +60,26 @@ public class ControladorTelaMenuAluno extends HBox{
 					FXCollections.observableArrayList(
 							((Aluno) Contexto.getInstance().getUsuarioLogado()).getRotinaTreinos()
 			));
-			this.painelDireita.getChildren().add(1, new ControladorTelaVisualizacaoTreino(
-					((Aluno) Contexto.getInstance().getUsuarioLogado()).getRotinaTreinos().get(
-							((Aluno) Contexto.getInstance().getUsuarioLogado()).getCodigoTreinoDia())
-					));
+			
+			
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+		
+		
+		if(!((Aluno) Contexto.getInstance().getUsuarioLogado()).getRotinaTreinos().isEmpty()){
+			this.painelDireita.getChildren().add(1, new ControladorTelaVisualizacaoTreino(
+						((Aluno) Contexto.getInstance().getUsuarioLogado()).getTreinoDoDia())
+					);
+		}	
+		else{
+			this.btImprimirTreino.setVisible(false);
+			this.btTreinar.setVisible(false);
+		
+			//this.painelDireita.getChildren().add(1, new ControladorTelaVisualizacaoTreino());
+			
+		}
+		
 	}
 	
 	@FXML
@@ -74,7 +89,29 @@ public class ControladorTelaMenuAluno extends HBox{
 	
 	@FXML
 	private void acaobtTreinar(){
-		
+		try {
+			Fachada.getInstance().salvarHistorico(
+					((Aluno)Contexto.getInstance().getUsuarioLogado())
+					);
+			Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
+			DialogPane d = dialogo.getDialogPane();
+			d.getStylesheets().add(
+					   getClass().getResource("/view/style/stylesheet.css").toExternalForm());
+					d.getStyleClass().add("dialog-pane");
+			dialogo.setContentText("Feito");
+			dialogo.setHeaderText(null);
+			dialogo.show();
+			
+		} catch (NegocioException e) {
+			Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
+			DialogPane d = dialogo.getDialogPane();
+			d.getStylesheets().add(
+					   getClass().getResource("/view/style/stylesheet.css").toExternalForm());
+					d.getStyleClass().add("dialog-pane");
+			dialogo.setContentText(e.getMessage());
+			dialogo.setHeaderText(null);
+			dialogo.show();
+		}
 	}
 	
 	class CelulaListaTreino extends ListCell<Treino>{

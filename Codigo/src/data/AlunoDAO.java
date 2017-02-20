@@ -9,19 +9,19 @@ import com.mysql.jdbc.PreparedStatement;
 import beans.Aluno;
 
 
-public class AlunoDao implements InterfaceCRUD<Aluno,String>{
+public class AlunoDAO implements InterfaceCRUD<Aluno,String>{
 	
-	private static AlunoDao instance;
+	private static AlunoDAO instance;
 	private PreparedStatement statement;
 	private ResultSet rSet;
 	
-	private AlunoDao(){
+	private AlunoDAO(){
 		
 	}
 	
-	public static AlunoDao getInstance(){
+	public static AlunoDAO getInstance(){
 		if(instance == null)
-			instance = new AlunoDao();
+			instance = new AlunoDAO();
 		return instance;
 	}
 

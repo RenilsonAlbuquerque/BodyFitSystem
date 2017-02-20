@@ -7,10 +7,10 @@ import beans.Administrador;
 import beans.PerfisEnum;
 import beans.Professor;
 import beans.Usuario;
-import data.AdministradorDao;
+import data.AdministradorDAO;
 import data.DBConnectionFactory;
 import data.InterfaceCRUD;
-import data.UsuarioDao;
+import data.UsuarioDAO;
 import exceptions.NegocioException;
 
 public class ControladorAdministrador {
@@ -21,8 +21,8 @@ public class ControladorAdministrador {
 	private ControladorUsuario controladorUsuario;
 	
 	private ControladorAdministrador(){
-		this.repositorio = AdministradorDao.getInstance();
-		this.usuario = new UsuarioDao();
+		this.repositorio = AdministradorDAO.getInstance();
+		this.usuario = new UsuarioDAO();
 		this.controladorUsuario = ControladorUsuario.getInstance();
 		
 	}

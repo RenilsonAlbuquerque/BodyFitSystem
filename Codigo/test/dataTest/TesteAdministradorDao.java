@@ -12,18 +12,18 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import beans.Administrador;
-import data.AdministradorDao;
+import data.AdministradorDAO;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TesteAdministradorDao {
 
 	private Administrador administrador;
-	private AdministradorDao dao;
+	private AdministradorDAO dao;
 	
 	@Before
 	public void iniciar(){
 		this.administrador = new Administrador("18754938744","chefe");
-		this.dao = AdministradorDao.getInstance();
+		this.dao = AdministradorDAO.getInstance();
 	}
 	
 	@Test

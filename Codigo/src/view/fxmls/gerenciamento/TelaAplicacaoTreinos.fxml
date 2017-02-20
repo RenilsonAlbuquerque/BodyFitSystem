@@ -9,7 +9,7 @@
 
 <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="20.0" prefHeight="531.0" prefWidth="745.0" vgap="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox fx:id="painelLista" alignment="CENTER" prefHeight="460.0" prefWidth="335.0">
+      <VBox fx:id="painelLista" alignment="CENTER" prefHeight="451.0" prefWidth="335.0">
          <children>
             <Label fx:id="labelTreinosAluno" alignment="CENTER" prefHeight="39.0" prefWidth="242.0" text="Treinos do Aluno">
                <font>
@@ -19,12 +19,7 @@
                   <Insets bottom="11.0" />
                </padding>
             </Label>
-            <ListView fx:id="listaTreinosAluno" prefHeight="339.0" prefWidth="335.0" />
-            <HBox alignment="TOP_CENTER" prefHeight="62.0" prefWidth="335.0">
-               <children>
-                  <Button fx:id="btnImprimirTreino" mnemonicParsing="false" prefHeight="54.0" prefWidth="335.0" text="Imprimir" />
-               </children>
-            </HBox>
+            <ListView fx:id="listaTreinosAluno" prefHeight="371.0" prefWidth="335.0" />
          </children>
       </VBox>
       <VBox fx:id="painelLista1" alignment="CENTER" prefHeight="491.0" prefWidth="339.0">
@@ -34,18 +29,19 @@
                   <Insets bottom="11.0" />
                </VBox.margin>
             </TextField>
-            <ListView fx:id="listaTreinos" prefHeight="341.0" prefWidth="339.0" />
-            <HBox alignment="TOP_CENTER" prefHeight="67.0" prefWidth="339.0">
+            <HBox alignment="TOP_CENTER" prefHeight="25.0" prefWidth="339.0" spacing="30.0">
                <children>
-                  <Button fx:id="btnTreinoPadrao" mnemonicParsing="false" onAction="#acaoBtTreinoPadrao" prefHeight="54.0" prefWidth="171.0" text="Treino Padrão" />
-                  <Button fx:id="btnMeusTreinos" mnemonicParsing="false" onAction="#acaoBtMeusTreinos" prefHeight="54.0" prefWidth="177.0" text="Meus Treinos" />
+                  <RadioButton fx:id="btTreinoPadrao" mnemonicParsing="false" text="Treino Padrão" />
+                  <RadioButton fx:id="btMeusTreinos" mnemonicParsing="false" text="Meus Treinos" />
                </children>
             </HBox>
+            <ListView fx:id="listaTreinos" prefHeight="341.0" prefWidth="339.0" />
          </children>
       </VBox>
-      <HBox alignment="CENTER" prefHeight="79.0" prefWidth="744.0">
+      <HBox alignment="CENTER" prefHeight="79.0" prefWidth="744.0" spacing="10.0">
          <children>
-            <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#acaoBtSalvar" prefHeight="61.0" prefWidth="175.0" text="Salvar" />
+            <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#acaoBtSalvar" prefHeight="54.0" prefWidth="175.0" text="Salvar" />
+            <Button fx:id="btnImprimirTreino" mnemonicParsing="false" prefHeight="54.0" prefWidth="175.0" text="Imprimir" />
          </children></HBox>
    </children>
 </FlowPane>

@@ -1,6 +1,7 @@
 package beans;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Aluno extends Usuario {
 	private int idade;
@@ -8,8 +9,8 @@ public class Aluno extends Usuario {
 	private float altura;
 	private String cpfProfessor;
 	private ArrayList<Treino> rotinaTreinos;
-	private int codigoTreinoDia;
-	
+	private Treino treinoDoDia;
+	private HashMap<Integer,Treino> rotinaTreinosMapa;
 	
 	public Aluno(String cpf,String cpfProf, String nome, String senha, String caminhoFoto,ArrayList<PerfisEnum> perfis,
 			int idade, float peso, float altura) {
@@ -64,6 +65,7 @@ public class Aluno extends Usuario {
 	public void setCpfProfessor(String cpfProfessor) {
 		this.cpfProfessor = cpfProfessor;
 	}
+	
 	public ArrayList<Treino> getRotinaTreinos() {
 		return rotinaTreinos;
 	}
@@ -71,11 +73,18 @@ public class Aluno extends Usuario {
 		this.rotinaTreinos = rotinaTreinos;
 	}
 	
-	public int getCodigoTreinoDia() {
-		return codigoTreinoDia;
+	
+	public HashMap<Integer, Treino> getRotinaTreinosMapa() {
+		return rotinaTreinosMapa;
 	}
-	public void setCodigoTreinoDia(int codigoTreinoDia) {
-		this.codigoTreinoDia = codigoTreinoDia;
+	public void setRotinaTreinosMapa(HashMap<Integer, Treino> rotinaTreinosMapa) {
+		this.rotinaTreinosMapa = rotinaTreinosMapa;
+	}
+	public Treino getTreinoDoDia() {
+		return treinoDoDia;
+	}
+	public void setTreinoDoDia(Treino treinoDoDia) {
+		this.treinoDoDia = treinoDoDia;
 	}
 	@Override
 	public String toString(){

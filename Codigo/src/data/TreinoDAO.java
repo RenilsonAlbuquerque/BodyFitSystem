@@ -8,18 +8,18 @@ import com.mysql.jdbc.PreparedStatement;
 
 import beans.Treino;
 
-public class TreinoDao implements ITreinoDao{
+public class TreinoDAO implements IAtividadesDao<Treino>{
 	
-	private static TreinoDao instance;
+	private static TreinoDAO instance;
 	private PreparedStatement statement;
 	private ResultSet rSet;
 	
-	private TreinoDao(){
+	private TreinoDAO(){
 		
 	}
-	public static TreinoDao getInstance(){
+	public static TreinoDAO getInstance(){
 		if(instance == null)
-			instance = new TreinoDao();
+			instance = new TreinoDAO();
 		return instance;
 	}
 	

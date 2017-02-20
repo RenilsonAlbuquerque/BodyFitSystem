@@ -8,17 +8,24 @@ import com.mysql.jdbc.PreparedStatement;
 
 import beans.Exercicio;
 
-public class ExercicioDao implements IRepositorioAtividades<Exercicio,Integer>{
+public class ExercicioDAO implements IAtividadesDao<Exercicio>{
+	
+	private static ExercicioDAO instance;
 	
 	private PreparedStatement statement;
 	private ResultSet rSet;
 	
-	public ExercicioDao(){
+	private ExercicioDAO(){
 		
+	}
+	public static ExercicioDAO getInstance(){
+		if(instance == null)
+			instance = new ExercicioDAO();
+		return instance;
 	}
 	
 	@Override
-	public boolean existe(Integer codigo) throws SQLException {
+	public boolean existe(int codigo) throws SQLException {
 		
 		boolean resultado = false;
 		String sql = "SELECT * FROM academia.exercicio WHERE CODIGO_E = " + codigo;
@@ -35,12 +42,12 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio,Integer>{
 	
 
 	@Override
-	public boolean cadastrar(Exercicio objeto) throws SQLException {
+	public int cadastrar(Exercicio objeto) throws SQLException {
 		String sql = "INSERT INTO academia.exercicio(CPF_P,NOME,CARGA,REPETICOES,INTERVALO,PADRAO) "
 				+ "values(?,?,?,?,?,?)";
 			
 			
-			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
+			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
 			statement.setString(1, objeto.getCpfProfessor());
 			statement.setString(2, objeto.getNome());
 			statement.setString(3, objeto.getCarga());
@@ -48,8 +55,10 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio,Integer>{
 			statement.setInt(5, objeto.getIntervalo());
 			statement.setBoolean(6, objeto.isPadrao());
 			statement.execute();
-			
-		return true;	
+			ResultSet st = statement.getGeneratedKeys();
+			st.next();
+
+		return st.getInt(1);
 	}
 	
 				
@@ -108,15 +117,8 @@ public class ExercicioDao implements IRepositorioAtividades<Exercicio,Integer>{
 		
 	
 	
-
 	@Override
-	public boolean cadastrar(Exercicio objeto, String cpfProf) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Exercicio buscar(Integer chave) throws SQLException {
+	public Exercicio buscar(int chave) throws SQLException {
 		Exercicio resultado = null;
 		String sql = "SELECT * FROM academia.exercicio WHERE CODIGO_E = " + chave;
 

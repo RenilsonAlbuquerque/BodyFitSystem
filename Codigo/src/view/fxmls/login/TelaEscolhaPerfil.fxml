@@ -5,27 +5,20 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<FlowPane alignment="CENTER" prefHeight="390.0" prefWidth="431.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" prefHeight="483.0" prefWidth="462.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane fx:id="painel" prefHeight="390.0" prefWidth="246.0">
+      <VBox fx:id="painel" alignment="CENTER" prefHeight="351.0" prefWidth="462.0" spacing="20.0">
          <children>
             <Button fx:id="botaoAluno" mnemonicParsing="false" onAction="#acaoBotaoAluno" prefHeight="54.0" prefWidth="246.0" text="Aluno" />
-            <Button fx:id="botaoCoordenador" mnemonicParsing="false" onAction="#acaoBotaoCoordenador" prefHeight="54.0" prefWidth="246.0" text="Coordenador" GridPane.rowIndex="2" />
-            <Button fx:id="botaoProfessor" mnemonicParsing="false" onAction="#acaoBotaoProfessor" prefHeight="54.0" prefWidth="246.0" text="Professor" GridPane.rowIndex="1" />
-            <Button fx:id="botaoAdministrador" mnemonicParsing="false" onAction="#acaoBotaoAdministrador" prefHeight="54.0" prefWidth="246.0" text="Administrador" GridPane.rowIndex="3" />
-            <Button fx:id="botaoVoltar" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#acaoBotaoSair" prefHeight="25.0" prefWidth="109.0" text="Sair" GridPane.rowIndex="4" />
+            <Button fx:id="botaoCoordenador" mnemonicParsing="false" onAction="#acaoBotaoCoordenador" prefHeight="54.0" prefWidth="246.0" text="Coordenador" />
+            <Button fx:id="botaoProfessor" mnemonicParsing="false" onAction="#acaoBotaoProfessor" prefHeight="54.0" prefWidth="246.0" text="Professor" />
+            <Button fx:id="botaoAdministrador" mnemonicParsing="false" onAction="#acaoBotaoAdministrador" prefHeight="54.0" prefWidth="246.0" text="Administrador" />
          </children>
-         <columnConstraints>
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="246.0" minWidth="10.0" prefWidth="246.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="0.0" prefWidth="0.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-         </rowConstraints>
-      </GridPane>
+      </VBox>
+      <HBox fx:id="painelInferior" alignment="CENTER" prefHeight="88.0" prefWidth="462.0">
+         <children>
+            <Button fx:id="botaoVoltar" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#acaoBotaoSair" prefHeight="25.0" prefWidth="109.0" text="Sair" />
+         </children>
+      </HBox>
    </children>
-</FlowPane>
+</VBox>

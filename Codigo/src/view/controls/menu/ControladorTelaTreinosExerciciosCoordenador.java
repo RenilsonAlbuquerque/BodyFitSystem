@@ -10,6 +10,7 @@ import javafx.scene.layout.FlowPane;
 import view.controls.gerenciamento.ControladorPGerenciaExercicioPadrao;
 import view.controls.gerenciamento.ControladorPGerenciaExercicios;
 import view.controls.gerenciamento.ControladorPGerenciaTreinos;
+import view.controls.gerenciamento.ControladorPGerenciaTreinosPadrao;
 import view.controls.login.ControladorTelaLogin;
 
 public class ControladorTelaTreinosExerciciosCoordenador extends FlowPane {
@@ -38,7 +39,7 @@ public class ControladorTelaTreinosExerciciosCoordenador extends FlowPane {
 	
 	@FXML
 	public void acaoBancoTreinos(){
-		
+		ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorPGerenciaTreinosPadrao());
 	}
 	@FXML
 	public void acaoBancoExercicios(){

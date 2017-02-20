@@ -6,14 +6,12 @@ import beans.Administrador;
 import beans.Aluno;
 import beans.Professor;
 import beans.Usuario;
-import control.Fachada;
 import data.FTPConnectionFactory;
 import exceptions.ConexaoFTPException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -85,10 +83,19 @@ public class ControladorTelaVisualizacao extends VBox{
 			this.labelNome2.setText("Turno");
 			this.labelValor2.setText( ((Professor) usuario).getTurno() );
 			
+			this.labelNome3.setText("");
+			this.labelValor3.setText("");
+			
 		}
 		if(usuario instanceof Administrador){
 			this.labelNome1.setText("Cargo");
 			this.labelValor1.setText(((Administrador) usuario).getCargo());
+			
+			this.labelNome2.setText("");
+			this.labelValor2.setText("");
+			
+			this.labelNome3.setText("");
+			this.labelValor3.setText("");
 		}
 		
 		

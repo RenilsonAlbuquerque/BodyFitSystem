@@ -69,10 +69,11 @@ public class FTPConnectionFactory {
 			this.initConection();
 			this.conexao.changeWorkingDirectory("/Imagens Usuarios/");
 			inputStream = new FileInputStream(arquivo);
-			//this.conexao.setFileTransferMode(FTPClient.ASCII_FILE_TYPE);
+			
+			this.conexao.setFileTransferMode(FTPClient.BINARY_FILE_TYPE);
 			this.conexao.enterLocalPassiveMode();
 			resultado = conexao.storeFile(nome,inputStream);
-			System.out.println(conexao.getReplyCode());
+			
 		} catch (IOException | ConexaoFTPException e) {
 			e.printStackTrace();
 		}
@@ -84,7 +85,6 @@ public class FTPConnectionFactory {
 			}
 		}
 		return resultado;
-		
 		
 	}
 	

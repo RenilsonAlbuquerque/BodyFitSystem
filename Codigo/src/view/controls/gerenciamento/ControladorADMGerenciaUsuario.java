@@ -25,9 +25,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import view.controls.Principal;
 import view.controls.atualizar.ControladorTelaAlterarUsuario;
 import view.controls.cadastro.ControladorTelaCadastroUsuario;
 import view.controls.login.ControladorTelaLogin;
@@ -37,13 +35,7 @@ public class ControladorADMGerenciaUsuario extends HBox{
 	private ArrayList usuarios;
 
 	@FXML
-	private VBox painelEsquerda;
-	
-	@FXML
-	private VBox painelDireita;
-	
-	@FXML
-	private HBox painelRadaioButtons;
+	private HBox painelTopo;
 	
 	@FXML
 	private HBox painelOpcoes;
@@ -80,7 +72,7 @@ public class ControladorADMGerenciaUsuario extends HBox{
 			    
 			});
 			this.rbAluno.setSelected(true);
-			//this.getChildren().add(0,new ControladorTelaVisualizacao(aluno));
+		
 		}catch(IOException e){
 			e.printStackTrace();
 		}
@@ -172,6 +164,7 @@ public class ControladorADMGerenciaUsuario extends HBox{
 	}
 	@FXML
 	private void acaoBtExcluir(ActionEvent e){
+		
 		if (this.listaObjetos.getSelectionModel().getSelectedItem() instanceof Usuario) {
 			Alert dialogo = new Alert(Alert.AlertType.CONFIRMATION);
 			DialogPane d = dialogo.getDialogPane();
@@ -188,7 +181,7 @@ public class ControladorADMGerenciaUsuario extends HBox{
 				}
 			}
 		}
-		;
+		
 	}
 	
 }

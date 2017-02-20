@@ -3,21 +3,20 @@ package control;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 import beans.Aluno;
 import beans.AlunoExecuta;
 import beans.AlunoTreino;
 import beans.Treino;
 import beans.Usuario;
-import data.AlunoDao;
+import data.AlunoDAO;
 import data.AlunoExecutaDAO;
 import data.AlunoTreinoDAO;
 import data.DBConnectionFactory;
 import data.IRelacionamento;
-import data.ITreinoDao;
 import data.InterfaceCRUD;
-import data.TreinoDao;
-import data.UsuarioDao;
+import data.UsuarioDAO;
 import exceptions.NegocioException;
 
 public class ControladorAluno {
@@ -26,14 +25,14 @@ private static ControladorAluno instance;
 private InterfaceCRUD<Aluno,String> repositorio;
 private InterfaceCRUD<Usuario,String> usuario;
 private IRelacionamento<AlunoTreino,String> repositorioAlunoTreino;
-private ITreinoDao repositorioTreinos;
+private ControladorTreino treinos;
 private IRelacionamento<AlunoExecuta,String> repositorioHistorico;
 	
 	private ControladorAluno(){
-		this.repositorio = AlunoDao.getInstance();
-		this.usuario = new UsuarioDao();
+		this.repositorio = AlunoDAO.getInstance();
+		this.usuario = new UsuarioDAO();
 		this.repositorioAlunoTreino = AlunoTreinoDAO.getInstance();
-		this.repositorioTreinos = TreinoDao.getInstance();
+		this.treinos = ControladorTreino.getInstance();
 		this.repositorioHistorico = AlunoExecutaDAO.getInstance();
 	}
 	
@@ -62,7 +61,7 @@ private IRelacionamento<AlunoExecuta,String> repositorioHistorico;
 		try{
 			Aluno resultado = this.repositorio.buscar(cpf);
 			resultado.setRotinaTreinos(this.getTreinosAluno(cpf));
-			resultado.setCodigoTreinoDia(this.codigoTreinoDia(resultado));
+			resultado.setTreinoDoDia(this.codigoTreinoDia(resultado));
 			return resultado;
 		}catch(SQLException e){
 			throw new NegocioException(e.getMessage());
@@ -82,6 +81,7 @@ private IRelacionamento<AlunoExecuta,String> repositorioHistorico;
 					a.setSenha(u.getSenha());
 					a.setPerfis(u.getPerfis());
 					a.setCaminhoFoto(u.getCaminhoFoto());
+					a.setRotinaTreinos(this.getTreinosAluno(a.getCpf()));
 					resultado.add(a);
 				}
 			}
@@ -106,6 +106,7 @@ private IRelacionamento<AlunoExecuta,String> repositorioHistorico;
 				a.setSenha(u.getSenha());
 				a.setPerfis(u.getPerfis());
 				a.setCaminhoFoto(u.getCaminhoFoto());
+				a.setRotinaTreinos(this.getTreinosAluno(a.getCpf()));
 				resultado.add(a);
 			}
 		} catch (SQLException e) {
@@ -139,15 +140,16 @@ private IRelacionamento<AlunoExecuta,String> repositorioHistorico;
 	}
 	public void salvarRotinaDeTreino(Aluno aluno) throws NegocioException{
 		try {
-			
 			for(AlunoTreino at: this.repositorioAlunoTreino.listar(aluno.getCpf())){
 				this.repositorioAlunoTreino.remover(at);
 			}
-			
+		
 			int ordem = 1;
-			for(Treino treinos : aluno.getRotinaTreinos() ){
+			for(Treino treinos : aluno.getRotinaTreinos()){
 				this.repositorioAlunoTreino.inserir(new AlunoTreino(aluno.getCpf(),treinos.getCodigo(),ordem));
+				ordem++;
 			}
+			
 			DBConnectionFactory.getInstance().getConnection().commit();
 		} catch (SQLException e) {
 			try {
@@ -158,15 +160,36 @@ private IRelacionamento<AlunoExecuta,String> repositorioHistorico;
 			
 		}
 	}
+	public void salvarHistoricoTreino(Aluno aluno) throws NegocioException{
+		AlunoExecuta relacao = new AlunoExecuta(aluno.getCpf(),
+				aluno.getTreinoDoDia().getCodigo(),
+				new Date(System.currentTimeMillis()));
+		try{
+			
+			if(!this.repositorioHistorico.listar().contains(relacao)){
+				this.repositorioHistorico.inserir(relacao);
+			}else{
+				throw new NegocioException("Você já treinou hoje");
+			}
+			DBConnectionFactory.getInstance().getConnection().commit();
+		}
+		catch(SQLException e){
+			try {
+				DBConnectionFactory.getInstance().getConnection().rollback();
+			} catch (SQLException e1) {}
+			if(e.getErrorCode() == 1062)
+				throw new NegocioException(e.getMessage());
+		}
+	}
 	private ArrayList<Treino> getTreinosAluno(String cpf) throws NegocioException{
 		ArrayList<Treino> resultado = new ArrayList<Treino>();
 		try{
 			for(AlunoTreino at : this.repositorioAlunoTreino.listar(cpf)){
-				for(Treino t : this.repositorioTreinos.listar()){
+				for(Treino t : this.treinos.listar()){
 					if(t.getCodigo() == at.getCodigoTreino()){
 						resultado.add(t);
 					}
-					break;
+					//break;
 				}
 			}
 			return resultado;
@@ -175,20 +198,29 @@ private IRelacionamento<AlunoExecuta,String> repositorioHistorico;
 			throw new NegocioException(e.getMessage());
 		}
 	}
-	private int codigoTreinoDia(Aluno a) throws SQLException{
-		ArrayList<AlunoExecuta> historico = this.repositorioHistorico.listar(a.getCpf());
-		if(historico.isEmpty()){
-			return 0;
+	private Treino codigoTreinoDia(Aluno a) throws SQLException{
+		if(a.getRotinaTreinos().isEmpty()){
+			return null;
 		}
 		else{
-			Collections.sort(historico);
-			int result = historico.get(historico.size()).getCodigoTreino() + 1;
-			if(result < a.getRotinaTreinos().size())
-				return result;
-			else
-				return 0;
-			
+			ArrayList<AlunoExecuta> historico = this.repositorioHistorico.listar(a.getCpf());
+			if(historico.isEmpty()){
+				return  a.getRotinaTreinos().get(0);
+			}
+			else{
+				Collections.sort(historico);
+				for(int i = 0; i< a.getRotinaTreinos().size();i++){
+					if(a.getRotinaTreinos().get(i).getCodigo() == historico.get(historico.size() -1).getCodigoTreino()){
+						if(i + 1 <= a.getRotinaTreinos().size() -1){
+							return a.getRotinaTreinos().get(i+1);
+						}
+					}
+				}
+				return a.getRotinaTreinos().get(0);
+				
+			}
 		}
+		
 	}
 
 }

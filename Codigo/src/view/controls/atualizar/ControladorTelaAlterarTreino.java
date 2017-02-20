@@ -69,6 +69,13 @@ public class ControladorTelaAlterarTreino extends GridPane{
 				}
 			});
 			
+			this.listaExerciciosAdcionar.setCellFactory(new Callback<ListView<Exercicio>, CelulaListaExercicio>() {
+				@Override
+				public CelulaListaExercicio call(ListView<Exercicio> arg0) {
+					return new CelulaListaExercicio();
+				}
+			});
+			
 		}catch(IOException e){
 			e.printStackTrace();
 		}
@@ -79,15 +86,15 @@ public class ControladorTelaAlterarTreino extends GridPane{
 			exerciciosPadrao= Fachada.getInstance().listarExerciciosPadrao();
 			
 		} catch ( NegocioException e) {
-			this.exerciciosPadrao = new ArrayList<String>();
-			this.exerciciosPadrao.add(e.getMessage());
+			this.exerciciosPadrao = new ArrayList<Exercicio>();
+			
 		}
 		try{
 			exerciciosProfessor = Fachada.getInstance().listarExercicios(Contexto.getInstance().getUsuarioLogado().getCpf());
 			
 		} catch ( NegocioException e) {
-			this.exerciciosProfessor = new ArrayList<String>();
-			this.exerciciosProfessor.add(e.getMessage());
+			this.exerciciosProfessor = new ArrayList<Exercicio>();
+			
 		}
 
 		this.listaExerciciosAdcionar.setVisible(false);
@@ -103,30 +110,6 @@ public class ControladorTelaAlterarTreino extends GridPane{
 		
 		this.listaExerciciosAdcionar.getItems().clear();
 
-		if(lista.get(0) instanceof Exercicio){
-			this.listaExerciciosAdcionar.setCellFactory(new Callback<ListView<Exercicio>, CelulaListaExercicio>() {
-				@Override
-				public CelulaListaExercicio call(ListView<Exercicio> arg0) {
-					return new CelulaListaExercicio();
-				}
-			});
-			
-		}
-		else{
-			
-			this.listaExerciciosAdcionar.setCellFactory(list-> {
-				ListCell<String> cell = new ListCell<String>() {
-
-					@Override
-					protected void updateItem(String item, boolean empty) {
-						super.updateItem(item, empty);
-						setText(empty ? null : item);
-					}
-				};
-				return cell;
-			});
-			
-		}
 		this.listaExerciciosAdcionar.refresh();
 		this.listaExerciciosAdcionar.setItems(FXCollections.observableArrayList(lista));
 	}

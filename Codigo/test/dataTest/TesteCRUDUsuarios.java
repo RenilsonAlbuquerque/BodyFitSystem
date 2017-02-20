@@ -13,18 +13,18 @@ import org.junit.runners.MethodSorters;
 import beans.Administrador;
 import beans.Aluno;
 import beans.Professor;
-import data.AdministradorDao;
-import data.AlunoDao;
-import data.ProfessorDao;
-import data.UsuarioDao;
+import data.AdministradorDAO;
+import data.AlunoDAO;
+import data.ProfessorDAO;
+import data.UsuarioDAO;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TesteCRUDUsuarios {
 	
-	private UsuarioDao uDao;
-	private AlunoDao aDao;
-	private ProfessorDao pDao;
-	private AdministradorDao dDao;
+	private UsuarioDAO uDao;
+	private AlunoDAO aDao;
+	private ProfessorDAO pDao;
+	private AdministradorDAO dDao;
 	
 	private Aluno aluno;
 	private Professor professor;
@@ -34,10 +34,10 @@ public class TesteCRUDUsuarios {
 	@Before
 	public void inicio(){
 		
-		this.uDao = new UsuarioDao();
-		this.aDao = AlunoDao.getInstance();
-		this.pDao = ProfessorDao.getInstance();
-		this.dDao = AdministradorDao.getInstance();
+		this.uDao = new UsuarioDAO();
+		this.aDao = AlunoDAO.getInstance();
+		this.pDao = ProfessorDAO.getInstance();
+		this.dDao = AdministradorDAO.getInstance();
 		
 		this.aluno = new Aluno("10870298445", "Roberto", "senha", "caminho",22, 70, 1.90f);
 		this.professor = new Professor("10784567244","maria","4321","caminho","Cref","manhã",true);

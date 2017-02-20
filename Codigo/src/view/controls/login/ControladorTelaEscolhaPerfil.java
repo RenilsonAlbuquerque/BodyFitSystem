@@ -12,8 +12,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import view.controls.Principal;
 import view.controls.gerenciamento.ControladorADMGerenciaUsuario;
@@ -21,10 +21,10 @@ import view.controls.menu.ControladorMenuPrincipal;
 import view.controls.menu.ControladorOpcoesProfessor;
 import view.controls.menu.ControladorTelaMenuAluno;
 
-public class ControladorTelaEscolhaPerfil extends FlowPane{
+public class ControladorTelaEscolhaPerfil extends VBox{
 	
 	@FXML
-	private GridPane painel;
+	private VBox painel;
 	@FXML
 	private Button botaoProfessor;
 	@FXML
@@ -35,6 +35,8 @@ public class ControladorTelaEscolhaPerfil extends FlowPane{
 	private Button botaoCoordenador;
 	@FXML
 	private Button botaoVoltar;
+	@FXML
+	private HBox painelInferior;
 	
 	private String cpf;
 		
@@ -63,7 +65,7 @@ public class ControladorTelaEscolhaPerfil extends FlowPane{
 			 	if(perfis.indexOf(PerfisEnum.administrador) > -1)
 			 		painel.getChildren().add(botaoAdministrador);
 			 	
-			 	painel.add(botaoVoltar, 0, 4);
+			 	
 			 	
 			 	
 			} catch (IOException | NegocioException e) {
@@ -133,6 +135,7 @@ public class ControladorTelaEscolhaPerfil extends FlowPane{
 	}
 	@FXML
 	private void acaoBotaoSair(ActionEvent evt){
+		Contexto.getInstance().setUsuarioLogado(null);
 		Principal.setCurrentStage(new ControladorTelaLogin());
 	} 
 	

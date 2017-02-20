@@ -5,17 +5,17 @@ import java.util.ArrayList;
 
 import beans.Exercicio;
 import data.DBConnectionFactory;
-import data.ExercicioDao;
-import data.IRepositorioAtividades;
+import data.ExercicioDAO;
+import data.IAtividadesDao;
 import exceptions.NegocioException;
 
 public class ControladorExercicio {
 		
 	private static ControladorExercicio instance;
-	public IRepositorioAtividades<Exercicio,Integer> repositorio;
+	public IAtividadesDao<Exercicio> repositorio;
 	
 	private ControladorExercicio(){
-		this.repositorio = new ExercicioDao();
+		this.repositorio = ExercicioDAO.getInstance();
 	}
 	
 	public static ControladorExercicio getInstance(){
@@ -27,8 +27,8 @@ public class ControladorExercicio {
 	public void cadastrar(Exercicio exercicio) throws NegocioException{
 		try {
 			if (!(this.repositorio.existe(exercicio.getCodigo()))) {
-				 boolean resultado = this.repositorio.cadastrar(exercicio);
-				 if(resultado)
+				 int resultado = this.repositorio.cadastrar(exercicio);
+				 if(resultado > 0)
 					 DBConnectionFactory.getInstance().getConnection().commit();
 				 else
 					 throw new NegocioException("O exercício já está cadastrado");
@@ -73,11 +73,27 @@ public class ControladorExercicio {
 		else
 			throw new NegocioException("Não existem Exercícios Padrão cadastrados");
 	}
+	public ArrayList<Exercicio> listar() throws NegocioException{
+		ArrayList<Exercicio> resultado = new ArrayList<Exercicio>();
+		try {
+			for(Exercicio e : repositorio.listar()){
+					resultado.add(e);
+			}
+		} catch (SQLException e) {
+			throw new NegocioException(e.getMessage());
+		}
+		 
+		if(!(resultado.isEmpty())){
+			return resultado;
+		}
+		else
+			throw new NegocioException("Não existem Exercícios Padrão cadastrados");
+	}
 	public ArrayList<Exercicio> listar(String cpf) throws NegocioException{
 		ArrayList<Exercicio> resultado = new ArrayList<Exercicio>();
 		try {
 			for(Exercicio e : repositorio.listar()){
-				if(e.getCpfProfessor().equals(cpf))
+				if(e.getCpfProfessor().equals(cpf) && !e.isPadrao())
 					resultado.add(e);
 			}
 		} catch (SQLException e) {

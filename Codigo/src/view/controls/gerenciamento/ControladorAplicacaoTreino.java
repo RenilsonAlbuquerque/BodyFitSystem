@@ -2,12 +2,17 @@ package view.controls.gerenciamento;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import beans.Aluno;
+import beans.PerfisEnum;
+import beans.Professor;
 import beans.Treino;
 import control.Contexto;
 import control.Fachada;
 import exceptions.NegocioException;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,7 +24,10 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -46,10 +54,12 @@ public class ControladorAplicacaoTreino extends FlowPane{
 	private Button btnImprimirTreino;
 	
 	@FXML
-	private Button btnTreinoPadrao;
+	private RadioButton btTreinoPadrao;
 	
 	@FXML
-	private Button btnMeusTreinos;
+	private RadioButton btMeusTreinos;
+	
+	private ToggleGroup grupo;
 	
 	@FXML
 	private Button btnSalvar;
@@ -80,6 +90,34 @@ public class ControladorAplicacaoTreino extends FlowPane{
 				}
 			});
 			
+			this.txtBuscarTreino.textProperty().addListener((obs, oldText, newText) -> {
+			    this.atualizaLista(newText);
+			    
+			});
+			
+			this.grupo =  new ToggleGroup();
+			this.grupo.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+			    public void changed(ObservableValue<? extends Toggle> ov,
+			        Toggle toggle, Toggle new_toggle) {
+			            if (new_toggle == null){
+			            	
+			            }  
+			            else{
+			            	if(new_toggle.getToggleGroup().getSelectedToggle() == btTreinoPadrao)
+			            		atualizaLista(txtBuscarTreino.getText());
+			            	if(new_toggle.getToggleGroup().getSelectedToggle() == btMeusTreinos)
+			            		atualizaLista(txtBuscarTreino.getText());
+			            	
+			            		
+			            }
+			                
+			         }
+			});
+			
+			
+			
+			this.btTreinoPadrao.setToggleGroup(grupo);
+			this.btMeusTreinos.setToggleGroup(grupo);
 			//this.getChildren().add(0,new ControladorTelaVisualizacao(aluno));
 		}catch(IOException e){
 			e.printStackTrace();
@@ -118,7 +156,23 @@ public class ControladorAplicacaoTreino extends FlowPane{
 		this.listaTreinos.refresh();
 		this.listaTreinos.setItems(FXCollections.observableArrayList(lista));
 	}
-	
+	public void atualizaLista(String parametro){
+		
+		this.listaTreinos.getItems().clear();
+		if(this.btMeusTreinos.isSelected()){
+			for(Treino t : (ArrayList<Treino>) this.treinosProfessor){
+				if( t.getNome().toLowerCase().contains(parametro.toLowerCase()) )
+					listaTreinos.getItems().add(t);
+			}
+		}else{
+			for(Treino t : (ArrayList<Treino>) this.treinosPadrao){
+				if( t.getNome().toLowerCase().contains(parametro.toLowerCase()) )
+					listaTreinos.getItems().add(t);
+			}
+		}
+		
+		Collections.sort(this.listaTreinos.getItems());
+	}
 	@FXML
 	private void acaoBtTreinoPadrao(){
 		if(!this.treinosPadrao.isEmpty()){
@@ -149,6 +203,7 @@ public class ControladorAplicacaoTreino extends FlowPane{
 			dialogo.setContentText("Rotina de treinos Salva!");
 			dialogo.setHeaderText(null);
 			dialogo.show();
+			
 			
 		} catch (NegocioException e) {
 			Alert dialogo = new Alert(Alert.AlertType.ERROR);
@@ -206,8 +261,8 @@ public class ControladorAplicacaoTreino extends FlowPane{
 			}else{
 	            GridPane painel = new GridPane();
 	            painel.getColumnConstraints().add(new ColumnConstraints(200));
-	            painel.getColumnConstraints().add(new ColumnConstraints(40));
-	            painel.getColumnConstraints().add(new ColumnConstraints(40));
+	            painel.getColumnConstraints().add(new ColumnConstraints(30));
+	            painel.getColumnConstraints().add(new ColumnConstraints(30));
 
 	            Label icon = new Label(objeto.getNome());
 	            icon.getStyleClass().add("cache-list-icon");
@@ -264,8 +319,8 @@ public class ControladorAplicacaoTreino extends FlowPane{
 				}else{
 		            GridPane painel = new GridPane();
 		            painel.getColumnConstraints().add(new ColumnConstraints(200));
-		            painel.getColumnConstraints().add(new ColumnConstraints(40));
-		            painel.getColumnConstraints().add(new ColumnConstraints(40));
+		            painel.getColumnConstraints().add(new ColumnConstraints(30));
+		            painel.getColumnConstraints().add(new ColumnConstraints(30));
 
 		            Label icon = new Label(objeto.getNome());
 		            icon.getStyleClass().add("cache-list-icon");

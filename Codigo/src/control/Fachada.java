@@ -44,9 +44,11 @@ public class Fachada {
 	public boolean autenticar(String cpf,String senha) throws NegocioException{
 		return this.usuario.autenticar(cpf, senha);
 	}
+	
 	public ArrayList<PerfisEnum> getPerfisUsuario(String cpf) throws NegocioException{
 		return this.usuario.getPerfis(cpf);
 	}
+
 	
 	public void atualizarUsuario(Usuario usuario) throws NegocioException{
 		this.usuario.atualizar(usuario);
@@ -76,17 +78,7 @@ public class Fachada {
 	public void alterarUsuario(ArrayList<Usuario> perfis) throws NegocioException{
 		this.usuario.atualizar(perfis);
 	}
-	/*
-	public void cadastrarAluno(Aluno aluno) throws NegocioException{
-		this.aluno.cadastrar(aluno);
-	}
-	public void cadastrarProfessor(Professor professor) throws NegocioException{
-		this.professor.cadastrar(professor);
-	}
-	public void cadastrarAdministrador(Administrador administrador) throws NegocioException{
-		this.administrador.cadastrar(administrador);
-	}
-	*/
+	
 	
 	public void cadastrarTreino(Treino treino) throws NegocioException{
 		this.treino.cadastrar(treino);
@@ -97,18 +89,9 @@ public class Fachada {
 	public void salvarRotinaTreino(Aluno aluno) throws NegocioException{
 		this.aluno.salvarRotinaDeTreino(aluno);
 	}
-	/*
-	public void alterarAluno(Aluno aluno) throws NegocioException, ConexaoBancoException, CRUDException{
-		this.aluno.atualizar(aluno);
+	public void salvarHistorico(Aluno aluno) throws NegocioException{
+		this.aluno.salvarHistoricoTreino(aluno);
 	}
-	public void alterarProfessor(Professor professor) throws NegocioException, ConexaoBancoException, CRUDException{
-		this.professor.atualizar(professor);
-	}
-	public void alterarAdministrador(Administrador administrador) throws NegocioException, ConexaoBancoException, CRUDException{
-		this.administrador.atualizar(administrador);
-	}
-	*/
-	
 	public void alterarTreino(Treino treino) throws NegocioException{
 		this.treino.alterar(treino);
 	}
@@ -144,17 +127,7 @@ public class Fachada {
 	public void remover(Usuario usuario) throws NegocioException{
 		this.usuario.remover(usuario);
 	}
-	/*
-	public void removerAluno(Aluno aluno) throws NegocioException{
-		this.aluno.remover(aluno);
-	}
-	public void removerProfessor(Professor professor) throws NegocioException{
-		this.professor.remover(professor);
-	}
-	public void removerAdministrador(Administrador administrador) throws NegocioException{
-		this.administrador.remover(administrador);
-	}
-	*/
+	
 	public void removerTreino(Treino treino) throws NegocioException{
 		this.treino.remover(treino);
 	}

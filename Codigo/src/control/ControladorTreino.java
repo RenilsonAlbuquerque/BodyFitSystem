@@ -2,35 +2,30 @@ package control;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-import beans.AlunoExecuta;
 import beans.Exercicio;
 import beans.Treino;
 import beans.TreinoExercicio;
-import data.AlunoExecutaDAO;
 import data.DBConnectionFactory;
-import data.ExercicioDao;
+import data.ExercicioDAO;
+import data.IAtividadesDao;
 import data.IRelacionamento;
-import data.ITreinoDao;
-import data.InterfaceCRUD;
-import data.TreinoDao;
+import data.TreinoDAO;
 import data.TreinoExercicioDAO;
 import exceptions.NegocioException;
 
 public class ControladorTreino {
 	private static ControladorTreino instance;
 	
-	private ITreinoDao repositorioTreinos;
+	private IAtividadesDao<Treino> repositorioTreinos;
 	private IRelacionamento<TreinoExercicio,Integer> treinosExercicios;
-	private InterfaceCRUD<Exercicio,Integer> repositorioExercicio;
+	private IAtividadesDao<Exercicio> repositorioExercicio;
 	
 	
 	private ControladorTreino(){
-		this.repositorioTreinos = TreinoDao.getInstance();
+		this.repositorioTreinos = TreinoDAO.getInstance();
 		this.treinosExercicios = TreinoExercicioDAO.getInstance();
-		this.repositorioExercicio = new ExercicioDao();
+		this.repositorioExercicio = ExercicioDAO.getInstance();
 		
 	}
 	
@@ -114,11 +109,34 @@ public class ControladorTreino {
 		else
 			throw new NegocioException("Não existem Treinos Padrão cadastrados");
 	}
+
+	public ArrayList<Treino> listar() throws NegocioException {
+		ArrayList<Treino> resultado = new ArrayList<Treino>();
+		try {
+			for (Treino t : repositorioTreinos.listar()) {
+
+				resultado.add(t);
+				for (Exercicio e : repositorioExercicio.listar()) {
+					if (this.contains(this.treinosExercicios.listar(t.getCodigo()), e)) {
+						t.getExerciciosArray().add(e);
+					}
+				}
+
+			}
+		} catch (SQLException e) {
+			throw new NegocioException(e.getMessage());
+		}
+
+		if (!(resultado.isEmpty())) {
+			return resultado;
+		} else
+			throw new NegocioException("Não existem Treinos cadastrados");
+	}
 	public ArrayList<Treino> listar(String cpf) throws NegocioException{
 		ArrayList<Treino> resultado = new ArrayList<Treino>();
 		try {
 			for(Treino t : repositorioTreinos.listar()){
-				if(t.getCpfProfessor().equals(cpf)){
+				if(t.getCpfProfessor().equals(cpf) && t.isPadrao() == false){
 					resultado.add(t);
 					for(Exercicio e: repositorioExercicio.listar()){
 						if(this.contains( this.treinosExercicios.listar(t.getCodigo()),e)){

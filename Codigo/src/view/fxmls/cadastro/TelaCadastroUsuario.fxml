@@ -26,16 +26,16 @@
             </AnchorPane>
             <AnchorPane prefHeight="496.0" prefWidth="403.0">
                <children>
-                  <ListView fx:id="listaPerfis" layoutX="52.0" layoutY="103.0" prefHeight="280.0" prefWidth="291.0" />
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="52.0" layoutY="59.0" prefHeight="17.0" prefWidth="291.0" text="Lista de Perfis">
+                  <ListView fx:id="listaPerfis" layoutX="52.0" layoutY="103.0" prefHeight="280.0" prefWidth="314.0" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="52.0" layoutY="59.0" prefHeight="37.0" prefWidth="314.0" text="Lista de Perfis">
                      <font>
                         <Font name="Arial Black" size="24.0" />
                      </font></Label>
-                  <HBox layoutX="52.0" layoutY="383.0" prefHeight="60.0" prefWidth="291.0">
+                  <HBox layoutX="52.0" layoutY="383.0" prefHeight="60.0" prefWidth="320.0">
                      <children>
-                        <Button fx:id="botaoAluno" mnemonicParsing="false" onAction="#acaoBtAluno" prefHeight="58.0" prefWidth="98.0" text="Aluno" />
-                        <Button fx:id="botaoProfessor" mnemonicParsing="false" onAction="#acaoBtProfessor" prefHeight="58.0" prefWidth="98.0" text="Professor" />
-                        <Button fx:id="botaoAdministrador" mnemonicParsing="false" onAction="#acaoBtAdministrador" prefHeight="58.0" prefWidth="95.0" text="Administrador" />
+                        <Button fx:id="botaoAluno" mnemonicParsing="false" onAction="#acaoBtAluno" prefHeight="58.0" prefWidth="105.0" text="Aluno" />
+                        <Button fx:id="botaoProfessor" mnemonicParsing="false" onAction="#acaoBtProfessor" prefHeight="58.0" prefWidth="105.0" text="Professor" />
+                        <Button fx:id="botaoAdministrador" mnemonicParsing="false" onAction="#acaoBtAdministrador" prefHeight="58.0" prefWidth="105.0" text="Administrador" />
                      </children>
                   </HBox>
                </children>

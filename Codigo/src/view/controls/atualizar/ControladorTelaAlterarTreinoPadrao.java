@@ -1,4 +1,4 @@
-package view.controls.cadastro;
+package view.controls.atualizar;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,11 +23,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
+import view.controls.cadastro.ControladorTelaCadastroTreino;
 import view.controls.visualizacao.ControladorVisualizacaoExercicio;
 
-
-public class ControladorTelaCadastroTreino extends GridPane{
-
+public class ControladorTelaAlterarTreinoPadrao extends GridPane {
+private Treino treino;
+	
 	private ArrayList exerciciosPadrao;
 	private ArrayList exerciciosProfessor;
 	
@@ -46,9 +47,14 @@ public class ControladorTelaCadastroTreino extends GridPane{
 	@FXML
 	private Button btnExerciciosPadrao;
 	
+	@FXML
+	private Button btnSalvar;
 	
-	public ControladorTelaCadastroTreino(){
+	
+	
+	public ControladorTelaAlterarTreinoPadrao(Treino treino){
 		try{
+			
 			FXMLLoader loader = new FXMLLoader(ControladorTelaCadastroTreino.class.getClass().getResource("/view/fxmls/cadastro/TelaCadastroTreino.fxml"));
 			loader.setController(this);
 			
@@ -73,59 +79,36 @@ public class ControladorTelaCadastroTreino extends GridPane{
 			e.printStackTrace();
 		}
 		
+		this.treino = treino;
 		try 
 		{
 			exerciciosPadrao= Fachada.getInstance().listarExerciciosPadrao();
 			
 		} catch ( NegocioException e) {
 			this.exerciciosPadrao = new ArrayList<Exercicio>();
-			//this.exerciciosPadrao.add(e.getMessage());
+			
 		}
 		try{
 			exerciciosProfessor = Fachada.getInstance().listarExercicios(Contexto.getInstance().getUsuarioLogado().getCpf());
 			
 		} catch ( NegocioException e) {
 			this.exerciciosProfessor = new ArrayList<Exercicio>();
-			//this.exerciciosProfessor.add(e.getMessage());
+			
 		}
 
 		this.listaExerciciosAdcionar.setVisible(false);
-
+		
+		this.listaExerciciosTreino.setItems(FXCollections.observableArrayList(this.treino.getExerciciosArray()));
+		this.txtNomeTreino.setText(this.treino.getNome());
+		this.btnSalvar.setText("Alterar");
 	}
-	
-	
 	
 	
 	
 	private void povoaLista(ArrayList lista){
 		
 		this.listaExerciciosAdcionar.getItems().clear();
-		/*
-		if(lista.get(0) instanceof Exercicio){
-			this.listaExerciciosAdcionar.setCellFactory(new Callback<ListView<Exercicio>, CelulaListaExercicio>() {
-				@Override
-				public CelulaListaExercicio call(ListView<Exercicio> arg0) {
-					return new CelulaListaExercicio();
-				}
-			});
-			
-		}
-		else{
-			
-			this.listaExerciciosAdcionar.setCellFactory(list-> {
-				ListCell<String> cell = new ListCell<String>() {
 
-					@Override
-					protected void updateItem(String item, boolean empty) {
-						super.updateItem(item, empty);
-						setText(empty ? null : item);
-					}
-				};
-				return cell;
-			});
-			
-		}
-		*/
 		this.listaExerciciosAdcionar.refresh();
 		this.listaExerciciosAdcionar.setItems(FXCollections.observableArrayList(lista));
 	}
@@ -134,22 +117,21 @@ public class ControladorTelaCadastroTreino extends GridPane{
 	private void acaoBotaoSalvar(ActionEvent e){
 		
 		if(!this.listaExerciciosTreino.getItems().isEmpty()){
-			Treino treino = new Treino(this.txtNomeTreino.getText());
-			treino.getExerciciosArray().addAll(this.listaExerciciosTreino.getItems());
-			treino.setProfessor( Contexto.getInstance().getUsuarioLogado().getCpf());
-			treino.setPadrao(false);
-			
+			this.treino.setNome(this.txtNomeTreino.getText());
+			this.treino.getExerciciosArray().clear();
+			this.treino.setPadrao(true);
+			this.treino.getExerciciosArray().addAll(this.listaExerciciosTreino.getItems());
 			try {
-				Fachada.getInstance().cadastrarTreino(treino);
+				Fachada.getInstance().alterarTreino(this.treino);
 				Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
 				DialogPane d = dialogo.getDialogPane();
 				d.getStylesheets().add(
 						   getClass().getResource("/view/style/stylesheet.css").toExternalForm());
 						d.getStyleClass().add("dialog-pane");
-				dialogo.setContentText("Treino cadastrado");
+				dialogo.setContentText("Treino alterado");
 				dialogo.setHeaderText(null);
 				dialogo.show();
-			} catch (NegocioException  e1) {
+			} catch (NegocioException e1) {
 				Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
     			DialogPane d = dialogo.getDialogPane();
     			d.getStylesheets().add(
@@ -309,6 +291,5 @@ public class ControladorTelaCadastroTreino extends GridPane{
 			}
 		}
 		
-	
 	
 }

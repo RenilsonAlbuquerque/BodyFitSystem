@@ -2,6 +2,7 @@ package view.controls.visualizacao;
 
 import java.io.IOException;
 
+import beans.Usuario;
 import control.Contexto;
 import control.Fachada;
 import exceptions.NegocioException;
@@ -86,6 +87,7 @@ public class ControladorVisualizacaoPerfilProprio extends HBox{
 		    	try {
 					if(Fachada.getInstance().autenticar(Contexto.getInstance().getUsuarioLogado().getCpf(), senhaAntiga.getText())){
 						Contexto.getInstance().getUsuarioLogado().setSenha(novaSenha.getText());
+						Usuario u = Contexto.getInstance().getUsuarioLogado();
 						Fachada.getInstance().atualizarUsuario(Contexto.getInstance().getUsuarioLogado());
 						dialogo.close();
 					}

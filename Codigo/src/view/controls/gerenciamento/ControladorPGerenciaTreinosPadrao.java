@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Optional;
 
 import beans.Treino;
-import control.Contexto;
 import control.Fachada;
 import exceptions.NegocioException;
 import javafx.beans.value.ChangeListener;
@@ -24,15 +23,15 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import view.controls.atualizar.ControladorTelaAlterarTreino;
-import view.controls.cadastro.ControladorTelaCadastroTreino;
+import view.controls.atualizar.ControladorTelaAlterarTreinoPadrao;
+import view.controls.cadastro.ControladorTelaCadastroTreinoPadrao;
 import view.controls.login.ControladorTelaLogin;
 import view.controls.menu.ControladorMenuPrincipal;
 import view.controls.visualizacao.ControladorTelaVisualizacaoTreino;
 
-public class ControladorPGerenciaTreinos extends BorderPane{
+public class ControladorPGerenciaTreinosPadrao extends BorderPane {
 	
-	private ArrayList<Treino> treinos;
+private ArrayList<Treino> treinos;
 	
 	@FXML
 	private VBox painelEsquerda;
@@ -55,13 +54,13 @@ public class ControladorPGerenciaTreinos extends BorderPane{
 	@FXML
 	private Button btnExcluirTreino;
 	
-	public ControladorPGerenciaTreinos(String cpfProf){
+	public ControladorPGerenciaTreinosPadrao(){
 		try{
 			FXMLLoader loader = new FXMLLoader(ControladorTelaLogin.class.getClass().getResource("/view/fxmls/gerenciamento/TelaProfessorGerenciaTreinos.fxml"));
 			loader.setController(this);
 			this.setCenter(loader.load());
 			
-			this.povoarlista(cpfProf);
+			this.povoarlista();
 			
 			this.painelDireita.getChildren().add(0,new ControladorTelaVisualizacaoTreino());
 			
@@ -70,9 +69,9 @@ public class ControladorPGerenciaTreinos extends BorderPane{
 		}
 	}
 	
-	public void povoarlista(String cpfProf){
+	public void povoarlista(){
 		try {
-			this.treinos =  Fachada.getInstance().listarTreinos(cpfProf); 
+			this.treinos =  Fachada.getInstance().listarTreinosPadrao(); 
 			this.listaObjetos.setItems(FXCollections.observableArrayList(treinos));
 			Collections.sort(this.listaObjetos.getItems());
 			
@@ -103,12 +102,12 @@ public class ControladorPGerenciaTreinos extends BorderPane{
 	}
 	@FXML
 	private void acaoCadastrarTreinos(ActionEvent e){
-		ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorTelaCadastroTreino());
+		ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorTelaCadastroTreinoPadrao());
 	}
 	@FXML
 	private void acaoAlterarTreinos(ActionEvent e){
 		if(this.listaObjetos.getSelectionModel().getSelectedItem() != null)
-		ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorTelaAlterarTreino((Treino) this.listaObjetos.getSelectionModel().getSelectedItem()));
+		ControladorMenuPrincipal.getInstance().adcionaTela(new ControladorTelaAlterarTreinoPadrao((Treino) this.listaObjetos.getSelectionModel().getSelectedItem()));
 	}
 	@FXML
 	private void acaoExcluirTreino(ActionEvent e){
@@ -128,7 +127,7 @@ public class ControladorPGerenciaTreinos extends BorderPane{
 				try{
 					Fachada.getInstance().removerTreino((Treino) listaObjetos.getSelectionModel().getSelectedItem());
 					this.treinos.remove(treino);
-					povoarlista(Contexto.getInstance().getUsuarioLogado().getCpf());
+					povoarlista();
 					//listaObjetos.getSelectionModel().select(0);
 				}catch(NegocioException ex){
 					System.out.println(ex.getMessage());
@@ -137,4 +136,5 @@ public class ControladorPGerenciaTreinos extends BorderPane{
 			
 		}
 	}
+
 }

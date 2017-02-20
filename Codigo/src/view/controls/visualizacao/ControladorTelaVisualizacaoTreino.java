@@ -40,6 +40,7 @@ public class ControladorTelaVisualizacaoTreino extends VBox{
 			});
 			
 			this.listaExercicios.getItems().addAll(treino.getExerciciosArray());
+			this.listaExercicios.refresh();
 			this.nomeTreino.setText(treino.getNome());
 			
 		}catch(IOException e){
@@ -69,7 +70,12 @@ public class ControladorTelaVisualizacaoTreino extends VBox{
 			e.printStackTrace();
 		}
 	}
-	
+	public void adicionarTreino(Treino treino){
+		this.listaExercicios.getItems().clear();
+		this.listaExercicios.getItems().addAll(treino.getExerciciosArray());
+		this.listaExercicios.refresh();
+		this.nomeTreino.setText(treino.getNome());
+	}
 	class CelulaListaExercicio extends ListCell<Exercicio>{
 		
 		@Override
@@ -97,7 +103,7 @@ public class ControladorTelaVisualizacaoTreino extends VBox{
 				painel.getColumnConstraints().add(new ColumnConstraints(200)); // column 1 is 100 wide
 				painel.getColumnConstraints().add(new ColumnConstraints(60)); // column 2 is 200 wide
 				painel.getColumnConstraints().add(new ColumnConstraints(80)); // co
-				painel.getColumnConstraints().add(new ColumnConstraints(80)); // co
+				painel.getColumnConstraints().add(new ColumnConstraints(100)); // co
 				
 	            setGraphic(painel);
 			}

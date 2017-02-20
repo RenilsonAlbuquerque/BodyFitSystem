@@ -8,18 +8,18 @@ import com.mysql.jdbc.PreparedStatement;
 
 import beans.Administrador;
 
-public class AdministradorDao implements InterfaceCRUD<Administrador,String>{
+public class AdministradorDAO implements InterfaceCRUD<Administrador,String>{
 	
-	private static AdministradorDao instance;
+	private static AdministradorDAO instance;
 	private PreparedStatement statement;
 	private ResultSet rSet;
 	
-	private AdministradorDao(){
+	private AdministradorDAO(){
 		
 	}
-	public static AdministradorDao getInstance(){
+	public static AdministradorDAO getInstance(){
 		if(instance == null)
-			instance = new AdministradorDao();
+			instance = new AdministradorDAO();
 		return instance;
 	}
 	@Override

@@ -99,6 +99,7 @@ public class ControladorMenuPrincipal extends BorderPane{
 			this.fotoPerfil.setFill(new ImagePattern(new Image(FTPConnectionFactory.getInstance().retrieveImage(
 					Contexto.getInstance().getUsuarioLogado().getCaminhoFoto()))));
 		} catch (ConexaoFTPException e) {
+			
 			this.fotoPerfil.setFill(new ImagePattern(new Image("imagens/Default User.png")));
 		}
 		

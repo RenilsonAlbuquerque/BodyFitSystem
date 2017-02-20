@@ -7,8 +7,8 @@ import beans.Professor;
 import beans.Usuario;
 import data.DBConnectionFactory;
 import data.InterfaceCRUD;
-import data.ProfessorDao;
-import data.UsuarioDao;
+import data.ProfessorDAO;
+import data.UsuarioDAO;
 import exceptions.NegocioException;
 
 public class ControladorProfessor {
@@ -16,12 +16,11 @@ public class ControladorProfessor {
 	private static ControladorProfessor instance;	
 	private InterfaceCRUD<Professor,String> repositorio;
 	private InterfaceCRUD<Usuario,String> usuario;
-	private ControladorUsuario controladorUsuario;
 	
 	private ControladorProfessor(){
-		this.repositorio = ProfessorDao.getInstance();
-		this.usuario = new UsuarioDao();
-		this.controladorUsuario = ControladorUsuario.getInstance();
+		this.repositorio = ProfessorDAO.getInstance();
+		this.usuario = new UsuarioDAO();
+		//this.controladorUsuario = ControladorUsuario.getInstance();
 	}
 	
 	public static ControladorProfessor getInstance(){
