@@ -221,7 +221,8 @@ public class ControladorADMGerenciaUsuario extends HBox{
 	            painel.add(icon,0,0);     
 	            
 	       
-	              
+	             
+	            
 	            Button visualizar = new Button("V");
 	            visualizar.setOnAction(new EventHandler<ActionEvent>(){
 	            	@Override

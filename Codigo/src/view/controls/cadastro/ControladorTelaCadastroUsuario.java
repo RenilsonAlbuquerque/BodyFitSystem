@@ -374,7 +374,7 @@ public class ControladorTelaCadastroUsuario extends FlowPane{
 	            nomeTipo.getStyleClass().add("cache-list-icon");
 	            painel.add(nomeTipo,0,0);          
 
-	            
+	            /*
 	            Button visualizar = new Button("V");
 	            visualizar.setOnAction(new EventHandler<ActionEvent>(){
 	            	@Override
@@ -395,7 +395,7 @@ public class ControladorTelaCadastroUsuario extends FlowPane{
 	            	}
 	            });
 	            painel.add(visualizar,1,0);
-	            
+	            */
 	            Button remover = new Button("X");
 	            remover.setOnAction(new EventHandler<ActionEvent>(){
 	            	@Override
