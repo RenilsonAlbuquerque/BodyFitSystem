@@ -6,6 +6,7 @@ import beans.Exercicio;
 import beans.Treino;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Orientation;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -38,7 +39,7 @@ public class ControladorTelaVisualizacaoTreino extends VBox{
 					return new CelulaListaExercicio();
 				}
 			});
-			
+			this.listaExercicios.setOrientation(Orientation.HORIZONTAL);
 			this.listaExercicios.getItems().addAll(treino.getExerciciosArray());
 			this.listaExercicios.refresh();
 			this.nomeTreino.setText(treino.getNome());

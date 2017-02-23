@@ -155,8 +155,9 @@ private IRelacionamento<AlunoExecuta,String> repositorioHistorico;
 			try {
 				DBConnectionFactory.getInstance().getConnection().rollback();
 			} catch (SQLException e1) {}
-			if(e.getErrorCode() == 1062)
-				throw new NegocioException("Você não pode salvar o mesmo \n treino repetidamente no rotina do aluno");
+			throw new NegocioException(e.getErrorCode() + e.getMessage() );
+			//if(e.getErrorCode() == 1062)
+				//throw new NegocioException("Você não pode salvar o mesmo \n treino repetidamente no rotina do aluno");
 			
 		}
 	}

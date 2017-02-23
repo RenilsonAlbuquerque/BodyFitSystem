@@ -6,23 +6,23 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<HBox alignment="CENTER" prefHeight="588.0" prefWidth="880.0" spacing="60.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<HBox alignment="CENTER" prefHeight="588.0" prefWidth="922.0" spacing="60.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox fx:id="painelEsquerda" alignment="CENTER" prefHeight="589.0" prefWidth="447.0" spacing="20.0">
+      <VBox fx:id="painelEsquerda" alignment="CENTER" prefHeight="589.0" prefWidth="447.0">
          <children>
+            <TextField fx:id="txtBuscar" prefHeight="36.0" prefWidth="350.0" promptText="Buscar" />
             <ListView fx:id="listaObjetos" prefHeight="431.0" prefWidth="399.0" />
-            <TextField fx:id="txtBuscar" alignment="CENTER" prefHeight="36.0" prefWidth="350.0" />
          </children>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
       </VBox>
-      <VBox fx:id="painelDireita" alignment="CENTER" prefHeight="576.0" prefWidth="400.0" spacing="20.0">
+      <VBox fx:id="painelDireita" alignment="CENTER" prefHeight="588.0" prefWidth="423.0" spacing="20.0">
          <children>
-            <HBox fx:id="painelBaixo" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <HBox fx:id="painelBaixo" alignment="CENTER" prefHeight="100.0" prefWidth="400.0">
                <children>
-                  <Button fx:id="btnCadastrarExercicio" contentDisplay="CENTER" mnemonicParsing="false" onAction="#acaoCadastrarExercicio" prefHeight="64.0" prefWidth="116.0" text="Cadastrar Exercício" />
-                  <Button fx:id="btnAlterarExercicio" contentDisplay="CENTER" mnemonicParsing="false" onAction="#acaoAlterarExercicio" prefHeight="64.0" prefWidth="116.0" text="Alterar Exercício" />
+                  <Button fx:id="btnCadastrarExercicio" contentDisplay="CENTER" mnemonicParsing="false" onAction="#acaoCadastrarExercicio" prefHeight="64.0" prefWidth="120.0" text="Cadastrar Exercício" />
+                  <Button fx:id="btnAlterarExercicio" contentDisplay="CENTER" mnemonicParsing="false" onAction="#acaoAlterarExercicio" prefHeight="64.0" prefWidth="120.0" text="Alterar Exercício" />
                   <Button fx:id="btnExcluirExercicio" contentDisplay="CENTER" mnemonicParsing="false" onAction="#acaoExcluirExercicio" prefHeight="64.0" prefWidth="116.0" text="Excluir Exercício" />
                </children>
             </HBox>

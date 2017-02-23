@@ -36,7 +36,6 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import view.controls.atualizar.ControladorTelaAlterarUsuario;
 import view.controls.cadastro.ControladorTelaCadastroUsuario;
-import view.controls.gerenciamento.ControladorAplicacaoTreino.CelulaListaTreino;
 import view.controls.login.ControladorTelaLogin;
 import view.controls.visualizacao.ControladorTelaVisualizacao;
 

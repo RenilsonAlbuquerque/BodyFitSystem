@@ -83,6 +83,7 @@ public class ControladorAplicacaoTreino extends FlowPane{
 				}
 			});
 			
+			
 			this.listaTreinos.setCellFactory(new Callback<ListView<Treino>, CelulaListaTreinoAdd>() {
 
 				@Override
@@ -119,7 +120,7 @@ public class ControladorAplicacaoTreino extends FlowPane{
 			
 			this.btTreinoPadrao.setToggleGroup(grupo);
 			this.btMeusTreinos.setToggleGroup(grupo);
-			//this.getChildren().add(0,new ControladorTelaVisualizacao(aluno));
+			
 		}catch(IOException e){
 			e.printStackTrace();
 		}
@@ -148,6 +149,7 @@ public class ControladorAplicacaoTreino extends FlowPane{
 		
 		
 		this.listaTreinosAluno.getItems().addAll(this.aluno.getRotinaTreinos());
+		this.btMeusTreinos.setSelected(true);
 
 	}
 	private void povoaLista(ArrayList lista){
@@ -250,40 +252,7 @@ public class ControladorAplicacaoTreino extends FlowPane{
 			dialogo.show();
 		}
 	}
-	class CelulaListaTreinos extends ListCell<Treino>{
-		
-		@Override
-		protected void updateItem(Treino objeto,boolean empty){
-			super.updateItem(objeto,empty);
-			if(empty){
-				
-			}else{
-	            GridPane painel = new GridPane();
-	            painel.getColumnConstraints().add(new ColumnConstraints(200));
-	            painel.getColumnConstraints().add(new ColumnConstraints(40));
-	            painel.getColumnConstraints().add(new ColumnConstraints(40));
-
-	            Label icon = new Label(objeto.getNome());
-	            icon.getStyleClass().add("cache-list-icon");
-	            painel.add(icon,0,0);          
-
-	            
-	            Button visualizar = new Button("V");
-	            painel.add(visualizar,1,0);
-	            
-	            Button remover = new Button("X");
-	            remover.setOnAction(new EventHandler<ActionEvent>(){
-	            	@Override
-	            	public void handle(ActionEvent e){
-	            		listaTreinosAluno.getItems().remove(CelulaListaTreinos.this);
-	            	}
-	            });
-	            painel.add(remover,2,0);
-	            
-	            setGraphic(painel);
-			}
-		}
-	}
+	
 	class CelulaListaTreinoAdd extends ListCell<Treino>{
 		
 		@Override
@@ -311,7 +280,7 @@ public class ControladorAplicacaoTreino extends FlowPane{
 	            		if(listaTreinos.getSelectionModel().getSelectedIndex() != CelulaListaTreinoAdd.this.getIndex() )
 	            			listaTreinos.getSelectionModel().clearAndSelect(CelulaListaTreinoAdd.this.getIndex());
 	            		if(listaTreinosAluno.getItems().size() < 6)
-	            		listaTreinosAluno.getItems().add((Treino) listaTreinos.getSelectionModel().getSelectedItem());
+	            		listaTreinosAluno.getItems().add(objeto);
 	            	}
 	            });
 	            painel.add(adicionar,1,0);
@@ -331,7 +300,7 @@ public class ControladorAplicacaoTreino extends FlowPane{
 	        					d.getStyleClass().add("dialog-pane");
 	        			dialogo.getDialogPane().setContent(
 	        					new ControladorTelaVisualizacaoTreino(
-	        							(Treino) listaTreinos.getSelectionModel().getSelectedItem()));
+	        							objeto));
 	        			dialogo.setHeaderText(null);
 	        			dialogo.show();
 	            	}
@@ -340,68 +309,68 @@ public class ControladorAplicacaoTreino extends FlowPane{
 	            
 	            setGraphic(painel);
 			}
-			
 		}
 	}
-	class CelulaListaTreino extends ListCell<Treino>{
 			
-			@Override
-			protected void updateItem(Treino objeto,boolean empty){
-				super.updateItem(objeto,empty);
+			class CelulaListaTreino extends ListCell<Treino>{
 				
-				if(empty){
-					setGraphic(null);
-				}else{
-		            GridPane painel = new GridPane();
-		            painel.getColumnConstraints().add(new ColumnConstraints(200));
-		            painel.getColumnConstraints().add(new ColumnConstraints(30));
-		            painel.getColumnConstraints().add(new ColumnConstraints(30));
+				@Override
+				protected void updateItem(Treino objeto,boolean empty){
+					super.updateItem(objeto,empty);
+					
+					if(empty){
+						setGraphic(null);
+					}else{
+			            GridPane painel = new GridPane();
+			            painel.getColumnConstraints().add(new ColumnConstraints(200));
+			            painel.getColumnConstraints().add(new ColumnConstraints(30));
+			            painel.getColumnConstraints().add(new ColumnConstraints(30));
 
-		            Label icon = new Label(objeto.getNome());
-		            icon.getStyleClass().add("cache-list-icon");
-		            painel.add(icon,0,0);          
+			            Label icon = new Label(objeto.getNome());
+			            icon.getStyleClass().add("cache-list-icon");
+			            painel.add(icon,0,0);          
 
-		            
-		            Button visualizar = new Button("V");
-		            visualizar.setOnAction(new EventHandler<ActionEvent>(){
-		            	@Override
-		            	public void handle(ActionEvent e){
-		            		
-		            		if(listaTreinosAluno.getSelectionModel().getSelectedIndex() != CelulaListaTreino.this.getIndex())
-		            			listaTreinosAluno.getSelectionModel().select(CelulaListaTreino.this.getIndex());
-		            		
-		            		Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
-		        			DialogPane d = dialogo.getDialogPane();
-		        			d.getStylesheets().add(
-		        					   getClass().getResource("/view/style/stylesheet.css").toExternalForm());
-		        					d.getStyleClass().add("dialog-pane");
-		        			dialogo.getDialogPane().setContent(
-		        					new ControladorTelaVisualizacaoTreino(
-		        							(Treino) listaTreinosAluno.getSelectionModel().getSelectedItem()));
-		        			dialogo.setHeaderText(null);
-		        			dialogo.show();
-		            	}
-		            });
-		            painel.add(visualizar,1,0);
-		            
-		            Button remover = new Button("X");
-		            remover.setOnAction(new EventHandler<ActionEvent>(){
-		            	@Override
-		            	public void handle(ActionEvent e){
-		        
-		            		if(listaTreinosAluno.getSelectionModel().getSelectedIndex() != CelulaListaTreino.this.getIndex())
-		            			listaTreinosAluno.getSelectionModel().select(CelulaListaTreino.this.getIndex());
-		            		listaTreinosAluno.getItems().remove(CelulaListaTreino.this.getIndex());
-		            	}
-		            });
-		            painel.add(remover,2,0);
-		            
-		            setGraphic(painel);
+			            
+			            Button visualizar = new Button("V");
+			            visualizar.setOnAction(new EventHandler<ActionEvent>(){
+			            	@Override
+			            	public void handle(ActionEvent e){
+			            		
+			            		if(listaTreinosAluno.getSelectionModel().getSelectedIndex() != CelulaListaTreino.this.getIndex())
+			            			listaTreinosAluno.getSelectionModel().select(CelulaListaTreino.this.getIndex());
+			            		
+			            		Alert dialogo = new Alert(Alert.AlertType.INFORMATION);
+			        			DialogPane d = dialogo.getDialogPane();
+			        			d.getStylesheets().add(
+			        					   getClass().getResource("/view/style/stylesheet.css").toExternalForm());
+			        					d.getStyleClass().add("dialog-pane");
+			        			dialogo.getDialogPane().setContent(
+			        					new ControladorTelaVisualizacaoTreino(objeto));
+			        			dialogo.setHeaderText(null);
+			        			dialogo.show();
+			            	}
+			            });
+			            painel.add(visualizar,1,0);
+			            
+			            Button remover = new Button("X");
+			            remover.setOnAction(new EventHandler<ActionEvent>(){
+			            	@Override
+			            	public void handle(ActionEvent e){
+			        
+			            		if(listaTreinosAluno.getSelectionModel().getSelectedIndex() != CelulaListaTreino.this.getIndex())
+			            			listaTreinosAluno.getSelectionModel().select(CelulaListaTreino.this.getIndex());
+			            		listaTreinosAluno.getItems().remove(objeto);
+			            	}
+			            });
+			            painel.add(remover,2,0);
+			            
+			            setGraphic(painel);
+					}
+					
 				}
-				
 			}
 		}
-		
 
-}
+	
+
 
