@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.Stack;
 
 import control.Contexto;
-import control.Fachada;
 import data.FTPConnectionFactory;
 import exceptions.ConexaoFTPException;
 import javafx.fxml.FXML;

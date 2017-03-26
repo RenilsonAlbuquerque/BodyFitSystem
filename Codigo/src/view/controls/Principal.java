@@ -17,7 +17,7 @@ public class Principal extends Application{
 	public void start(Stage arg0) {
 		
 		currentStage = new Stage();
-		//currentStage.initStyle(StageStyle.DECORATED);
+		//currentStage.initStyle(StageStyle.UNDECORATED);
 		currentStage.getIcons().add(new Image("/imagens/Main Icon.png"));
 		currentStage.setTitle("BodyFit Systems");
 		setCurrentStage(new ControladorTelaLogin());	

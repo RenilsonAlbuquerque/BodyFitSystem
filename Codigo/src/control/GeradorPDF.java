@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -43,7 +44,9 @@ public class GeradorPDF {
 			 documento.add(new Paragraph("Treino do dia: " +treino.getNome()));
 			 documento.add(new Paragraph("   "));
              
-			 PdfPTable table = new PdfPTable(4);
+			 PdfPTable table = new PdfPTable(6);
+			 table.setWidthPercentage(100);
+			 table.setTotalWidth(new float[]{120,72,90,110,72,400});
 			 
 			 PdfPCell c1 = new PdfPCell(new Phrase("Nome do Execício"));
              c1.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -61,13 +64,23 @@ public class GeradorPDF {
              c1.setHorizontalAlignment(Element.ALIGN_CENTER);
              table.addCell(c1);
              
+             c1 = new PdfPCell(new Phrase("Séries"));
+             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+             table.addCell(c1);
+             
+             c1 = new PdfPCell(new Phrase("Descrição"));
+             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+             table.addCell(c1);
+             
              table.setHeaderRows(1);
              
              for(Exercicio e : treino.getExerciciosArray()){
             	 table.addCell(e.getNome());
                  table.addCell(e.getCarga());
-                 table.addCell(String.valueOf(e.getIntervalo()));
+                 table.addCell(String.valueOf(e.getIntervalo() + "s"));
                  table.addCell(String.valueOf(e.getRepeticao()));
+                 table.addCell(String.valueOf(e.getSeries()));
+                 table.addCell(e.getDescricao());
              }
              documento.add(table);
              documento.close();
@@ -97,12 +110,15 @@ public class GeradorPDF {
 				 
 				 Paragraph preface = new Paragraph(" ");
 				 preface.add(t.getNome());
-				 PdfPTable table = new PdfPTable(4);
+				 
+				 PdfPTable table = new PdfPTable(6);
+				 table.setWidthPercentage(100);
+				 table.setTotalWidth(new float[]{120,72,90,110,72,400});
 				 
 				 PdfPCell c1 = new PdfPCell(new Phrase("Nome do Execício"));
 	             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
 	             table.addCell(c1);
-
+	             
 	             c1 = new PdfPCell(new Phrase("Carga"));
 	             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
 	             table.addCell(c1);
@@ -115,13 +131,24 @@ public class GeradorPDF {
 	             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
 	             table.addCell(c1);
 	             
+	             c1 = new PdfPCell(new Phrase("Séries"));
+	             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+	             table.addCell(c1);
+	             
+	             c1 = new PdfPCell(new Phrase("Descrição"));
+	             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+	             table.addCell(c1);
+	             
 	             table.setHeaderRows(1);
 	             
 	             for(Exercicio e : t.getExerciciosArray()){
 	            	 table.addCell(e.getNome());
 	                 table.addCell(e.getCarga());
-	                 table.addCell(String.valueOf(e.getIntervalo()));
+	                 table.addCell(String.valueOf(e.getIntervalo() + "s"));
 	                 table.addCell(String.valueOf(e.getRepeticao()));
+	                 table.addCell(String.valueOf(e.getSeries()));
+	                 table.addCell(e.getDescricao());
+	                
 	             }
 	             preface.add(table);
 	             documento.add(preface);

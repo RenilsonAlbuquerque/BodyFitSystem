@@ -39,7 +39,7 @@ public class ControladorTelaVisualizacaoTreino extends VBox{
 					return new CelulaListaExercicio();
 				}
 			});
-			this.listaExercicios.setOrientation(Orientation.HORIZONTAL);
+			this.listaExercicios.setOrientation(Orientation.VERTICAL);
 			this.listaExercicios.getItems().addAll(treino.getExerciciosArray());
 			this.listaExercicios.refresh();
 			this.nomeTreino.setText(treino.getNome());

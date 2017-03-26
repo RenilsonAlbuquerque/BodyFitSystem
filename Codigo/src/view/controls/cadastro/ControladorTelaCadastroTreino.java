@@ -218,7 +218,7 @@ public class ControladorTelaCadastroTreino extends GridPane{
 	            	public void handle(ActionEvent e){
 	            		if(listaExerciciosAdcionar.getSelectionModel().getSelectedIndex() != CelulaListaExercicio.this.getIndex())
 	            			listaExerciciosAdcionar.getSelectionModel().clearAndSelect(CelulaListaExercicio.this.getIndex());
-	            		listaExerciciosTreino.getItems().add((Exercicio)listaExerciciosAdcionar.getSelectionModel().getSelectedItem());
+	            		listaExerciciosTreino.getItems().add(objeto);
 	            	}
 	            });
 	            painel.add(adicionar,1,0);
@@ -238,7 +238,7 @@ public class ControladorTelaCadastroTreino extends GridPane{
 	        					d.getStyleClass().add("dialog-pane");
 	        			dialogo.getDialogPane().setContent(
 	        					new ControladorVisualizacaoExercicio(
-	        							(Exercicio) listaExerciciosAdcionar.getSelectionModel().getSelectedItem()));
+	        							objeto));
 	        			dialogo.setHeaderText(null);
 	        			dialogo.show();
 	            	}

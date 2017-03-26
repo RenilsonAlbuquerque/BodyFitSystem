@@ -25,6 +25,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -135,11 +136,15 @@ public class ControladorPGerenciaExercicios extends BorderPane{
 		TextField txtCarga = new TextField();
 		TextField txtIntervalo = new TextField();
 		TextField txtRepeticao = new TextField();
+		TextField txtSeries = new TextField();
+		TextArea arDescricao = new TextArea();
 		
 		Label lblNome = new Label("Nome");
 		Label lblCarga = new Label("Carga");
 		Label lblIntervalo = new Label("Intervalo");
 		Label lblRepeticao = new Label("Repetições");
+		Label lblSeries = new Label("Séries");
+		Label lblDescricao = new Label("Descrição");
 		Label lblErro = new Label();
 		
 		Button botaoCadastrar = new Button("Cadastrar");
@@ -152,8 +157,12 @@ public class ControladorPGerenciaExercicios extends BorderPane{
 		painel.add(txtRepeticao, 1, 2);
 		painel.add(lblIntervalo, 0, 3);
 		painel.add(txtIntervalo, 1, 3);
-		painel.add(lblErro, 2, 3);
-		painel.add(botaoCadastrar, 3, 3);
+		painel.add(lblSeries, 0, 4);
+		painel.add(txtSeries, 1, 4);
+		painel.add(lblDescricao, 0, 5);
+		painel.add(arDescricao, 1, 5);
+		painel.add(lblErro, 1, 6);
+		painel.add(botaoCadastrar, 2, 7);
 		
 
 		botaoCadastrar.setOnAction(new EventHandler<ActionEvent>() {
@@ -162,7 +171,8 @@ public class ControladorPGerenciaExercicios extends BorderPane{
 		    		
 		    		Fachada.getInstance().cadastrarExercicio(new Exercicio(
 		    				Contexto.getInstance().getUsuarioLogado().getCpf(),
-		    				txtNome.getText(),txtCarga.getText(),Integer.valueOf(txtRepeticao.getText()),Integer.valueOf(txtIntervalo.getText()),false
+		    				txtNome.getText(),txtCarga.getText(),Integer.valueOf(txtRepeticao.getText()),Integer.valueOf(txtIntervalo.getText()),
+		    				Integer.valueOf(txtSeries.getText()), arDescricao.getText(),false
 		    				));
 		    	
 		    		dialogo.close();
@@ -197,25 +207,33 @@ public class ControladorPGerenciaExercicios extends BorderPane{
 			TextField txtCarga = new TextField(exercicio.getCarga());
 			TextField txtIntervalo = new TextField(String.valueOf(exercicio.getIntervalo()));
 			TextField txtRepeticao = new TextField(String.valueOf(exercicio.getRepeticao()));
+			TextField txtSeries = new TextField(String.valueOf(exercicio.getSeries()));
+			TextArea arDescricao = new TextArea(String.valueOf(exercicio.getDescricao()));
 
 			Label lblNome = new Label("Nome");
 			Label lblCarga = new Label("Carga");
 			Label lblIntervalo = new Label("Intervalo");
 			Label lblRepeticao = new Label("Repetições");
+			Label lblSeries = new Label("Séries");
+			Label lblDescricao = new Label("Descrição");
 			Label lblErro = new Label();
 
 			Button botaoCadastrar = new Button("Alterar");
 
-			painel.add(lblNome, 0, 0);
+			painel.add(lblNome,0,0);
 			painel.add(txtNome, 1, 0);
 			painel.add(lblCarga, 0, 1);
-			painel.add(txtCarga, 1, 1);
+			painel.add(txtCarga,1,1);
 			painel.add(lblRepeticao, 0, 2);
 			painel.add(txtRepeticao, 1, 2);
 			painel.add(lblIntervalo, 0, 3);
 			painel.add(txtIntervalo, 1, 3);
-			painel.add(lblErro, 1, 3);
-			painel.add(botaoCadastrar, 2, 3);
+			painel.add(lblSeries, 0, 4);
+			painel.add(txtSeries, 1, 4);
+			painel.add(lblDescricao, 0, 5);
+			painel.add(arDescricao, 1, 5);
+			painel.add(lblErro, 1, 6);
+			painel.add(botaoCadastrar, 2, 7);
 
 			botaoCadastrar.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
@@ -226,6 +244,8 @@ public class ControladorPGerenciaExercicios extends BorderPane{
 						exercicio.setCarga(txtCarga.getText());
 						exercicio.setRepeticao(Integer.valueOf(txtRepeticao.getText()));
 						exercicio.setIntervalo(Integer.valueOf(txtIntervalo.getText()));
+						exercicio.setSeries(Integer.valueOf(txtSeries.getText()));
+						exercicio.setDescricao(arDescricao.getText());
 						Fachada.getInstance().alterarExercicio(exercicio);
 						
 						dialogo.close();

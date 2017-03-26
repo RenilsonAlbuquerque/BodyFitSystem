@@ -6,37 +6,31 @@ public class Exercicio implements Comparable<Exercicio>{
 	private String carga;
 	private int intervalo;
 	private int repeticao;
+	private int series;
+	private String descricao;
 	private boolean padrao;
 	private String cpfProfessor;
 	
-	/*
-	public Exercicio(String nome, String carga, int intervalo, int repeticao,boolean padrao) {
+	public Exercicio(int codigo,String cpf,String nome, String carga, int intervalo, int repeticao,int series,String descricao,boolean padrao) {
 		super();
 		this.setNome(nome);
 		this.setCarga(carga);
 		this.setIntervalo(intervalo);
 		this.setRepeticao(repeticao);
-		this.setCodigo(codigo);
-		this.setPadrao(padrao);
-	}
-	*/
-	public Exercicio(int codigo,String cpf,String nome, String carga, int intervalo, int repeticao,boolean padrao) {
-		super();
-		this.setNome(nome);
-		this.setCarga(carga);
-		this.setIntervalo(intervalo);
-		this.setRepeticao(repeticao);
+		this.setSeries(series);
+		this.setDescricao(descricao);
 		this.setCodigo(codigo);
 		this.setCpfProfessor(cpf);
 		this.setPadrao(padrao);
 	}
-	public Exercicio(String cpf,String nome, String carga, int intervalo, int repeticao,boolean padrao) {
+	public Exercicio(String cpf,String nome, String carga, int intervalo, int repeticao,int series,String descricao,boolean padrao) {
 		super();
 		this.setNome(nome);
 		this.setCarga(carga);
 		this.setIntervalo(intervalo);
 		this.setRepeticao(repeticao);
-		this.setCodigo(codigo);
+		this.setSeries(series);
+		this.setDescricao(descricao);
 		this.setPadrao(padrao);
 		this.setCpfProfessor(cpf);
 	}
@@ -63,6 +57,20 @@ public class Exercicio implements Comparable<Exercicio>{
 	}
 	public void setRepeticao(int repeticao) {
 		this.repeticao = repeticao;
+	}
+	
+	public int getSeries() {
+		return series;
+	}
+	public void setSeries(int series) {
+		this.series = series;
+	}
+	
+	public String getDescricao() {
+		return descricao;
+	}
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 	public int getCodigo() {
 		return codigo;

@@ -43,6 +43,9 @@ public class ControladorAplicacaoTreino extends FlowPane{
 	private ArrayList treinosProfessor;
 	
 	@FXML
+	private Label labelTreinosAluno;
+	
+	@FXML
 	private TextField txtBuscarTreino;
 	
 	@FXML
@@ -332,6 +335,7 @@ public class ControladorAplicacaoTreino extends FlowPane{
 
 			            
 			            Button visualizar = new Button("V");
+			           // visualizar.setGraphic(new ImageView("/imagens/viewIcon.png"));
 			            visualizar.setOnAction(new EventHandler<ActionEvent>(){
 			            	@Override
 			            	public void handle(ActionEvent e){

@@ -11,7 +11,7 @@
    <children>
       <VBox fx:id="painelLista" alignment="CENTER" prefHeight="451.0" prefWidth="335.0">
          <children>
-            <Label fx:id="labelTreinosAluno" alignment="CENTER" prefHeight="39.0" prefWidth="242.0" text="Treinos do Aluno">
+            <Label fx:id="labelTreinosAluno" alignment="CENTER" prefHeight="39.0" prefWidth="338.0" text="Treinos do Aluno">
                <font>
                   <Font name="Arial Rounded MT Bold" size="20.0" />
                </font>

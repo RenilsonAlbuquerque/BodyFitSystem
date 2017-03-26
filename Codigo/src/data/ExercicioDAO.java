@@ -43,8 +43,8 @@ public class ExercicioDAO implements IAtividadesDao<Exercicio>{
 
 	@Override
 	public int cadastrar(Exercicio objeto) throws SQLException {
-		String sql = "INSERT INTO academia.exercicio(CPF_P,NOME,CARGA,REPETICOES,INTERVALO,PADRAO) "
-				+ "values(?,?,?,?,?,?)";
+		String sql = "INSERT INTO academia.exercicio(CPF_P,NOME,CARGA,REPETICOES,INTERVALO,SERIES,DESCRICAO,PADRAO) "
+				+ "values(?,?,?,?,?,?,?,?)";
 			
 			
 			statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
@@ -53,7 +53,9 @@ public class ExercicioDAO implements IAtividadesDao<Exercicio>{
 			statement.setString(3, objeto.getCarga());
 			statement.setInt(4, objeto.getRepeticao());
 			statement.setInt(5, objeto.getIntervalo());
-			statement.setBoolean(6, objeto.isPadrao());
+			statement.setInt(6, objeto.getSeries());
+			statement.setString(7, objeto.getDescricao());
+			statement.setBoolean(8, objeto.isPadrao());
 			statement.execute();
 			ResultSet st = statement.getGeneratedKeys();
 			st.next();
@@ -77,13 +79,15 @@ public class ExercicioDAO implements IAtividadesDao<Exercicio>{
 	@Override
 	public boolean atualizar(Exercicio objeto) throws SQLException{
 		
-		String sql = "UPDATE exercicio SET NOME = ?,CARGA= ?,REPETICOES =?,INTERVALO=?  "
+		String sql = "UPDATE exercicio SET NOME = ?,CARGA= ?,REPETICOES =?,INTERVALO=?,SERIES = ?,DESCRICAO = ?  "
 				+ " WHERE CODIGO_E = " + objeto.getCodigo();
 				statement = (PreparedStatement) DBConnectionFactory.getInstance().getConnection().prepareStatement(sql);
 				statement.setString(1, objeto.getNome());
 				statement.setString(2, objeto.getCarga());
 				statement.setInt(3, objeto.getRepeticao());
 				statement.setInt(4, objeto.getIntervalo());
+				statement.setInt(5, objeto.getSeries());
+				statement.setString(6, objeto.getDescricao());
 				statement.execute();
 				
 		return true;
@@ -106,8 +110,10 @@ public class ExercicioDAO implements IAtividadesDao<Exercicio>{
 				String carga = rSet.getNString("CARGA");
 				int repeticoes = rSet.getInt("REPETICOES");
 				int intervalo = rSet.getInt("INTERVALO");
+				int series = rSet.getInt("SERIES");
+				String descricao = rSet.getNString("DESCRICAO");
 				boolean padrao = rSet.getBoolean("PADRAO");
-				Exercicio exercicio = new Exercicio(codigo,cpfProf,nome,carga,repeticoes,intervalo,padrao);
+				Exercicio exercicio = new Exercicio(codigo,cpfProf,nome,carga,repeticoes,intervalo,series,descricao,padrao);
 				exercicios.add(exercicio);
 			}
 		
@@ -132,8 +138,10 @@ public class ExercicioDAO implements IAtividadesDao<Exercicio>{
 			String carga = rSet.getNString("CARGA");
 			int repeticoes = rSet.getInt("REPETICOES");
 			int intervalo = rSet.getInt("INTERVALO");
+			int series = rSet.getInt("SERIES");
+			String descricao = rSet.getNString("DESCRICAO");
 			boolean padrao = rSet.getBoolean("PADRAO");
-			resultado = new Exercicio(codigo,cpf, nome, carga, repeticoes, intervalo, padrao);
+			resultado = new Exercicio(codigo,cpf, nome, carga, repeticoes, intervalo,series,descricao, padrao);
 		}
 		return resultado;
 	}
